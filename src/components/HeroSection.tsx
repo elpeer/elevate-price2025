@@ -9,29 +9,10 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section id="intro" className="flex h-screen w-full">
-      {/* Left - Blue wave image */}
-      <div className="w-1/2 relative">
-        <img
-          src="https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b?placeholderIfAbsent=true"
-          alt="Blue wave background"
-          className="w-full h-full object-cover"
-        />
-        {/* Scroll indicator */}
-        <button 
-          onClick={scrollToAbout}
-          className="absolute bottom-8 right-8 flex items-center gap-3 text-white hover:opacity-80 transition-opacity"
-        >
-          <span className="text-sm">גלול למטה</span>
-          <div className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center">
-            <div className="w-2 h-2 bg-white rounded-full" />
-          </div>
-        </button>
-      </div>
-
-      {/* Right - Content */}
+    <section id="intro" className="flex h-screen w-full flex-row-reverse">
+      {/* Right - Content (appears on RIGHT in RTL) */}
       <div className="w-1/2 bg-background flex flex-col justify-center px-16 py-12">
-        <div className="max-w-lg mr-auto text-right">
+        <div className="max-w-lg ml-auto text-right">
           {/* Title */}
           <h1 className="text-5xl font-normal leading-tight text-foreground mb-12">
             אפיון ועיצוב UX/UI
@@ -49,7 +30,7 @@ const HeroSection: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex gap-12 justify-end">
+            <div className="flex gap-16 justify-end">
               <div className="text-right">
                 <div className="flex items-center justify-end gap-2 mb-1">
                   <span className="text-muted-foreground text-sm">טלפון</span>
@@ -66,7 +47,7 @@ const HeroSection: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex gap-12 justify-end">
+            <div className="flex gap-16 justify-end">
               <div className="text-right">
                 <div className="flex items-center justify-end gap-2 mb-1">
                   <span className="text-muted-foreground text-sm">טלפון משני</span>
@@ -87,12 +68,31 @@ const HeroSection: React.FC = () => {
           {/* CTA Button */}
           <button 
             onClick={scrollToAbout}
-            className="bg-primary text-white px-8 py-4 rounded-full flex items-center gap-3 hover:bg-primary/90 transition-colors mr-auto"
+            className="bg-primary text-white px-8 py-4 rounded-full flex items-center gap-3 hover:bg-primary/90 transition-colors"
           >
             <span className="font-medium">גלול להצעה</span>
             <div className="w-2 h-2 bg-white rounded-full" />
           </button>
         </div>
+      </div>
+
+      {/* Left - Blue wave image (appears on LEFT in RTL) */}
+      <div className="w-1/2 relative">
+        <img
+          src="https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b?placeholderIfAbsent=true"
+          alt="Blue wave background"
+          className="w-full h-full object-cover"
+        />
+        {/* Scroll indicator */}
+        <button 
+          onClick={scrollToAbout}
+          className="absolute bottom-8 left-8 flex items-center gap-3 text-white hover:opacity-80 transition-opacity"
+        >
+          <div className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center">
+            <div className="w-2 h-2 bg-white rounded-full" />
+          </div>
+          <span className="text-sm">גלול למטה</span>
+        </button>
       </div>
     </section>
   );
