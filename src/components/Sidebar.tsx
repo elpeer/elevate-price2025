@@ -47,8 +47,8 @@ const Sidebar: React.FC = () => {
       <div className="flex items-center gap-2 mb-8 justify-end">
         <span className="text-xl font-semibold text-foreground">elevate</span>
         <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-white">
-            <path d="M12 4L20 20H4L12 4Z" fill="currentColor"/>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-white">
+            <path d="M12 5L5 19H19L12 5Z" stroke="currentColor" strokeWidth="2" fill="currentColor"/>
           </svg>
         </div>
       </div>
