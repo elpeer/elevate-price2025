@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrollAnimation, StaggerContainer, StaggerItem, FadeScale } from './ScrollAnimation';
 import blueAbstractBg from '@/assets/blue-abstract-bg.png';
 import logo1 from '@/assets/clients/logo-1.svg';
 import logo2 from '@/assets/clients/logo-2.svg';
@@ -54,47 +55,59 @@ const CoreValuesSection: React.FC = () => {
           >
             {/* Text overlay */}
             <div className="absolute inset-0 flex flex-col justify-center items-center px-6 md:px-12 text-center">
-              <p className="text-white/90 text-sm md:text-lg leading-6 md:leading-8 mb-4 md:mb-8">
-                המשימה שלנו היא להעצים עסקים עם פתרונות אינטרנט מתקדמים המניעים צמיחה ומעורבות. אנו משלבים תובנה אסטרטגית, עיצוב חדשני ומומחיות טכנית כדי ליצור אתרים מותאמים הבולטים בנוף הדיגיטלי.
-              </p>
-              <p className="text-white/90 text-sm md:text-lg leading-6 md:leading-8">
-                עם מחויבות למצוינות ולשביעות רצון לקוחות, אנו שואפים להיות השותף מנצח עבור חברות המעוניינות להוביל את הנוכחות הדיגיטלית שלהם להשגת מטרותיהם.
-              </p>
+              <ScrollAnimation>
+                <p className="text-white/90 text-sm md:text-lg leading-6 md:leading-8 mb-4 md:mb-8">
+                  המשימה שלנו היא להעצים עסקים עם פתרונות אינטרנט מתקדמים המניעים צמיחה ומעורבות. אנו משלבים תובנה אסטרטגית, עיצוב חדשני ומומחיות טכנית כדי ליצור אתרים מותאמים הבולטים בנוף הדיגיטלי.
+                </p>
+              </ScrollAnimation>
+              <ScrollAnimation delay={0.1}>
+                <p className="text-white/90 text-sm md:text-lg leading-6 md:leading-8">
+                  עם מחויבות למצוינות ולשביעות רצון לקוחות, אנו שואפים להיות השותף מנצח עבור חברות המעוניינות להוביל את הנוכחות הדיגיטלית שלהם להשגת מטרותיהם.
+                </p>
+              </ScrollAnimation>
             </div>
           </div>
 
           {/* Client logos section */}
           <div className="py-8 md:py-12 px-6 md:px-8">
-            <p className="text-center text-foreground font-medium mb-6 md:mb-8">נבחרנו על ידי הטובים ביותר</p>
+            <ScrollAnimation>
+              <p className="text-center text-foreground font-medium mb-6 md:mb-8">נבחרנו על ידי הטובים ביותר</p>
+            </ScrollAnimation>
             
             {/* Logos grid - 2 rows */}
-            <div className="grid grid-cols-4 items-center justify-items-center gap-4" dir="rtl">
+            <StaggerContainer className="grid grid-cols-4 items-center justify-items-center gap-4" staggerDelay={0.05}>
               {clientLogos.map((logo, index) => (
-                <div key={index} className="flex items-center justify-center">
-                  <img src={logo} alt={`Client ${index + 1}`} className="h-10 md:h-16 w-auto object-contain" />
-                </div>
+                <StaggerItem key={index}>
+                  <div className="flex items-center justify-center">
+                    <img src={logo} alt={`Client ${index + 1}`} className="h-10 md:h-16 w-auto object-contain" />
+                  </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </div>
 
         {/* Right side - Values list (white background) - top on mobile */}
         <div className="w-full md:w-1/2 bg-white py-12 md:py-24 px-6 md:px-16 order-1 md:order-2">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 md:mb-12 text-right">ערכי הליבה שלנו</h2>
+          <ScrollAnimation direction="left">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 md:mb-12 text-right">ערכי הליבה שלנו</h2>
+          </ScrollAnimation>
           
-          <div className="space-y-6 md:space-y-8">
+          <StaggerContainer className="space-y-6 md:space-y-8" staggerDelay={0.1}>
             {values.map((value, index) => (
-              <div key={index} className="flex items-center gap-4 md:gap-6" dir="rtl">
-                <div className="flex-shrink-0">
-                  <img src={value.icon} alt={value.title} className="w-12 h-12 md:w-14 md:h-14" />
+              <StaggerItem key={index} direction="left">
+                <div className="flex items-center gap-4 md:gap-6" dir="rtl">
+                  <div className="flex-shrink-0">
+                    <img src={value.icon} alt={value.title} className="w-12 h-12 md:w-14 md:h-14" />
+                  </div>
+                  <div className="text-right flex-1">
+                    <h3 className="text-lg md:text-xl font-semibold text-foreground mb-1 md:mb-2">{value.title}</h3>
+                    <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{value.description}</p>
+                  </div>
                 </div>
-                <div className="text-right flex-1">
-                  <h3 className="text-lg md:text-xl font-semibold text-foreground mb-1 md:mb-2">{value.title}</h3>
-                  <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{value.description}</p>
-                </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </div>
     </section>

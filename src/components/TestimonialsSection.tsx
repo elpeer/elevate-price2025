@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrollAnimation, StaggerContainer, StaggerItem } from './ScrollAnimation';
 
 const testimonials = [
   {
@@ -35,32 +36,38 @@ const TestimonialsSection: React.FC = () => {
   return (
     <section id="testimonials" className="w-full bg-background py-12 md:py-16 px-6 md:px-16 flex flex-col justify-center">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-normal text-foreground text-center mb-3 md:mb-4">
-          השותפים שלנו
-        </h2>
-        <p className="text-muted-foreground text-center text-base md:text-lg mb-10 md:mb-16 max-w-2xl mx-auto">
-          בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.
-        </p>
+        <ScrollAnimation>
+          <h2 className="text-3xl md:text-4xl font-normal text-foreground text-center mb-3 md:mb-4">
+            השותפים שלנו
+          </h2>
+        </ScrollAnimation>
+        <ScrollAnimation delay={0.1}>
+          <p className="text-muted-foreground text-center text-base md:text-lg mb-10 md:mb-16 max-w-2xl mx-auto">
+            בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.
+          </p>
+        </ScrollAnimation>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6" staggerDelay={0.1}>
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-background border border-border rounded-2xl md:rounded-3xl p-6 md:p-8">
-              <div className="flex items-center justify-between mb-4 md:mb-6" dir="rtl">
-                <div className="flex items-center gap-3">
-                  <img src={testimonial.avatar} alt={testimonial.name} className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover" />
-                  <div className="text-right">
-                    <p className="font-medium text-foreground text-sm">{testimonial.name}</p>
-                    <p className="text-muted-foreground text-xs">{testimonial.title}</p>
+            <StaggerItem key={index}>
+              <div className="bg-background border border-border rounded-2xl md:rounded-3xl p-6 md:p-8 h-full">
+                <div className="flex items-center justify-between mb-4 md:mb-6" dir="rtl">
+                  <div className="flex items-center gap-3">
+                    <img src={testimonial.avatar} alt={testimonial.name} className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover" />
+                    <div className="text-right">
+                      <p className="font-medium text-foreground text-sm">{testimonial.name}</p>
+                      <p className="text-muted-foreground text-xs">{testimonial.title}</p>
+                    </div>
                   </div>
+                  <img src={testimonial.logo} alt="Company logo" className="h-6 md:h-8 object-contain" />
                 </div>
-                <img src={testimonial.logo} alt="Company logo" className="h-6 md:h-8 object-contain" />
+                <p className="text-foreground text-right leading-6 md:leading-7 opacity-80 text-sm md:text-base">
+                  {testimonial.text}
+                </p>
               </div>
-              <p className="text-foreground text-right leading-6 md:leading-7 opacity-80 text-sm md:text-base">
-                {testimonial.text}
-              </p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
