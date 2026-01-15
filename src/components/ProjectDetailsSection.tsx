@@ -33,17 +33,8 @@ const ProjectDetailsSection: React.FC = () => {
   return (
     <section id="project-details" className="w-full bg-background">
       <div className="flex flex-col md:flex-row">
-        {/* LEFT column: Image */}
-        <div className="w-full md:w-1/2 order-2 md:order-1">
-          <img 
-            src={projectDetailsImage} 
-            alt="Project details" 
-            className="w-full h-full object-cover min-h-[500px]"
-          />
-        </div>
-
         {/* RIGHT column: FAQ Accordion */}
-        <div className="w-full md:w-1/2 order-1 md:order-2 py-16 px-12" dir="rtl">
+        <div className="w-full md:w-1/2 py-16 px-12" dir="rtl">
           <h2 className="text-3xl md:text-4xl font-normal text-foreground text-right mb-12">
             פרטים נוספים על הפרויקט
           </h2>
@@ -81,6 +72,15 @@ const ProjectDetailsSection: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* LEFT column: Image */}
+        <div className="w-full md:w-1/2">
+          <img 
+            src={projectDetailsImage} 
+            alt="Project details" 
+            className="w-full h-full object-cover min-h-[500px]"
+          />
         </div>
       </div>
     </section>
