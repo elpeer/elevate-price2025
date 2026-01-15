@@ -42,15 +42,13 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <aside className="w-[220px] bg-background border-r border-border fixed top-0 right-0 h-screen flex flex-col py-6 px-4 z-50">
-      {/* Logo - Icon only */}
-      <div className="flex items-center mb-8 justify-end">
-        <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-white">
-            <path d="M12 5L5 19H19L12 5Z" fill="currentColor"/>
-          </svg>
-        </div>
-      </div>
+    <aside className="w-[220px] bg-background border-l fixed top-0 right-0 h-screen flex flex-col py-6 px-4 z-50" style={{ borderLeftColor: '#CBCBD4' }}>
+      {/* Logo - replaceable via Visual Edits */}
+      <img 
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%232563EB'/%3E%3Cpath d='M20 12L12 26h16L20 12z' fill='white'/%3E%3C/svg%3E" 
+        alt="Logo" 
+        className="w-10 h-10 mb-8"
+      />
 
       {/* Navigation */}
       <nav className="flex flex-col gap-1">
