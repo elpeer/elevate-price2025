@@ -1,17 +1,35 @@
 import React, { useState } from 'react';
+import { Check } from 'lucide-react';
+import SignatureCanvas from './SignatureCanvas';
+import HebrewDatePicker from './HebrewDatePicker';
 
 const SignatureSection: React.FC = () => {
   const [clientName, setClientName] = useState('');
-  const [date, setDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [agreed, setAgreed] = useState(false);
+  const [signatureData, setSignatureData] = useState<string | null>(null);
+
+  const canSubmit = agreed && signatureData && clientName.trim() !== '';
+
+  const handleSubmit = () => {
+    if (!canSubmit) return;
+    
+    console.log('Submitting:', {
+      clientName,
+      date: selectedDate,
+      agreed,
+      signatureData
+    });
+    // Handle form submission here
+  };
 
   return (
-    <section id="signature" className="min-h-screen w-full bg-background py-24 px-16 flex flex-col justify-center">
+    <section id="signature" className="w-full bg-background py-24 px-16" dir="rtl">
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-2 gap-12">
-          {/* Right - Form */}
-          <div className="order-2">
-            <h2 className="text-4xl font-normal text-foreground text-right mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* RIGHT column - Form (אישור לקוח) */}
+          <div className="md:order-2">
+            <h2 className="text-3xl md:text-4xl font-normal text-foreground text-right mb-12">
               אישור לקוח
             </h2>
 
@@ -24,8 +42,8 @@ const SignatureSection: React.FC = () => {
                   type="text"
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
-                  placeholder="שם לקוח"
-                  className="w-full bg-secondary rounded-full px-6 py-4 text-right text-foreground outline-none"
+                  placeholder="הכנס שם מלא"
+                  className="w-full bg-secondary rounded-full px-6 py-4 text-right text-foreground outline-none focus:ring-2 focus:ring-primary/50"
                 />
               </div>
 
@@ -33,52 +51,61 @@ const SignatureSection: React.FC = () => {
                 <label className="block text-right text-lg font-medium text-foreground mb-3">
                   תאריך
                 </label>
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="w-full bg-secondary rounded-full px-6 py-4 text-right text-foreground outline-none"
+                <HebrewDatePicker
+                  selectedDate={selectedDate}
+                  onChange={setSelectedDate}
+                  placeholder="בחר תאריך"
                 />
               </div>
             </div>
           </div>
 
-          {/* Left - Signature */}
-          <div className="order-1">
-            <div className="bg-secondary rounded-3xl p-8">
+          {/* LEFT column - Signature Card (חתימה) */}
+          <div className="md:order-1">
+            <div className="rounded-3xl p-8" style={{ backgroundColor: '#F3F5FF' }}>
               <div className="text-right mb-6">
                 <h3 className="text-2xl font-medium text-foreground">חתימה</h3>
                 <p className="text-muted-foreground">יש לחתום בשדה הבא וללחוץ אישור.</p>
               </div>
 
-              <div className="bg-background rounded-2xl p-8 mb-6 min-h-[150px] flex items-center justify-center">
-                <img
-                  src="https://api.builder.io/api/v1/image/assets/TEMP/a809b319250e60e99e7a1bf6acf149fcf9330abb?placeholderIfAbsent=true"
-                  alt="Signature"
-                  className="max-w-[200px]"
-                />
+              {/* Signature Canvas */}
+              <div className="mb-6">
+                <SignatureCanvas onSignatureChange={setSignatureData} />
               </div>
 
+              {/* Checkbox Agreement */}
               <div className="flex items-start gap-4 mb-6">
-                <input
-                  type="checkbox"
-                  checked={agreed}
-                  onChange={(e) => setAgreed(e.target.checked)}
-                  className="w-6 h-6 rounded border-border mt-1"
-                />
-                <p className="text-foreground text-right leading-7">
+                <button
+                  onClick={() => setAgreed(!agreed)}
+                  className={`flex-shrink-0 w-6 h-6 rounded border-2 flex items-center justify-center transition-colors ${
+                    agreed 
+                      ? 'bg-primary border-primary' 
+                      : 'bg-white border-muted-foreground'
+                  }`}
+                >
+                  {agreed && <Check className="w-4 h-4 text-white" />}
+                </button>
+                <p className="text-foreground text-right leading-7 text-sm">
                   בחתימה מעלה, אני מאשר שקראתי, הבנתי והסכמתי לכל התנאים, התנאים והמדיניות המפורטים בהסכם פרויקט ADU.
                 </p>
               </div>
 
-              <button className="bg-primary text-white px-8 py-4 rounded-full flex items-center gap-3 hover:bg-primary/90 transition-colors">
+              {/* Submit Button */}
+              <button 
+                onClick={handleSubmit}
+                disabled={!canSubmit}
+                className={`px-8 py-4 rounded-full flex items-center gap-3 transition-colors ${
+                  canSubmit 
+                    ? 'bg-primary text-white hover:bg-primary/90' 
+                    : 'bg-muted text-muted-foreground cursor-not-allowed'
+                }`}
+              >
                 <span className="font-medium">אישור</span>
-                <div className="w-2 h-2 bg-white rounded-full" />
+                <div className={`w-2 h-2 rounded-full ${canSubmit ? 'bg-white' : 'bg-muted-foreground'}`} />
               </button>
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );
