@@ -1,87 +1,70 @@
 import React from 'react';
+import { Lightbulb, Users, Target, Palette, Code, Headphones } from 'lucide-react';
+
+const services = [
+  {
+    icon: Lightbulb,
+    title: 'UX חדשני ומתקדם',
+    description: 'אנו מעצבים חוויות משתמש אינטואיטיביות וממשקים ויזואליים'
+  },
+  {
+    icon: Users,
+    title: 'מחקר משתמשים',
+    description: 'מחקר מעמיק והבנת הצרכים של קהל היעד שלך'
+  },
+  {
+    icon: Target,
+    title: 'אסטרטגיה דיגיטלית',
+    description: 'תכנון אסטרטגי מקיף להשגת יעדים עסקיים'
+  },
+  {
+    icon: Palette,
+    title: 'עיצוב UI מרהיב',
+    description: 'עיצוב ויזואלי מרהיב המשקף את מהות המותג'
+  },
+  {
+    icon: Code,
+    title: 'פיתוח Frontend',
+    description: 'פיתוח קוד נקי ומותאם לכל הפלטפורמות'
+  },
+  {
+    icon: Headphones,
+    title: 'תמיכה ושירות',
+    description: 'ליווי מקצועי לאורך כל הדרך ואחריה'
+  }
+];
 
 const WhyElevateSection: React.FC = () => {
   return (
-    <section className="bg-secondary self-stretch flex w-full flex-col items-stretch pr-20 pb-[135px] max-md:max-w-full max-md:pr-5 max-md:pb-[100px]">
-      <div className="z-10 mt-[-420px] max-md:max-w-full max-md:mt-[-200px]">
-        <div className="gap-5 flex max-md:flex-col max-md:items-stretch">
-          <div className="w-[30%] max-md:w-full max-md:ml-0">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/42598c6bc078b0501a62ee259fc4aeb3006492db?placeholderIfAbsent=true"
-              alt="Design Process Illustration"
-              className="aspect-[0.45] object-contain w-full grow max-md:max-w-full"
-            />
+    <section className="bg-secondary py-24 px-16">
+      <div className="max-w-6xl mx-auto">
+        {/* Title */}
+        <div className="flex items-center justify-center gap-6 mb-8">
+          <h2 className="text-7xl font-light text-foreground">Why</h2>
+          <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-white">
+              <path d="M12 4L20 20H4L12 4Z" fill="currentColor"/>
+            </svg>
           </div>
-          <div className="w-[70%] ml-5 max-md:w-full max-md:ml-0">
-            <div className="flex w-full flex-col items-stretch font-normal mt-[491px] max-md:max-w-full max-md:mt-10">
-              <div className="flex w-[1103px] max-w-full items-stretch gap-[40px_59px] text-[153px] text-foreground whitespace-nowrap leading-none flex-wrap max-md:text-[40px]">
-                <h2 className="grow max-md:text-[40px]">Why</h2>
-                <img
-                  src="https://api.builder.io/api/v1/image/assets/TEMP/6d14ddf3313b646f05be384f477d54170213db69?placeholderIfAbsent=true"
-                  alt="Decorative Element"
-                  className="aspect-[1.01] object-contain w-[118px] shrink-0 max-w-full my-auto"
-                />
-                <h2 className="grow shrink w-[498px] max-md:max-w-full max-md:text-[40px]">elevate</h2>
+          <h2 className="text-7xl font-light text-foreground">elevate</h2>
+        </div>
+
+        {/* Description */}
+        <p className="text-center text-foreground text-lg leading-8 max-w-3xl mx-auto mb-16">
+          אנו מעצבים חוויות משתמש אינטואיטיביות וממשקים ויזואליים המשקפים את מהות המותג שלך ומגבירים מעורבות. המומחיות שלנו ב-UX/UI, בשילוב מחקר מעמיק ועיצוב ממוקד משתמש, מבטיחה שהמוצר הדיגיטלי שלך יבלוט ויספק ערך אמיתי בסביבה המקוונת התחרותית.
+        </p>
+
+        {/* Services Grid */}
+        <div className="grid grid-cols-3 gap-6">
+          {services.map((service, index) => (
+            <div key={index} className="bg-background rounded-2xl p-8 text-right">
+              <div className="w-14 h-14 rounded-full bg-secondary flex items-center justify-center mb-4 mr-auto ml-0">
+                <service.icon className="w-7 h-7 text-primary" />
               </div>
-              <p className="text-foreground text-xl leading-[34px] text-right mt-[46px] max-md:max-w-full max-md:mr-2.5 max-md:mt-10">
-                אנו מעצבים חוויות משתמש אינטואיטיביות וממשקים ויזואליים המשקפים את מהות המותג שלך ומגבירים מעורבות. המומחיות שלנו ב-UX/UI, בשילוב מחקר מעמיק ועיצוב ממוקד משתמש, מבטיחה שהמוצר הדיגיטלי שלך יבלוט ויספק ערך אמיתי בסביבה המקוונת התחרותית.
-              </p>
+              <h3 className="text-xl font-medium text-foreground mb-2">{service.title}</h3>
+              <p className="text-muted-foreground leading-7">{service.description}</p>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="mb-[-27px] w-full max-w-[1429px] max-md:max-w-full max-md:mr-2.5 max-md:mb-2.5">
-        <div className="flex w-full gap-[40px_88px] flex-wrap max-md:max-w-full">
-          <div className="flex min-w-60 flex-col items-stretch justify-center flex-1 shrink basis-[0%]">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/2dc829a6b7bd5283d083df62c5641c7539df710a?placeholderIfAbsent=true"
-              alt="Service Icon 1"
-              className="aspect-[1] object-contain w-[54px]"
-            />
-            <div className="flex min-h-[202px] w-full mt-6" />
-          </div>
-          <div className="flex min-w-60 flex-col items-stretch justify-center flex-1 shrink basis-[0%]">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/9a33472c716b4d4720a7146a77dbddd1ff3af033?placeholderIfAbsent=true"
-              alt="Service Icon 2"
-              className="aspect-[1] object-contain w-[54px]"
-            />
-            <div className="flex min-h-[170px] w-full mt-6" />
-          </div>
-          <div className="flex min-w-60 flex-col items-stretch flex-1 shrink basis-[0%]">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/fc443509cab809a497c363e2ddf3eaa99b6fec96?placeholderIfAbsent=true"
-              alt="Service Icon 3"
-              className="aspect-[1] object-contain w-[54px]"
-            />
-            <div className="flex min-h-[172px] w-full mt-6" />
-          </div>
-        </div>
-        <div className="flex w-full gap-[40px_88px] flex-wrap mt-[54px] max-md:max-w-full max-md:mt-10">
-          <div className="flex min-w-60 flex-col items-stretch flex-1 shrink basis-[0%]">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/f5ea5dfeefe1c35a933779b013e6e95596787c9d?placeholderIfAbsent=true"
-              alt="Service Icon 4"
-              className="aspect-[1] object-contain w-[54px]"
-            />
-            <div className="flex min-h-[170px] w-full mt-6" />
-          </div>
-          <div className="flex min-w-60 flex-col items-stretch flex-1 shrink basis-[0%]">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/ab601ca8e8c51881fa649bbb1b62e885b8b474ad?placeholderIfAbsent=true"
-              alt="Service Icon 5"
-              className="aspect-[1] object-contain w-[54px]"
-            />
-            <div className="flex min-h-[170px] w-full mt-6" />
-          </div>
-          <div className="flex min-w-60 flex-col items-stretch flex-1 shrink basis-[0%]">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/00b705f7e0ef307ccb62a22368ee0edd74fd7e12?placeholderIfAbsent=true"
-              alt="Service Icon 6"
-              className="aspect-[1] object-contain w-[54px]"
-            />
-            <div className="flex min-h-[138px] w-full mt-6" />
-          </div>
+          ))}
         </div>
       </div>
     </section>
