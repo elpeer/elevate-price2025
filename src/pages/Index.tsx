@@ -8,6 +8,7 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import ProjectsSection from '@/components/ProjectsSection';
 import SiteContentSection from '@/components/SiteContentSection';
 import DeliverablesSection from '@/components/DeliverablesSection';
+import ProjectDetailsSection from '@/components/ProjectDetailsSection';
 import PricingSection from '@/components/PricingSection';
 import SignatureSection from '@/components/SignatureSection';
 
@@ -27,6 +28,7 @@ const Index: React.FC = () => {
         <ProjectsSection />
         <SiteContentSection />
         <DeliverablesSection />
+        <ProjectDetailsSection />
         <PricingSection />
         <SignatureSection />
       </main>

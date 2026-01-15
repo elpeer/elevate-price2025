@@ -10,6 +10,7 @@ const navItems = [
   { id: 'projects', label: 'פרויקטים' },
   { id: 'content', label: 'תכולת האתר' },
   { id: 'deliverables', label: 'מה כלול' },
+  { id: 'project-details', label: 'פרטים נוספים' },
   { id: 'pricing', label: 'תשלומים' },
   { id: 'signature', label: 'חתימה' },
 ];
