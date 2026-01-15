@@ -83,27 +83,27 @@ const services = [
 
 const WhyElevateSection: React.FC = () => {
   return (
-    <section id="why" className="min-h-screen w-full py-24 px-16" style={{ backgroundColor: '#EFEFFF' }}>
+    <section id="why" className="min-h-screen w-full py-16 md:py-24 px-6 md:px-16" style={{ backgroundColor: '#EFEFFF' }}>
       <div className="max-w-6xl mx-auto">
         {/* Title - Logo with arrow icon in center */}
-        <div className="flex items-center justify-center gap-6 mb-8">
-          <img src={whyElevateLogo} alt="Why Elevate" className="h-12" />
+        <div className="flex items-center justify-center gap-6 mb-6 md:mb-8">
+          <img src={whyElevateLogo} alt="Why Elevate" className="h-10 md:h-12" />
         </div>
 
         {/* Description */}
-        <p className="text-center text-foreground text-lg leading-8 max-w-4xl mx-auto mb-20">
+        <p className="text-center text-foreground text-base md:text-lg leading-7 md:leading-8 max-w-4xl mx-auto mb-12 md:mb-20">
           אנו מעצבים חוויות משתמש אינטואיטיביות וממשקים ויזואליים המשקפים את מהות המותג שלך ומגבירים מעורבות. המומחיות שלנו ב-UX/UI, בשילוב מחקר מעמיק ועיצוב ממוקד משתמש, מבטיחה שהמוצר הדיגיטלי שלך יבלוט ויספק ערך אמיתי בסביבה המקוונת התחרותית.
         </p>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-3 gap-x-16 gap-y-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-x-16 md:gap-y-16">
           {services.map((service, index) => (
             <div key={index} className="text-right">
               <div className="mb-4 flex justify-start">
                 <service.icon />
               </div>
-              <h3 className="text-xl font-medium text-foreground mb-3">{service.title}</h3>
-              <p className="text-muted-foreground leading-7 text-sm">{service.description}</p>
+              <h3 className="text-lg md:text-xl font-medium text-foreground mb-3">{service.title}</h3>
+              <p className="text-muted-foreground leading-6 md:leading-7 text-sm">{service.description}</p>
             </div>
           ))}
         </div>
