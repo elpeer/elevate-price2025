@@ -43,12 +43,11 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside className="w-[220px] bg-background border-r border-border fixed top-0 right-0 h-screen flex flex-col py-6 px-4 z-50">
-      {/* Logo */}
-      <div className="flex items-center gap-2 mb-8 justify-end">
-        <span className="text-xl font-semibold text-foreground">elevate</span>
-        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-white">
-            <path d="M12 5L5 19H19L12 5Z" stroke="currentColor" strokeWidth="2" fill="currentColor"/>
+      {/* Logo - Icon only */}
+      <div className="flex items-center mb-8 justify-end">
+        <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-white">
+            <path d="M12 5L5 19H19L12 5Z" fill="currentColor"/>
           </svg>
         </div>
       </div>
