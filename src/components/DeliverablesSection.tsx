@@ -2,20 +2,32 @@ import React from 'react';
 import deliverablesBg from '@/assets/deliverables-bg.png';
 import checkIcon from '@/assets/icons/check-icon.svg';
 
-const includedItems = [
-  'אפיון ועיצוב כל התבניות בהתאם לרשימת המסכים שיוגדרו ויכנסו במסגרת השעות הראשונית',
-  'בניית Design System',
-  'ליווי צוות הפיתוח עד לשלבים מתקדמים על מנת לוודא הטמעה תקינה או התאמות במידת הצורך',
-  'ליווי צוות הפיתוח עד לשלבים מתקדמים על מנת לוודא הטמעה תקינה או התאמות במידת הצורך',
-  'מיקרו אנימציה ואלמנטים אינטרקאטיביים',
-  'נגישות האתר',
-];
-
-const notIncludedItems = [
-  'פיתוח Frontend',
-  'מיתוג (אופציונלי)',
-  'יצירת תוכן',
-  'הכנסת תוכן ועריכה (עבור שאר הדפים הנוספים)',
+// Comparison rows - each row has included (right) and notIncluded (left) items
+const comparisonRows = [
+  {
+    included: 'אפיון ועיצוב כל התבניות בהתאם לרשימת המסכים שיוגדרו ויכנסו במסגרת השעות הראשונית',
+    notIncluded: 'פיתוח Frontend'
+  },
+  {
+    included: 'בניית Design System',
+    notIncluded: 'מיתוג (אופציונלי)'
+  },
+  {
+    included: 'ליווי צוות הפיתוח עד לשלבים מתקדמים על מנת לוודא הטמעה תקינה או התאמות במידת הצורך',
+    notIncluded: 'יצירת תוכן'
+  },
+  {
+    included: 'ליווי צוות הפיתוח עד לשלבים מתקדמים על מנת לוודא הטמעה תקינה או התאמות במידת הצורך',
+    notIncluded: 'הכנסת תוכן ועריכה (עבור שאר הדפים הנוספים)'
+  },
+  {
+    included: 'מיקרו אנימציה ואלמנטים אינטרקאטיביים',
+    notIncluded: null
+  },
+  {
+    included: 'נגישות האתר',
+    notIncluded: null
+  },
 ];
 
 const CheckIcon = () => (
@@ -29,8 +41,6 @@ const MinusIcon = () => (
 );
 
 const DeliverablesSection: React.FC = () => {
-  const maxRows = Math.max(includedItems.length, notIncludedItems.length);
-
   return (
     <section 
       id="deliverables" 
@@ -42,53 +52,50 @@ const DeliverablesSection: React.FC = () => {
           כל מה שנספק לך
         </h2>
 
-        {/* Two column layout with gap */}
-        <div className="flex gap-4" dir="rtl">
-          {/* Right column - Included */}
-          <div className="flex-1 rounded-xl overflow-hidden">
-            {/* Header */}
-            <div className="bg-foreground text-white p-5 text-center font-medium rounded-t-xl">
+        {/* Single comparison table using CSS Grid */}
+        <div className="rounded-xl overflow-hidden" dir="rtl">
+          {/* Header Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            {/* Right header - Included */}
+            <div className="bg-foreground text-white p-5 text-center font-medium">
               כלול בהצעה
             </div>
-            {/* Rows */}
-            {includedItems.map((item, index) => (
-              <div 
-                key={index} 
-                className="bg-white p-5 border-b border-border/30"
-              >
-                <div className="flex items-center gap-3">
-                  <CheckIcon />
-                  <span className="text-foreground text-sm leading-relaxed">{item}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Left column - Not included */}
-          <div className="flex-1 rounded-xl overflow-hidden">
-            {/* Header */}
+            {/* Left header - Not Included */}
             <div 
-              className="p-5 text-center font-medium text-foreground rounded-t-xl"
+              className="p-5 text-center font-medium text-foreground"
               style={{ backgroundColor: 'rgba(255, 255, 255, 0.50)' }}
             >
               לא כלול בהצעה
             </div>
-            {/* Rows */}
-            {Array.from({ length: maxRows }).map((_, index) => (
-              <div 
-                key={index} 
-                className="p-5 border-b border-border/20"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.50)' }}
-              >
-                {notIncludedItems[index] && (
-                  <div className="flex items-center gap-3">
-                    <MinusIcon />
-                    <span className="text-foreground text-sm">{notIncludedItems[index]}</span>
+          </div>
+
+          {/* Data Rows - each row is a single grid row with 2 cells */}
+          {comparisonRows.map((row, index) => (
+            <div key={index} className="grid grid-cols-1 md:grid-cols-2">
+              {/* Right cell - Included item */}
+              <div className="bg-white p-5 border-b border-border/30 flex items-center min-h-[72px]">
+                {row.included && (
+                  <div className="flex items-center gap-3 w-full">
+                    <CheckIcon />
+                    <span className="text-foreground text-sm leading-relaxed">{row.included}</span>
                   </div>
                 )}
               </div>
-            ))}
-          </div>
+              
+              {/* Left cell - Not Included item */}
+              <div 
+                className="p-5 border-b border-border/20 flex items-center min-h-[72px]"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.50)' }}
+              >
+                {row.notIncluded && (
+                  <div className="flex items-center gap-3 w-full">
+                    <MinusIcon />
+                    <span className="text-foreground text-sm">{row.notIncluded}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
