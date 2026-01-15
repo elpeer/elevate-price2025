@@ -1,5 +1,5 @@
 import React from 'react';
-import elevateLogo from '@/assets/elevate-logo.svg';
+import whyElevateLogo from '@/assets/why-elevate-logo.svg';
 
 // Custom hand-drawn style icons as SVG components
 const StarIcon = () => (
@@ -87,7 +87,7 @@ const WhyElevateSection: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         {/* Title - Logo with arrow icon in center */}
         <div className="flex items-center justify-center gap-6 mb-8">
-          <img src={elevateLogo} alt="Why Elevate" className="h-16" />
+          <img src={whyElevateLogo} alt="Why Elevate" className="h-12" />
         </div>
 
         {/* Description */}
