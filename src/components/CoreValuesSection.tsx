@@ -67,9 +67,9 @@ const clientLogos = [
 
 const CoreValuesSection: React.FC = () => {
   return (
-    <section id="values" className="w-full" dir="rtl">
+    <section id="values" className="w-full" dir="ltr">
       {/* Main content area */}
-      <div className="flex">
+      <div className="flex flex-row">
         {/* Left side - Image and logos (lavender background) */}
         <div className="w-1/2 flex flex-col" style={{ backgroundColor: '#EFEFFF' }}>
           {/* Blue abstract image with text overlay */}
