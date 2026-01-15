@@ -65,29 +65,29 @@ const ProjectsSection: React.FC = () => {
   }, [isDragging, startX, scrollLeft]);
 
   return (
-    <section id="projects" className="w-full bg-background py-12 md:py-16 flex flex-col justify-center overflow-hidden">
+    <section id="projects" className="w-full bg-background py-10 md:py-16 flex flex-col justify-center overflow-hidden">
       {/* Header with padding */}
-      <div className="px-6 md:px-16 mb-10 md:mb-16">
+      <div className="px-6 md:px-16 mb-6 md:mb-16">
         <ScrollAnimation>
-          <h2 className="text-3xl md:text-4xl font-normal text-foreground text-center mb-3 md:mb-4">
+          <h2 className="text-2xl md:text-4xl font-normal text-foreground text-center mb-2 md:mb-4">
             פרויקטים
           </h2>
         </ScrollAnimation>
         <ScrollAnimation delay={0.1}>
-          <p className="text-muted-foreground text-center text-base md:text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-center text-sm md:text-lg max-w-2xl mx-auto">
             בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.
           </p>
         </ScrollAnimation>
       </div>
 
-      {/* Full-width slider without padding */}
+      {/* Full-width slider */}
       <motion.div 
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
         ref={scrollRef}
-        className={`flex gap-4 md:gap-6 overflow-x-auto select-none px-6 md:px-0 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`flex gap-3 md:gap-6 overflow-x-auto select-none px-6 md:px-0 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         style={{ 
           scrollbarWidth: 'none', 
           msOverflowStyle: 'none',
@@ -101,18 +101,18 @@ const ProjectsSection: React.FC = () => {
         {projects.map((project, index) => (
           <motion.div 
             key={index} 
-            className="flex-shrink-0 text-right w-[280px] md:w-[500px]"
+            className="flex-shrink-0 text-right w-[220px] md:w-[500px]"
             whileHover={{ y: -5 }}
             transition={{ duration: 0.2 }}
           >
             <img
               src={project.image}
               alt={project.title}
-              className="w-full rounded-2xl md:rounded-3xl mb-3 md:mb-4 object-cover aspect-[4/3] pointer-events-none"
+              className="w-full rounded-xl md:rounded-3xl mb-2 md:mb-4 object-cover aspect-[4/3] pointer-events-none"
               draggable={false}
             />
-            <h3 className="text-xl md:text-2xl font-medium text-foreground mb-1 md:mb-2">{project.title}</h3>
-            <p className="text-muted-foreground text-sm md:text-base">{project.description}</p>
+            <h3 className="text-lg md:text-2xl font-medium text-foreground mb-1">{project.title}</h3>
+            <p className="text-muted-foreground text-xs md:text-base">{project.description}</p>
           </motion.div>
         ))}
       </motion.div>
