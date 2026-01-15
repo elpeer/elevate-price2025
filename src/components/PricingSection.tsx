@@ -191,7 +191,7 @@ const PricingSection: React.FC = () => {
             </h2>
             
             {/* Unified summary card */}
-            <div className="rounded-[32px]" style={{ backgroundColor: '#EDEDED' }}>
+            <div className="rounded-[32px] px-4 pb-4" style={{ backgroundColor: '#EDEDED' }}>
               <div className="p-8">
                 {pricingItems.map((item, index) => (
                   <div key={index}>
@@ -224,7 +224,7 @@ const PricingSection: React.FC = () => {
               </div>
 
               {/* Total bar - inside the card */}
-              <div className="px-8 py-5 border-t border-border/50 flex items-center justify-between">
+              <div className="bg-white rounded-[68px] px-6 py-3 flex items-center justify-between">
                 <span className="text-xl font-medium text-foreground">סה"כ</span>
                 <div className="flex items-center gap-3 text-muted-foreground text-sm">
                   <span>420 שעות</span>
