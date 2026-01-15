@@ -82,10 +82,10 @@ const services = [
 
 const WhyElevateSection: React.FC = () => {
   return (
-    <section id="why" className="min-h-screen w-full bg-gradient-to-b from-[#f5f3ff] via-[#ede9fe] to-[#f5f3ff] py-24 px-16">
+    <section id="why" className="min-h-screen w-full py-24 px-16" style={{ backgroundColor: '#EFEFFF' }}>
       <div className="max-w-6xl mx-auto">
-        {/* Title - Why on LEFT, logo in CENTER, elevate on RIGHT */}
-        <div className="flex items-center justify-center gap-8 mb-8">
+        {/* Title - Why on LEFT, logo in CENTER, elevate on RIGHT (using dir="ltr" for correct visual order) */}
+        <div dir="ltr" className="flex items-center justify-center gap-8 mb-8">
           <h2 className="text-8xl font-serif font-normal text-foreground">Why</h2>
           <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-white">
