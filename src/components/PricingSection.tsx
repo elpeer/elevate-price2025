@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Check, Plus, Minus, X } from 'lucide-react';
+import { Plus, Minus, X, Check } from 'lucide-react';
+import pricingBlockIcon from '@/assets/icons/pricing-block-icon.svg';
 
 const pricingItems = [
   {
@@ -193,16 +194,16 @@ const PricingSection: React.FC = () => {
                         <span>|</span>
                         <span>{item.hours}</span>
                       </div>
-                      <h3 className="text-lg font-medium text-foreground">{item.title}</h3>
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-medium text-foreground">{item.title}</h3>
+                        <img src={pricingBlockIcon} alt="" className="w-6 h-6" />
+                      </div>
                     </div>
                     
-                    {/* Row items */}
-                    <ul className="space-y-1.5 text-right mb-4">
+                    {/* Row items - bullet list */}
+                    <ul className="list-disc pr-5 space-y-1.5 text-right text-muted-foreground text-sm mb-4">
                       {item.items.map((listItem, i) => (
-                        <li key={i} className="text-muted-foreground text-sm flex items-center gap-2">
-                          <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span>{listItem}</span>
-                        </li>
+                        <li key={i}>{listItem}</li>
                       ))}
                     </ul>
                     
