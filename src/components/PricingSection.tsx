@@ -191,44 +191,46 @@ const PricingSection: React.FC = () => {
             </h2>
             
             {/* Unified summary card */}
-            <div className="rounded-[32px] p-8" style={{ backgroundColor: '#EDEDED' }}>
-              {pricingItems.map((item, index) => (
-                <div key={index}>
-                  {/* Row header */}
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <img src={pricingBlockIcon} alt="" className="w-6 h-6" />
-                      <h3 className="text-lg font-medium text-foreground">{item.title}</h3>
+            <div className="rounded-[32px]" style={{ backgroundColor: '#EDEDED' }}>
+              <div className="p-8">
+                {pricingItems.map((item, index) => (
+                  <div key={index}>
+                    {/* Row header */}
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <img src={pricingBlockIcon} alt="" className="w-6 h-6" />
+                        <h3 className="text-lg font-medium text-foreground">{item.title}</h3>
+                      </div>
+                      <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                        <span>{item.hours}</span>
+                        <span>|</span>
+                        <span className="font-medium text-foreground">{item.price}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3 text-muted-foreground text-sm">
-                      <span>{item.hours}</span>
-                      <span>|</span>
-                      <span className="font-medium text-foreground">{item.price}</span>
-                    </div>
+                    
+                    {/* Row items - bullet list */}
+                    <ul className="list-disc pr-5 space-y-1.5 text-right text-muted-foreground text-sm mb-4">
+                      {item.items.map((listItem, i) => (
+                        <li key={i}>{listItem}</li>
+                      ))}
+                    </ul>
+                    
+                    {/* Divider */}
+                    {index < pricingItems.length - 1 && (
+                      <div className="border-t border-border/50 my-5" />
+                    )}
                   </div>
-                  
-                  {/* Row items - bullet list */}
-                  <ul className="list-disc pr-5 space-y-1.5 text-right text-muted-foreground text-sm mb-4">
-                    {item.items.map((listItem, i) => (
-                      <li key={i}>{listItem}</li>
-                    ))}
-                  </ul>
-                  
-                  {/* Divider */}
-                  {index < pricingItems.length - 1 && (
-                    <div className="border-t border-border/50 my-5" />
-                  )}
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            {/* Total bar - outside the card */}
-            <div className="bg-white rounded-full px-8 py-5 mt-6 flex items-center justify-between">
-              <span className="text-xl font-medium text-foreground">סה"כ</span>
-              <div className="flex items-center gap-3 text-muted-foreground text-sm">
-                <span>420 שעות</span>
-                <span>|</span>
-                <span className="font-bold text-foreground text-lg">₪48,000</span>
+              {/* Total bar - inside the card */}
+              <div className="px-8 py-5 border-t border-border/50 flex items-center justify-between">
+                <span className="text-xl font-medium text-foreground">סה"כ</span>
+                <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                  <span>420 שעות</span>
+                  <span>|</span>
+                  <span className="font-bold text-foreground text-lg">₪48,000</span>
+                </div>
               </div>
             </div>
           </div>
