@@ -1,5 +1,6 @@
 import React from 'react';
 import Sidebar from '@/components/Sidebar';
+import MobileNav from '@/components/MobileNav';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
 import WhyElevateSection from '@/components/WhyElevateSection';
@@ -15,11 +16,14 @@ import SignatureSection from '@/components/SignatureSection';
 const Index: React.FC = () => {
   return (
     <div className="min-h-screen bg-background" dir="rtl">
-      {/* Sticky Sidebar on the right */}
+      {/* Sticky Sidebar on the right - desktop only */}
       <Sidebar />
       
-      {/* Main content with padding for sidebar */}
-      <main className="mr-[220px]">
+      {/* Mobile Navigation */}
+      <MobileNav />
+      
+      {/* Main content with padding for sidebar on desktop */}
+      <main className="md:mr-[220px]">
         <HeroSection />
         <AboutSection />
         <WhyElevateSection />

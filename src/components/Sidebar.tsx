@@ -45,7 +45,7 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <aside className="w-[220px] bg-background border-l fixed top-0 right-0 h-screen flex flex-col py-6 px-4 z-50" style={{ borderLeftColor: '#CBCBD4' }}>
+    <aside className="hidden md:flex w-[220px] bg-background border-l fixed top-0 right-0 h-screen flex-col py-6 px-4 z-50" style={{ borderLeftColor: '#CBCBD4' }}>
       {/* Logo */}
       <img 
         src={sidebarLogo} 

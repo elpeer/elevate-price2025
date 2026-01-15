@@ -1,5 +1,5 @@
 import React from 'react';
-
+import sidebarLogo from '@/assets/why-elevate-logo.svg';
 const HeroSection: React.FC = () => {
   const scrollToAbout = () => {
     const element = document.getElementById('about');
@@ -9,9 +9,9 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section id="intro" dir="ltr" className="flex h-screen w-full">
-      {/* Left - Blue wave image */}
-      <div className="w-1/2 relative">
+    <section id="intro" dir="ltr" className="flex flex-col-reverse md:flex-row min-h-screen w-full">
+      {/* Left - Blue wave image (top on mobile) */}
+      <div className="w-full md:w-1/2 h-[40vh] md:h-screen relative">
         <img
           src="https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b?placeholderIfAbsent=true"
           alt="Blue wave background"
@@ -30,10 +30,19 @@ const HeroSection: React.FC = () => {
       </div>
 
       {/* Right - Content */}
-      <div className="w-1/2 bg-background flex flex-col justify-center px-20 py-12" dir="rtl">
-        <div className="max-w-2xl text-right">
+      <div className="w-full md:w-1/2 bg-background flex flex-col justify-center px-6 md:px-20 py-8 md:py-12" dir="rtl">
+        <div className="max-w-2xl text-right mx-auto md:mx-0">
+          {/* Logo - mobile only */}
+          <div className="flex justify-center mb-6 md:hidden">
+            <img 
+              src={sidebarLogo} 
+              alt="Elevate Logo" 
+              className="h-10 w-auto"
+            />
+          </div>
+
           {/* Title */}
-          <h1 className="text-6xl font-normal leading-tight text-foreground mb-12">
+          <h1 className="text-3xl md:text-6xl font-normal leading-tight text-foreground mb-8 md:mb-12 text-center md:text-right">
             אפיון ועיצוב UX/UI
             <br />
             עבור Stagent CRM
@@ -41,54 +50,56 @@ const HeroSection: React.FC = () => {
 
           {/* Client info */}
           <div className="space-y-6 mb-10">
-            <div className="text-right">
+            <div className="text-center md:text-right">
               <span className="text-muted-foreground text-base block mb-1">הצעה לכבוד</span>
-              <span className="text-3xl font-medium text-foreground">Stagent</span>
+              <span className="text-2xl md:text-3xl font-medium text-foreground">Stagent</span>
             </div>
 
-            <div className="flex gap-24">
+            <div className="grid grid-cols-2 gap-6 md:flex md:gap-24">
               <div className="text-right">
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-2 mb-2 justify-end md:justify-start">
                   <div className="w-1 h-4 bg-primary rounded-full" />
-                  <span className="text-muted-foreground text-base">איש קשר</span>
+                  <span className="text-muted-foreground text-sm md:text-base">איש קשר</span>
                 </div>
-                <span className="text-foreground text-lg font-medium">מתן ראובנס</span>
+                <span className="text-foreground text-base md:text-lg font-medium">מתן ראובנס</span>
               </div>
               <div className="text-right">
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-2 mb-2 justify-end md:justify-start">
                   <div className="w-1 h-4 bg-primary rounded-full" />
-                  <span className="text-muted-foreground text-base">טלפון</span>
+                  <span className="text-muted-foreground text-sm md:text-base">טלפון</span>
                 </div>
-                <a href="tel:0528135510" className="text-foreground text-lg font-medium hover:text-primary transition-colors">0528135510</a>
+                <a href="tel:0528135510" className="text-foreground text-base md:text-lg font-medium hover:text-primary transition-colors">0528135510</a>
               </div>
             </div>
 
-            <div className="flex gap-24">
+            <div className="grid grid-cols-2 gap-6 md:flex md:gap-24">
               <div className="text-right">
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-2 mb-2 justify-end md:justify-start">
                   <div className="w-1 h-4 bg-primary rounded-full" />
-                  <span className="text-muted-foreground text-base">מייל</span>
+                  <span className="text-muted-foreground text-sm md:text-base">מייל</span>
                 </div>
-                <a href="mailto:yemp@gmail.com" className="text-foreground text-lg font-medium hover:text-primary transition-colors">yemp@gmail.com</a>
+                <a href="mailto:yemp@gmail.com" className="text-foreground text-base md:text-lg font-medium hover:text-primary transition-colors break-all">yemp@gmail.com</a>
               </div>
               <div className="text-right">
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-2 mb-2 justify-end md:justify-start">
                   <div className="w-1 h-4 bg-primary rounded-full" />
-                  <span className="text-muted-foreground text-base">טלפון משני</span>
+                  <span className="text-muted-foreground text-sm md:text-base">טלפון משני</span>
                 </div>
-                <a href="tel:0528135510" className="text-foreground text-lg font-medium hover:text-primary transition-colors">0528135510</a>
+                <a href="tel:0528135510" className="text-foreground text-base md:text-lg font-medium hover:text-primary transition-colors">0528135510</a>
               </div>
             </div>
           </div>
 
           {/* CTA Button */}
-          <button 
-            onClick={scrollToAbout}
-            className="bg-primary text-primary-foreground px-10 py-4 rounded-full flex items-center gap-3 hover:bg-primary/90 transition-colors text-lg"
-          >
-            <div className="w-2.5 h-2.5 bg-white rounded-full" />
-            <span className="font-medium">גלול להצעה</span>
-          </button>
+          <div className="flex justify-center md:justify-start">
+            <button 
+              onClick={scrollToAbout}
+              className="bg-primary text-primary-foreground px-8 md:px-10 py-4 rounded-full flex items-center gap-3 hover:bg-primary/90 transition-colors text-base md:text-lg"
+            >
+              <div className="w-2.5 h-2.5 bg-white rounded-full" />
+              <span className="font-medium">גלול להצעה</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>
