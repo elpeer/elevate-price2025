@@ -106,7 +106,7 @@ const PricingSection: React.FC = () => {
   };
 
   return (
-    <section id="pricing" className="w-full py-24 px-16 flex flex-col justify-center" style={{ backgroundColor: '#F3F3F3' }}>
+    <section id="pricing" className="w-full py-24 px-16 flex flex-col justify-center bg-background">
       <div className="max-w-6xl mx-auto w-full" dir="rtl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* RIGHT column - העדפות ותוספות */}
@@ -232,6 +232,26 @@ const PricingSection: React.FC = () => {
                   <span className="font-bold text-foreground text-lg">₪48,000</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Terms */}
+        <div className="mt-16 text-right">
+          <div className="text-muted-foreground text-sm leading-6 space-y-1">
+            <p>*הזמנים המוגדרים הם זמנים לכל חלק בנפרד ובחלקים ינוהלו במקביל</p>
+            <p>**זמני העבודה בחלקם יכולים להתקצר/להתארך בהתאם לזמני התגובה של הלקוח ותהליכי אישור</p>
+            <p>** בכל אישור עיצוב של עמוד נתחיל לקדם את פיתוח העמוד הספציפי כדי לקצר זמנים</p>
+            <p>תוספת שלא הוגדרה בהצעה ובאפיון הראשוני יתומחר בנפרד במידה והיא מהווה תוספת משמעותית</p>
+          </div>
+
+          <div className="mt-10">
+            <h3 className="text-xl font-medium text-foreground mb-4">תנאי תשלום</h3>
+            <div className="text-foreground leading-7">
+              <p>שבועיים אחרי פגישת התנעה – 15%</p>
+              <p>סיום עיצוב – 30%</p>
+              <p>השלמת פיתוח – 35%</p>
+              <p>שבועיים אחרי התקנה ווידוא תקינות – 20%</p>
             </div>
           </div>
         </div>
