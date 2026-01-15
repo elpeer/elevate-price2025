@@ -48,7 +48,7 @@ const Sidebar: React.FC = () => {
       <img 
         src={sidebarLogo} 
         alt="Elevate Logo" 
-        className="w-10 h-10 mb-8"
+        className="h-8 w-auto mb-8"
       />
 
       {/* Navigation */}
