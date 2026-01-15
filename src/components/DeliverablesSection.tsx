@@ -19,11 +19,11 @@ const notIncludedItems = [
 ];
 
 const CheckIcon = () => (
-  <img src={checkIcon} alt="included" className="w-5 h-5" />
+  <img src={checkIcon} alt="included" className="w-5 h-5 flex-shrink-0" />
 );
 
 const MinusIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
     <path fillRule="evenodd" clipRule="evenodd" d="M13.75 10.625H6.25C5.90438 10.625 5.625 10.3438 5.625 10C5.625 9.65625 5.90438 9.375 6.25 9.375H13.75C14.0956 9.375 14.375 9.65625 14.375 10C14.375 10.3438 14.0956 10.625 13.75 10.625ZM10 0C4.47688 0 0 4.475 0 10C0 15.525 4.47688 20 10 20C15.5231 20 20 15.525 20 10C20 4.475 15.5231 0 10 0Z" fill="#E3205D"/>
   </svg>
 );
@@ -42,31 +42,44 @@ const DeliverablesSection: React.FC = () => {
           כל מה שנספק לך
         </h2>
 
-        {/* Two column table */}
-        <div className="grid grid-cols-2 rounded-xl overflow-hidden" dir="rtl">
-          {/* Header Row */}
-          <div className="bg-foreground text-white p-4 text-center font-medium">
-            כלול בהצעה
-          </div>
-          <div className="bg-white p-4 text-center font-medium text-foreground border-b border-border">
-            לא כלול בהצעה
+        {/* Two column layout with gap */}
+        <div className="flex gap-4" dir="rtl">
+          {/* Right column - Included */}
+          <div className="flex-1 rounded-xl overflow-hidden">
+            {/* Header */}
+            <div className="bg-foreground text-white p-5 text-center font-medium rounded-t-xl">
+              כלול בהצעה
+            </div>
+            {/* Rows */}
+            {includedItems.map((item, index) => (
+              <div 
+                key={index} 
+                className="bg-white p-5 border-b border-border/30"
+              >
+                <div className="flex items-center gap-3">
+                  <CheckIcon />
+                  <span className="text-foreground text-sm leading-relaxed">{item}</span>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Content Rows */}
-          {Array.from({ length: maxRows }).map((_, index) => (
-            <React.Fragment key={index}>
-              {/* Included column */}
-              <div className="bg-white p-4 border-b border-border">
-                {includedItems[index] && (
-                  <div className="flex items-center gap-3">
-                    <CheckIcon />
-                    <span className="text-foreground text-sm">{includedItems[index]}</span>
-                  </div>
-                )}
-              </div>
-              
-              {/* Not included column */}
-              <div className="bg-white p-4 border-b border-border">
+          {/* Left column - Not included */}
+          <div className="flex-1 rounded-xl overflow-hidden">
+            {/* Header */}
+            <div 
+              className="p-5 text-center font-medium text-foreground rounded-t-xl"
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.50)' }}
+            >
+              לא כלול בהצעה
+            </div>
+            {/* Rows */}
+            {Array.from({ length: maxRows }).map((_, index) => (
+              <div 
+                key={index} 
+                className="p-5 border-b border-border/20"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.50)' }}
+              >
                 {notIncludedItems[index] && (
                   <div className="flex items-center gap-3">
                     <MinusIcon />
@@ -74,8 +87,8 @@ const DeliverablesSection: React.FC = () => {
                   </div>
                 )}
               </div>
-            </React.Fragment>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
