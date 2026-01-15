@@ -24,14 +24,17 @@ const ProjectDetailsSection: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleToggle = (index: number) => {
-    setActiveIndex(index);
+    // Only change if clicking a different item (keep current open if clicking same)
+    if (index !== activeIndex) {
+      setActiveIndex(index);
+    }
   };
 
   return (
     <section id="project-details" className="w-full bg-background">
-      <div className="grid grid-cols-1 md:grid-cols-2" dir="rtl">
-        {/* Left side - Image (first in DOM for RTL, appears on left) */}
-        <div className="order-2 md:order-1">
+      <div className="flex flex-col md:flex-row">
+        {/* LEFT column: Image */}
+        <div className="w-full md:w-1/2 order-2 md:order-1">
           <img 
             src={projectDetailsImage} 
             alt="Project details" 
@@ -39,14 +42,14 @@ const ProjectDetailsSection: React.FC = () => {
           />
         </div>
 
-        {/* Right side - FAQ Accordion (second in DOM for RTL, appears on right) */}
-        <div className="order-1 md:order-2 py-16 px-12">
+        {/* RIGHT column: FAQ Accordion */}
+        <div className="w-full md:w-1/2 order-1 md:order-2 py-16 px-12" dir="rtl">
           <h2 className="text-3xl md:text-4xl font-normal text-foreground text-right mb-12">
             פרטים נוספים על הפרויקט
           </h2>
 
           {/* Accordion */}
-          <div className="space-y-0">
+          <div>
             {faqItems.map((item, index) => (
               <div 
                 key={index} 
@@ -55,22 +58,26 @@ const ProjectDetailsSection: React.FC = () => {
                 {/* Accordion Header */}
                 <button
                   onClick={() => handleToggle(index)}
-                  className="w-full py-6 flex items-center justify-between text-right"
+                  className="w-full py-6 flex items-center gap-4 text-right"
                 >
-                  <span className="text-xl font-medium text-foreground">{item.title}</span>
-                  <span className="text-2xl text-foreground">
+                  <span className="text-2xl text-foreground flex-shrink-0">
                     {activeIndex === index ? '−' : '+'}
                   </span>
+                  <span className="text-xl font-medium text-foreground flex-1 text-right">{item.title}</span>
                 </button>
 
-                {/* Accordion Content */}
-                {activeIndex === index && (
+                {/* Accordion Content with smooth animation */}
+                <div 
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    activeIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}
+                >
                   <div className="pb-6 text-right">
                     <p className="text-muted-foreground text-sm leading-relaxed whitespace-pre-line">
                       {item.content}
                     </p>
                   </div>
-                )}
+                </div>
               </div>
             ))}
           </div>
