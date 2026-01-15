@@ -1,4 +1,5 @@
 import React from 'react';
+import elevateLogo from '@/assets/elevate-logo.svg';
 
 // Custom hand-drawn style icons as SVG components
 const StarIcon = () => (
@@ -84,15 +85,9 @@ const WhyElevateSection: React.FC = () => {
   return (
     <section id="why" className="min-h-screen w-full py-24 px-16" style={{ backgroundColor: '#EFEFFF' }}>
       <div className="max-w-6xl mx-auto">
-        {/* Title - Why on LEFT, logo in CENTER, elevate on RIGHT (using dir="ltr" for correct visual order) */}
-        <div dir="ltr" className="flex items-center justify-center gap-8 mb-8">
-          <h2 className="text-8xl font-serif font-normal text-foreground">Why</h2>
-          <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-white">
-              <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-          <h2 className="text-8xl font-mono font-normal text-foreground">elevate</h2>
+        {/* Title - Logo with arrow icon in center */}
+        <div className="flex items-center justify-center gap-6 mb-8">
+          <img src={elevateLogo} alt="Why Elevate" className="h-16" />
         </div>
 
         {/* Description */}
@@ -104,7 +99,7 @@ const WhyElevateSection: React.FC = () => {
         <div className="grid grid-cols-3 gap-x-16 gap-y-16">
           {services.map((service, index) => (
             <div key={index} className="text-right">
-              <div className="mb-4 flex justify-end">
+              <div className="mb-4 flex justify-start">
                 <service.icon />
               </div>
               <h3 className="text-xl font-medium text-foreground mb-3">{service.title}</h3>
