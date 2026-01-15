@@ -1,5 +1,5 @@
 import React from 'react';
-import whyElevateLogo from '@/assets/why-elevate-logo.svg';
+import whyElevateLogo from '@/assets/why-elevate-header.svg';
 
 // Custom hand-drawn style icons as SVG components
 const StarIcon = () => (
