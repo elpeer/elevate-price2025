@@ -9,7 +9,7 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section id="intro" className="flex h-screen w-full">
+    <section id="intro" dir="ltr" className="flex h-screen w-full">
       {/* Left - Blue wave image */}
       <div className="w-1/2 relative">
         <img
