@@ -101,7 +101,7 @@ const PricingSection: React.FC = () => {
       <div className="max-w-6xl mx-auto w-full" dir="rtl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* RIGHT column - העדפות ותוספות */}
-          <div className="md:order-2">
+          <div className="md:order-1">
             <h2 className="text-3xl md:text-4xl font-normal text-foreground text-right mb-2">
               העדפות ותוספות
             </h2>
@@ -176,7 +176,7 @@ const PricingSection: React.FC = () => {
           </div>
 
           {/* LEFT column - סיכום לוחות זמנים ועלויות */}
-          <div className="md:order-1">
+          <div className="md:order-2">
             <h2 className="text-3xl md:text-4xl font-normal text-foreground text-right mb-8">
               סיכום לוחות זמנים ועלויות
             </h2>
