@@ -30,54 +30,53 @@ const HeroSection: React.FC = () => {
       </div>
 
       {/* Right - Content */}
-      <div className="w-1/2 bg-background flex flex-col justify-center px-16 py-12" dir="rtl">
-        <div className="max-w-lg text-right">
+      <div className="w-1/2 bg-background flex flex-col justify-center px-20 py-12" dir="rtl">
+        <div className="max-w-2xl text-right">
           {/* Title */}
-          <h1 className="text-4xl font-normal leading-tight text-foreground mb-8">
+          <h1 className="text-6xl font-normal leading-tight text-foreground mb-12">
             אפיון ועיצוב UX/UI
             <br />
             עבור Stagent CRM
           </h1>
 
           {/* Client info */}
-          <div className="space-y-4 mb-8">
-            <div className="flex items-center gap-2">
-              <div className="w-1 h-4 bg-primary rounded-full" />
-              <span className="text-muted-foreground text-sm">הצעה לכבוד</span>
-              <span className="text-xl font-medium text-foreground mr-2">Stagent</span>
+          <div className="space-y-6 mb-10">
+            <div className="text-right">
+              <span className="text-muted-foreground text-base block mb-1">הצעה לכבוד</span>
+              <span className="text-3xl font-medium text-foreground">Stagent</span>
             </div>
 
-            <div className="flex gap-12">
+            <div className="flex gap-24">
               <div className="text-right">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-1 h-3 bg-primary rounded-full" />
-                  <span className="text-muted-foreground text-sm">איש קשר</span>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-1 h-4 bg-primary rounded-full" />
+                  <span className="text-muted-foreground text-base">איש קשר</span>
                 </div>
-                <span className="text-foreground font-medium">מתן ראובנס</span>
+                <span className="text-foreground text-lg font-medium">מתן ראובנס</span>
               </div>
               <div className="text-right">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-1 h-3 bg-primary rounded-full" />
-                  <span className="text-muted-foreground text-sm">טלפון</span>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-1 h-4 bg-primary rounded-full" />
+                  <span className="text-muted-foreground text-base">טלפון</span>
                 </div>
-                <a href="tel:0528135510" className="text-foreground font-medium hover:text-primary transition-colors">0528135510</a>
+                <a href="tel:0528135510" className="text-foreground text-lg font-medium hover:text-primary transition-colors">0528135510</a>
               </div>
             </div>
 
-            <div className="flex gap-12">
+            <div className="flex gap-24">
               <div className="text-right">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-1 h-3 bg-primary rounded-full" />
-                  <span className="text-muted-foreground text-sm">מייל</span>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-1 h-4 bg-primary rounded-full" />
+                  <span className="text-muted-foreground text-base">מייל</span>
                 </div>
-                <a href="mailto:yemp@gmail.com" className="text-foreground font-medium hover:text-primary transition-colors">yemp@gmail.com</a>
+                <a href="mailto:yemp@gmail.com" className="text-foreground text-lg font-medium hover:text-primary transition-colors">yemp@gmail.com</a>
               </div>
               <div className="text-right">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-1 h-3 bg-primary rounded-full" />
-                  <span className="text-muted-foreground text-sm">טלפון משני</span>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-1 h-4 bg-primary rounded-full" />
+                  <span className="text-muted-foreground text-base">טלפון משני</span>
                 </div>
-                <a href="tel:0528135510" className="text-foreground font-medium hover:text-primary transition-colors">0528135510</a>
+                <a href="tel:0528135510" className="text-foreground text-lg font-medium hover:text-primary transition-colors">0528135510</a>
               </div>
             </div>
           </div>
@@ -85,9 +84,9 @@ const HeroSection: React.FC = () => {
           {/* CTA Button */}
           <button 
             onClick={scrollToAbout}
-            className="bg-primary text-primary-foreground px-8 py-3 rounded-full flex items-center gap-3 hover:bg-primary/90 transition-colors"
+            className="bg-primary text-primary-foreground px-10 py-4 rounded-full flex items-center gap-3 hover:bg-primary/90 transition-colors text-lg"
           >
-            <div className="w-2 h-2 bg-white rounded-full" />
+            <div className="w-2.5 h-2.5 bg-white rounded-full" />
             <span className="font-medium">גלול להצעה</span>
           </button>
         </div>
