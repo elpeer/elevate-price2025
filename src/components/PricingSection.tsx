@@ -1,5 +1,5 @@
-import React from 'react';
-import { Check, ChevronDown } from 'lucide-react';
+import React, { useState } from 'react';
+import { Check, Plus, Minus, X } from 'lucide-react';
 
 const pricingItems = [
   {
@@ -28,47 +28,196 @@ const pricingItems = [
   }
 ];
 
+const categories = [
+  {
+    id: 'accessibility',
+    title: 'נגישות',
+    options: [
+      {
+        id: 'addon',
+        title: 'תוסף/רכיב נגישות',
+        price: '₪48,000',
+        description: 'נגישות תיושם ברמת הקוד בהתאם לדוח המפורט של...',
+        details: 'פירוט מלא על תוסף הנגישות כולל התאמות WCAG 2.1, תמיכה בקוראי מסך, ניווט מקלדת ועוד.'
+      },
+      {
+        id: 'report',
+        title: 'דו"ח נגישות',
+        price: '₪48,000',
+        description: 'נגישות תיושם ברמת הקוד בהתאם לדוח המפורט של...',
+        details: 'דוח נגישות מקיף הכולל בדיקות אוטומטיות וידניות, המלצות לתיקון והתאמה לתקנות.'
+      }
+    ]
+  },
+  {
+    id: 'branding',
+    title: 'חבילות מיתוג',
+    options: [
+      { id: 'basic', title: 'חבילה בסיסית', price: '₪15,000', description: 'לוגו ופלטת צבעים', details: '' },
+      { id: 'premium', title: 'חבילה מורחבת', price: '₪35,000', description: 'מיתוג מלא', details: '' }
+    ]
+  },
+  {
+    id: 'hosting',
+    title: 'שרת אחסון',
+    options: [
+      { id: 'shared', title: 'אחסון משותף', price: '₪500/חודש', description: 'לאתרים קטנים', details: '' },
+      { id: 'dedicated', title: 'שרת ייעודי', price: '₪2,000/חודש', description: 'לאתרים גדולים', details: '' }
+    ]
+  },
+  {
+    id: 'maintenance',
+    title: 'חבילות תחזוקה',
+    options: [
+      { id: 'monthly', title: 'תחזוקה חודשית', price: '₪1,500/חודש', description: 'תמיכה וגיבויים', details: '' },
+      { id: 'yearly', title: 'תחזוקה שנתית', price: '₪15,000/שנה', description: 'חבילה מלאה', details: '' }
+    ]
+  }
+];
+
 const PricingSection: React.FC = () => {
-  const [selectedOption, setSelectedOption] = React.useState<'addon' | 'report'>('report');
+  const [openCategory, setOpenCategory] = useState<string>('accessibility');
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({ accessibility: 'report' });
+  const [modalContent, setModalContent] = useState<{ title: string; content: string } | null>(null);
+
+  const toggleCategory = (categoryId: string) => {
+    setOpenCategory(openCategory === categoryId ? '' : categoryId);
+  };
+
+  const selectOption = (categoryId: string, optionId: string) => {
+    setSelectedOptions(prev => ({ ...prev, [categoryId]: optionId }));
+  };
+
+  const openModal = (title: string, content: string) => {
+    setModalContent({ title, content });
+  };
+
+  const closeModal = () => {
+    setModalContent(null);
+  };
 
   return (
-    <section id="pricing" className="min-h-screen w-full bg-background py-24 px-16 flex flex-col justify-center">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-2 gap-12">
-          {/* Left - Pricing */}
-          <div>
-            <h2 className="text-4xl font-normal text-foreground text-right mb-8">
-              סיכום לוחות זמנים ועלויות
+    <section id="pricing" className="w-full py-24 px-16 flex flex-col justify-center" style={{ backgroundColor: '#F3F3F3' }}>
+      <div className="max-w-6xl mx-auto w-full" dir="rtl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* RIGHT column - העדפות ותוספות */}
+          <div className="md:order-2">
+            <h2 className="text-3xl md:text-4xl font-normal text-foreground text-right mb-2">
+              העדפות ותוספות
             </h2>
-            
-            <div className="bg-muted rounded-3xl p-8">
-              {pricingItems.map((item, index) => (
-                <div key={index}>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <span className="font-medium text-foreground">{item.price}</span>
-                      <span>|</span>
-                      <span>{item.hours}</span>
+            <p className="text-muted-foreground text-right mb-8">
+              נא לבחור העדפות בנוגע לנגישות ושרתים ועוד..
+            </p>
+
+            {/* Categories */}
+            <div className="space-y-0">
+              {categories.map((category, index) => (
+                <div key={category.id} className={index > 0 ? 'border-t border-border' : ''}>
+                  {/* Category Header */}
+                  <button
+                    onClick={() => toggleCategory(category.id)}
+                    className="w-full py-5 flex items-center gap-4 text-right"
+                  >
+                    <span className="text-xl text-foreground flex-shrink-0">
+                      {openCategory === category.id ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
+                    </span>
+                    <span className="text-xl font-medium text-foreground">{category.title}</span>
+                  </button>
+
+                  {/* Category Options */}
+                  {openCategory === category.id && (
+                    <div className="pb-6">
+                      <div className="grid grid-cols-2 gap-4">
+                        {category.options.map((option) => {
+                          const isSelected = selectedOptions[category.id] === option.id;
+                          return (
+                            <button
+                              key={option.id}
+                              onClick={() => selectOption(category.id, option.id)}
+                              className={`relative p-5 text-right transition-all ${
+                                isSelected
+                                  ? 'bg-primary/10 border-2 border-primary'
+                                  : 'bg-white border-2 border-transparent'
+                              }`}
+                            >
+                              {/* Checkbox */}
+                              <div className={`absolute left-4 top-4 w-5 h-5 rounded border-2 ${
+                                isSelected ? 'bg-primary border-primary' : 'border-muted-foreground bg-white'
+                              } flex items-center justify-center`}>
+                                {isSelected && <Check className="w-3 h-3 text-white" />}
+                              </div>
+
+                              <h4 className={`font-medium mb-2 text-right ${isSelected ? 'text-primary' : 'text-foreground'}`}>
+                                {option.title}
+                              </h4>
+                              <p className="text-foreground text-lg mb-2 text-right">{option.price}</p>
+                              <p className="text-muted-foreground text-sm text-right">{option.description}</p>
+                              
+                              {option.details && (
+                                <button 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    openModal(option.title, option.details);
+                                  }}
+                                  className="text-primary text-sm font-medium mt-3 block text-right"
+                                >
+                                  למידע נוסף
+                                </button>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
-                    <h3 className="text-xl font-medium text-foreground">{item.title}</h3>
-                  </div>
-                  <ul className="space-y-2 text-right mb-6">
-                    {item.items.map((listItem, i) => (
-                      <li key={i} className="text-muted-foreground text-sm flex items-center justify-end gap-2">
-                        <span>{listItem}</span>
-                        <Check className="w-4 h-4 text-primary" />
-                      </li>
-                    ))}
-                  </ul>
-                  {index < pricingItems.length - 1 && (
-                    <div className="border-t border-border my-6" />
                   )}
                 </div>
               ))}
+            </div>
+          </div>
 
-              <div className="bg-background rounded-full px-6 py-4 flex items-center justify-between mt-6">
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <span className="font-medium text-foreground">₪48,000</span>
+          {/* LEFT column - סיכום לוחות זמנים ועלויות */}
+          <div className="md:order-1">
+            <h2 className="text-3xl md:text-4xl font-normal text-foreground text-right mb-8">
+              סיכום לוחות זמנים ועלויות
+            </h2>
+            
+            {/* Unified summary card */}
+            <div className="rounded-[32px] overflow-hidden" style={{ backgroundColor: '#EDEDED' }}>
+              <div className="p-8">
+                {pricingItems.map((item, index) => (
+                  <div key={index}>
+                    {/* Row header */}
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                        <span className="font-medium text-foreground">{item.price}</span>
+                        <span>|</span>
+                        <span>{item.hours}</span>
+                      </div>
+                      <h3 className="text-lg font-medium text-foreground">{item.title}</h3>
+                    </div>
+                    
+                    {/* Row items */}
+                    <ul className="space-y-1.5 text-right mb-4">
+                      {item.items.map((listItem, i) => (
+                        <li key={i} className="text-muted-foreground text-sm flex items-center gap-2">
+                          <Check className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span>{listItem}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    {/* Divider */}
+                    {index < pricingItems.length - 1 && (
+                      <div className="border-t border-border/50 my-5" />
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Total bar */}
+              <div className="bg-white px-8 py-5 flex items-center justify-between">
+                <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                  <span className="font-bold text-foreground text-lg">₪48,000</span>
                   <span>|</span>
                   <span>420 שעות</span>
                 </div>
@@ -76,86 +225,27 @@ const PricingSection: React.FC = () => {
               </div>
             </div>
           </div>
-
-          {/* Right - Options */}
-          <div>
-            <h2 className="text-4xl font-normal text-foreground text-right mb-2">
-              העדפות ותוספות
-            </h2>
-            <p className="text-muted-foreground text-right mb-8">
-              נא לבחור העדפות בנוגע לנגישות ושרתים ועוד..
-            </p>
-
-            {/* Accessibility section */}
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <div className="w-4 h-0.5 bg-foreground" />
-                </div>
-                <h3 className="text-xl font-medium text-foreground">נגישות</h3>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <button
-                  onClick={() => setSelectedOption('addon')}
-                  className={`relative p-6 rounded-2xl text-right border-2 transition-all ${
-                    selectedOption === 'addon'
-                      ? 'bg-primary/10 border-primary'
-                      : 'bg-muted border-transparent'
-                  }`}
-                >
-                  <div className={`absolute left-4 top-4 w-6 h-6 rounded-md border-2 ${
-                    selectedOption === 'addon' ? 'bg-primary border-primary' : 'border-border'
-                  } flex items-center justify-center`}>
-                    {selectedOption === 'addon' && <Check className="w-4 h-4 text-white" />}
-                  </div>
-                  <h4 className={`font-medium mb-2 ${selectedOption === 'addon' ? 'text-primary' : 'text-foreground'}`}>
-                    תוסף/רכיב נגישות
-                  </h4>
-                  <p className="text-foreground text-xl mb-2">₪48,000</p>
-                  <p className="text-muted-foreground text-sm">נגישות תיושם ברמת הקוד בהתאם לדוח המפורט של...</p>
-                  <button className="text-primary text-sm font-medium mt-3 flex items-center gap-1 justify-end w-full">
-                    למידע נוסף
-                  </button>
-                </button>
-
-                <button
-                  onClick={() => setSelectedOption('report')}
-                  className={`relative p-6 rounded-2xl text-right border-2 transition-all ${
-                    selectedOption === 'report'
-                      ? 'bg-primary/10 border-primary'
-                      : 'bg-muted border-transparent'
-                  }`}
-                >
-                  <div className={`absolute left-4 top-4 w-6 h-6 rounded-md border-2 ${
-                    selectedOption === 'report' ? 'bg-primary border-primary' : 'border-border'
-                  } flex items-center justify-center`}>
-                    {selectedOption === 'report' && <Check className="w-4 h-4 text-white" />}
-                  </div>
-                  <h4 className={`font-medium mb-2 ${selectedOption === 'report' ? 'text-primary' : 'text-foreground'}`}>
-                    דו"ח נגישות
-                  </h4>
-                  <p className="text-foreground text-xl mb-2">₪48,000</p>
-                  <p className="text-muted-foreground text-sm">נגישות תיושם ברמת הקוד בהתאם לדוח המפורט של...</p>
-                  <button className="text-primary text-sm font-medium mt-3 flex items-center gap-1 justify-end w-full">
-                    למידע נוסף
-                  </button>
-                </button>
-              </div>
-            </div>
-
-            {/* Collapsible sections */}
-            {['חבילות מיתוג', 'שרת אחסון', 'חבילות תחזוקה'].map((title, index) => (
-              <div key={index} className="border-t border-border py-4">
-                <button className="flex items-center justify-between w-full">
-                  <ChevronDown className="w-6 h-6 text-muted-foreground" />
-                  <span className="text-xl font-medium text-foreground">{title}</span>
-                </button>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {modalContent && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={closeModal}>
+          <div 
+            className="bg-white rounded-2xl p-8 max-w-lg mx-4 text-right" 
+            dir="rtl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <button onClick={closeModal} className="text-muted-foreground hover:text-foreground">
+                <X className="w-6 h-6" />
+              </button>
+              <h3 className="text-2xl font-medium text-foreground">{modalContent.title}</h3>
+            </div>
+            <p className="text-muted-foreground leading-relaxed">{modalContent.content}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
