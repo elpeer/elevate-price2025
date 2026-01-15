@@ -1,5 +1,13 @@
 import React from 'react';
 import blueAbstractBg from '@/assets/blue-abstract-bg.png';
+import logo1 from '@/assets/clients/logo-1.svg';
+import logo2 from '@/assets/clients/logo-2.svg';
+import logo3 from '@/assets/clients/logo-3.svg';
+import logo4 from '@/assets/clients/logo-4.svg';
+import logo5 from '@/assets/clients/logo-5.svg';
+import logo6 from '@/assets/clients/logo-6.svg';
+import logo7 from '@/assets/clients/logo-7.svg';
+import logo8 from '@/assets/clients/logo-8.svg';
 
 // Icons matching the reference design
 const InnovationIcon = () => (
@@ -55,16 +63,7 @@ const values = [
   }
 ];
 
-const clientLogos = [
-  'ISRAELCANADA',
-  'Playtika',
-  'Coca-Cola',
-  'מזרחי טפחות',
-  'pango',
-  'Abbott',
-  'Statement.',
-  'AIWAYS'
-];
+const clientLogos = [logo1, logo2, logo3, logo4, logo5, logo6, logo7, logo8];
 
 const CoreValuesSection: React.FC = () => {
   return (
@@ -97,10 +96,10 @@ const CoreValuesSection: React.FC = () => {
             <p className="text-center text-foreground font-medium mb-8">נבחרנו על ידי הטובים ביותר</p>
             
             {/* Logos grid - 2 rows */}
-            <div className="grid grid-cols-4 gap-6 items-center justify-items-center">
+            <div className="grid grid-cols-4 gap-6 items-center justify-items-center" dir="rtl">
               {clientLogos.map((logo, index) => (
-                <div key={index} className="text-muted-foreground font-semibold text-sm">
-                  {logo}
+                <div key={index} className="flex items-center justify-center">
+                  <img src={logo} alt={`Client ${index + 1}`} className="h-12 w-auto object-contain" />
                 </div>
               ))}
             </div>
