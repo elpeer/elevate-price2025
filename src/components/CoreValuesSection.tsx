@@ -69,10 +69,10 @@ const CoreValuesSection: React.FC = () => {
             <p className="text-center text-foreground font-medium mb-8">נבחרנו על ידי הטובים ביותר</p>
             
             {/* Logos grid - 2 rows */}
-            <div className="grid grid-cols-4 gap-6 items-center justify-items-center" dir="rtl">
+            <div className="grid grid-cols-4 gap-8 items-center justify-items-center" dir="rtl">
               {clientLogos.map((logo, index) => (
                 <div key={index} className="flex items-center justify-center">
-                  <img src={logo} alt={`Client ${index + 1}`} className="h-12 w-auto object-contain" />
+                  <img src={logo} alt={`Client ${index + 1}`} className="h-16 w-auto object-contain" />
                 </div>
               ))}
             </div>
@@ -85,13 +85,13 @@ const CoreValuesSection: React.FC = () => {
           
           <div className="space-y-8">
             {values.map((value, index) => (
-              <div key={index} className="flex items-center gap-6 flex-row-reverse" dir="rtl">
-                <div className="flex-shrink-0">
-                  <img src={value.icon} alt={value.title} className="w-20 h-20" />
-                </div>
+              <div key={index} className="flex items-center gap-6" dir="rtl">
                 <div className="text-right flex-1">
                   <h3 className="text-xl font-semibold text-foreground mb-2">{value.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{value.description}</p>
+                </div>
+                <div className="flex-shrink-0">
+                  <img src={value.icon} alt={value.title} className="w-14 h-14" />
                 </div>
               </div>
             ))}
