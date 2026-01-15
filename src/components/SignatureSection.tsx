@@ -24,11 +24,11 @@ const SignatureSection: React.FC = () => {
   };
 
   return (
-    <section id="signature" className="w-full bg-background py-24 px-16" dir="rtl">
+    <section id="signature" className="w-full bg-background py-12 px-16" dir="rtl">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* RIGHT column - Form (אישור לקוח) */}
-          <div className="md:order-2">
+          <div className="md:order-1">
             <h2 className="text-3xl md:text-4xl font-normal text-foreground text-right mb-12">
               אישור לקוח
             </h2>
@@ -61,7 +61,7 @@ const SignatureSection: React.FC = () => {
           </div>
 
           {/* LEFT column - Signature Card (חתימה) */}
-          <div className="md:order-1">
+          <div className="md:order-2">
             <div className="rounded-3xl p-8" style={{ backgroundColor: '#F3F5FF' }}>
               <div className="text-right mb-6">
                 <h3 className="text-2xl font-medium text-foreground">חתימה</h3>
