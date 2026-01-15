@@ -69,26 +69,7 @@ const CoreValuesSection: React.FC = () => {
   return (
     <section id="values" className="w-full" dir="rtl">
       {/* Main content area */}
-      <div className="flex flex-row-reverse">
-        {/* Right side - Values list (white background) */}
-        <div className="w-1/2 bg-white py-24 px-16">
-          <h2 className="text-4xl font-bold text-foreground mb-12 text-right">ערכי הליבה שלנו</h2>
-          
-          <div className="space-y-10">
-            {values.map((value, index) => (
-              <div key={index} className="flex items-start gap-6" dir="rtl">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <value.icon />
-                </div>
-                <div className="text-right">
-                  <h3 className="text-xl font-semibold text-foreground mb-2">{value.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{value.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
+      <div className="flex">
         {/* Left side - Image and logos (lavender background) */}
         <div className="w-1/2 flex flex-col" style={{ backgroundColor: '#EFEFFF' }}>
           {/* Blue abstract image with text overlay */}
@@ -127,6 +108,25 @@ const CoreValuesSection: React.FC = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+
+        {/* Right side - Values list (white background) */}
+        <div className="w-1/2 bg-white py-24 px-16">
+          <h2 className="text-4xl font-bold text-foreground mb-12 text-right">ערכי הליבה שלנו</h2>
+          
+          <div className="space-y-10">
+            {values.map((value, index) => (
+              <div key={index} className="flex items-start gap-6 flex-row-reverse" dir="rtl">
+                <div className="flex-shrink-0 w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                  <value.icon />
+                </div>
+                <div className="text-right flex-1">
+                  <h3 className="text-xl font-semibold text-foreground mb-2">{value.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{value.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
