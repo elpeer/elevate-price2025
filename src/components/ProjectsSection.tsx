@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 
 const projects = [
   {
@@ -35,6 +35,32 @@ const projects = [
 
 const ProjectsSection: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  }, []);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  }, [isDragging, startX, scrollLeft]);
 
   return (
     <section id="projects" className="min-h-screen w-full bg-background py-24 flex flex-col justify-center overflow-hidden">
@@ -51,7 +77,7 @@ const ProjectsSection: React.FC = () => {
       {/* Full-width slider without padding */}
       <div 
         ref={scrollRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
+        className={`flex gap-6 overflow-x-auto select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         style={{ 
           scrollbarWidth: 'none', 
           msOverflowStyle: 'none',
@@ -59,6 +85,10 @@ const ProjectsSection: React.FC = () => {
           paddingRight: '0'
         }}
         dir="rtl"
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
       >
         {projects.map((project, index) => (
           <div 
@@ -69,7 +99,8 @@ const ProjectsSection: React.FC = () => {
             <img
               src={project.image}
               alt={project.title}
-              className="w-full rounded-3xl mb-4 object-cover aspect-[4/3]"
+              className="w-full rounded-3xl mb-4 object-cover aspect-[4/3] pointer-events-none"
+              draggable={false}
             />
             <h3 className="text-2xl font-medium text-foreground mb-2">{project.title}</h3>
             <p className="text-muted-foreground">{project.description}</p>
