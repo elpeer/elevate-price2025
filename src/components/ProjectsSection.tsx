@@ -63,7 +63,7 @@ const ProjectsSection: React.FC = () => {
   }, [isDragging, startX, scrollLeft]);
 
   return (
-    <section id="projects" className="min-h-screen w-full bg-background py-24 flex flex-col justify-center overflow-hidden">
+    <section id="projects" className="w-full bg-background py-16 flex flex-col justify-center overflow-hidden">
       {/* Header with padding */}
       <div className="px-16 mb-16">
         <h2 className="text-4xl font-normal text-foreground text-center mb-4">
