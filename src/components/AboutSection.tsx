@@ -1,19 +1,24 @@
 import React from 'react';
+import gadiPhoto from '@/assets/gadi-photo.png';
 
 const AboutSection: React.FC = () => {
   return (
     <section id="about" dir="ltr" className="flex h-screen w-full">
       {/* Left side - Profile with lavender background */}
       <div className="w-1/2 flex items-center justify-center px-12" style={{ backgroundColor: '#EFEFFF' }}>
-        <div className="text-center">
+        <div className="flex items-center gap-8">
+          {/* Text on left */}
+          <div className="text-center">
+            <h3 className="text-2xl font-semibold text-foreground mb-1">גדי מאירסון</h3>
+            <p className="text-primary text-base">CEO elevate</p>
+            <a href="mailto:gadi@elevate.co.il" className="text-primary text-base hover:underline">gadi@elevate.co.il</a>
+          </div>
+          {/* Image on right */}
           <img
-            src="https://api.builder.io/api/v1/image/assets/TEMP/9dbbf53e39bc0a6708b47a333686f73f0dc70ad5?placeholderIfAbsent=true"
+            src={gadiPhoto}
             alt="Gadi Meirson"
-            className="w-44 h-44 rounded-lg object-cover mx-auto mb-6"
+            className="w-44 h-44 object-cover grayscale"
           />
-          <h3 className="text-2xl font-semibold text-foreground mb-1">גדי מאירסון</h3>
-          <p className="text-primary text-base">CEO elevate</p>
-          <a href="mailto:gadi@elevate.co.il" className="text-primary text-base hover:underline">gadi@elevate.co.il</a>
         </div>
       </div>
 
