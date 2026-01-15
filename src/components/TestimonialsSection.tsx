@@ -45,15 +45,15 @@ const TestimonialsSection: React.FC = () => {
         <div className="grid grid-cols-2 gap-6">
           {testimonials.map((testimonial, index) => (
             <div key={index} className="bg-background border border-border rounded-3xl p-8">
-              <div className="flex items-center justify-between mb-6">
-                <img src={testimonial.logo} alt="Company logo" className="h-8 object-contain" />
+              <div className="flex items-center justify-between mb-6" dir="rtl">
                 <div className="flex items-center gap-3">
+                  <img src={testimonial.avatar} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover" />
                   <div className="text-right">
                     <p className="font-medium text-foreground text-sm">{testimonial.name}</p>
                     <p className="text-muted-foreground text-xs">{testimonial.title}</p>
                   </div>
-                  <img src={testimonial.avatar} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover" />
                 </div>
+                <img src={testimonial.logo} alt="Company logo" className="h-8 object-contain" />
               </div>
               <p className="text-foreground text-right leading-7 opacity-80">
                 {testimonial.text}
