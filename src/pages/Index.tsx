@@ -3,7 +3,6 @@ import Sidebar from '@/components/Sidebar';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
 import WhyElevateSection from '@/components/WhyElevateSection';
-import ClientsSection from '@/components/ClientsSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import ProjectsSection from '@/components/ProjectsSection';
 import SiteContentSection from '@/components/SiteContentSection';
@@ -22,7 +21,6 @@ const Index: React.FC = () => {
         <HeroSection />
         <AboutSection />
         <WhyElevateSection />
-        <ClientsSection />
         <TestimonialsSection />
         <ProjectsSection />
         <SiteContentSection />

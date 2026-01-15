@@ -20,7 +20,7 @@ const projects = [
 
 const ProjectsSection: React.FC = () => {
   return (
-    <section className="bg-background py-24 px-16">
+    <section id="projects" className="min-h-screen w-full bg-background py-24 px-16 flex flex-col justify-center">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl font-normal text-foreground text-center mb-4">
           פרויקטים

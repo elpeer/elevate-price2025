@@ -32,7 +32,7 @@ const PricingSection: React.FC = () => {
   const [selectedOption, setSelectedOption] = React.useState<'addon' | 'report'>('report');
 
   return (
-    <section className="bg-background py-24 px-16">
+    <section id="pricing" className="min-h-screen w-full bg-background py-24 px-16 flex flex-col justify-center">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-2 gap-12">
           {/* Left - Pricing */}
