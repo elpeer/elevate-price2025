@@ -21,13 +21,11 @@ const faqItems = [
 ];
 
 const ProjectDetailsSection: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
   const handleToggle = (index: number) => {
-    // Only change if clicking a different item (keep current open if clicking same)
-    if (index !== activeIndex) {
-      setActiveIndex(index);
-    }
+    // Toggle: if clicking the active item, close it; otherwise open the clicked item
+    setActiveIndex(activeIndex === index ? null : index);
   };
 
   return (
@@ -60,7 +58,7 @@ const ProjectDetailsSection: React.FC = () => {
                 {/* Accordion Content with smooth animation */}
                 <div 
                   className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    activeIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    activeIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
                   }`}
                 >
                   <div className="pb-6 text-right">
