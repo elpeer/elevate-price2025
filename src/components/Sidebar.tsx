@@ -5,6 +5,7 @@ const navItems = [
   { id: 'intro', label: 'פתיח' },
   { id: 'about', label: 'עלינו' },
   { id: 'why', label: 'למה אנחנו' },
+  { id: 'values', label: 'ערכי הליבה שלנו' },
   { id: 'testimonials', label: 'לקוחות מספרים' },
   { id: 'projects', label: 'פרויקטים' },
   { id: 'content', label: 'תכולת האתר' },
