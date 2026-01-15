@@ -1,4 +1,6 @@
 import React, { useRef, useState, useCallback } from 'react';
+import { motion } from 'framer-motion';
+import { ScrollAnimation } from './ScrollAnimation';
 
 const projects = [
   {
@@ -66,16 +68,24 @@ const ProjectsSection: React.FC = () => {
     <section id="projects" className="w-full bg-background py-12 md:py-16 flex flex-col justify-center overflow-hidden">
       {/* Header with padding */}
       <div className="px-6 md:px-16 mb-10 md:mb-16">
-        <h2 className="text-3xl md:text-4xl font-normal text-foreground text-center mb-3 md:mb-4">
-          פרויקטים
-        </h2>
-        <p className="text-muted-foreground text-center text-base md:text-lg max-w-2xl mx-auto">
-          בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.
-        </p>
+        <ScrollAnimation>
+          <h2 className="text-3xl md:text-4xl font-normal text-foreground text-center mb-3 md:mb-4">
+            פרויקטים
+          </h2>
+        </ScrollAnimation>
+        <ScrollAnimation delay={0.1}>
+          <p className="text-muted-foreground text-center text-base md:text-lg max-w-2xl mx-auto">
+            בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.
+          </p>
+        </ScrollAnimation>
       </div>
 
       {/* Full-width slider without padding */}
-      <div 
+      <motion.div 
+        initial={{ opacity: 0, x: -50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
         ref={scrollRef}
         className={`flex gap-4 md:gap-6 overflow-x-auto select-none px-6 md:px-0 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         style={{ 
@@ -89,9 +99,11 @@ const ProjectsSection: React.FC = () => {
         onMouseMove={handleMouseMove}
       >
         {projects.map((project, index) => (
-          <div 
+          <motion.div 
             key={index} 
             className="flex-shrink-0 text-right w-[280px] md:w-[500px]"
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.2 }}
           >
             <img
               src={project.image}
@@ -101,9 +113,9 @@ const ProjectsSection: React.FC = () => {
             />
             <h3 className="text-xl md:text-2xl font-medium text-foreground mb-1 md:mb-2">{project.title}</h3>
             <p className="text-muted-foreground text-sm md:text-base">{project.description}</p>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };
