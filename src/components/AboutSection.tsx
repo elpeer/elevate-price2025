@@ -2,37 +2,51 @@ import React from 'react';
 
 const AboutSection: React.FC = () => {
   return (
-    <section className="w-full max-w-[1513px] max-md:max-w-full">
-      <div className="gap-5 flex max-md:flex-col max-md:items-stretch">
-        <div className="w-[56%] max-md:w-full max-md:ml-0">
-          <div className="bg-secondary flex w-full flex-col mx-auto pt-[213px] pb-[391px] px-[70px] max-md:max-w-full max-md:mt-10 max-md:px-5 max-md:py-[100px]">
-            <div className="flex items-center gap-[25px]">
-              <div className="self-stretch my-auto">
-                <div className="flex min-h-[59px]" />
-              </div>
-              <img
-                src="https://api.builder.io/api/v1/image/assets/TEMP/833f81910f4ee7c4c909bb4892608ea8ef2cec69?placeholderIfAbsent=true"
-                alt="Elevate Digital Studio Logo"
-                className="aspect-[1] object-contain w-[200px] self-stretch shrink-0 my-auto"
-              />
+    <section className="flex">
+      {/* Left - Blue wave image with profile */}
+      <div className="w-1/2 relative">
+        <img
+          src="https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b?placeholderIfAbsent=true"
+          alt="Blue wave background"
+          className="w-full h-full object-cover min-h-[600px]"
+        />
+        {/* Profile card */}
+        <div className="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm p-8">
+          <div className="flex items-center gap-6 justify-end">
+            <div className="text-right">
+              <h3 className="text-xl font-semibold text-foreground">גדי מאירסון</h3>
+              <p className="text-primary text-sm">CEO elevate</p>
+              <p className="text-primary text-sm">gadi@elevate.co.il</p>
             </div>
+            <img
+              src="https://api.builder.io/api/v1/image/assets/TEMP/9dbbf53e39bc0a6708b47a333686f73f0dc70ad5?placeholderIfAbsent=true"
+              alt="Gadi Meirson"
+              className="w-24 h-24 rounded-lg object-cover"
+            />
           </div>
         </div>
-        <div className="w-[44%] ml-5 max-md:w-full max-md:ml-0">
-          <article className="flex flex-col items-stretch text-right mt-14 max-md:max-w-full max-md:mt-10">
-            <h2 className="text-foreground text-5xl font-medium leading-[57px] max-md:max-w-full max-md:text-[40px] max-md:leading-[53px]">
-              אנו נרגשים להתחיל את הפרויקט שלך!
-            </h2>
-            <p className="text-foreground text-base font-normal leading-7 mt-[27px] max-md:max-w-full max-md:mr-0.5">
+      </div>
+
+      {/* Right - Content */}
+      <div className="w-1/2 bg-background flex flex-col justify-center px-16 py-20">
+        <div className="max-w-lg mr-auto text-right">
+          <h2 className="text-4xl font-medium leading-tight text-foreground mb-8">
+            אנו נרגשים להתחיל את
+            <br />
+            הפרויקט שלך!
+          </h2>
+
+          <div className="space-y-6 text-foreground text-base leading-7">
+            <p>
               אנחנו Elevate Digital Studio, המתמחה בעיצוב חווית משתמש (UX) וממשק משתמש (UI) למוצרים דיגיטליים ומערכות מורכבות. אנו מתמחים בעיצוב ופיתוח אתרי דגל בסטנדרטים מתקדמים, אפליקציות WEB, פלטפורמות מסחר אלקטרוני, דפי נחיתה ומערכות אינטרנט מורכבות. הצוות המוכשר שלנו בעל ניסיון רב בעבודה על פרויקטים מתעשיות שונות ועם מותגים מובילים בארץ ובעולם.
-              <br />
-              <br />
+            </p>
+            <p>
               אנו נרגשים לשתף פעולה בפרויקט שלכם! הצעה זו כוללת את את התוכנית שלנו להביא את החזון שלכם לעולם הדיגיטלי בצורה הטובה ביותר.
-              <br />
-              <br />
+            </p>
+            <p>
               אל תהססו לפנות בכל שאלה. ביחד, בואו ניצור משהו מדהים!
             </p>
-          </article>
+          </div>
         </div>
       </div>
     </section>
