@@ -1,4 +1,5 @@
 import React from 'react';
+import blueAbstractBg from '@/assets/blue-abstract-bg.png';
 
 // Icons matching the reference design
 const InnovationIcon = () => (
@@ -74,16 +75,11 @@ const CoreValuesSection: React.FC = () => {
         <div className="w-1/2 flex flex-col" style={{ backgroundColor: '#EFEFFF' }}>
           {/* Blue abstract image with text overlay */}
           <div 
-            className="relative h-[500px] bg-gradient-to-br from-blue-900 via-blue-600 to-blue-400"
+            className="relative h-[500px] bg-cover bg-center"
             style={{
-              backgroundImage: 'linear-gradient(135deg, #0a1628 0%, #1a3a5c 30%, #2563eb 60%, #60a5fa 100%)'
+              backgroundImage: `url(${blueAbstractBg})`
             }}
           >
-            {/* Decorative light streaks */}
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-cyan-400/30 rounded-full blur-2xl"></div>
-            </div>
             
             {/* Text overlay */}
             <div className="absolute inset-0 flex flex-col justify-center items-center px-12 text-center">
