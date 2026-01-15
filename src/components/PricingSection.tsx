@@ -2,29 +2,37 @@ import React, { useState } from 'react';
 import { Plus, Minus, X, Check } from 'lucide-react';
 import pricingBlockIcon from '@/assets/icons/pricing-block-icon.svg';
 
-const pricingItems = [
+const basePricingItems = [
   {
     title: 'אבחון ומחקר',
+    priceValue: 5000,
     price: '₪5,000',
-    hours: '30 שעות',
+    hours: 30,
+    hoursText: '30 שעות',
     items: ['ראיונות עומק לצורך למידה ואפיון צרכים', 'ניתוח הממשק הקיים', 'ניתוח מתחרים']
   },
   {
     title: 'תכנון UX עדכני',
+    priceValue: 2000,
     price: '₪2,000',
-    hours: '30 שעות',
+    hours: 30,
+    hoursText: '30 שעות',
     items: ['ראיונות עומק לצורך למידה ואפיון צרכים', 'ניתוח הממשק הקיים', 'ניתוח מתחרים']
   },
   {
     title: 'עיצוב UI',
+    priceValue: 1000,
     price: '₪1,000',
-    hours: '30 שעות',
+    hours: 30,
+    hoursText: '30 שעות',
     items: ['ראיונות עומק לצורך למידה ואפיון צרכים', 'ניתוח הממשק הקיים', 'ניתוח מתחרים']
   },
   {
     title: 'העברה לפיתוח וליווי',
+    priceValue: 2000,
     price: '₪2,000',
-    hours: '30 שעות',
+    hours: 30,
+    hoursText: '30 שעות',
     items: ['ראיונות עומק לצורך למידה ואפיון צרכים', 'ניתוח הממשק הקיים', 'ניתוח מתחרים']
   }
 ];
@@ -38,6 +46,9 @@ const categories = [
         id: 'addon',
         title: 'תוסף/רכיב נגישות',
         price: '₪48,000',
+        priceValue: 48000,
+        hours: 40,
+        hoursText: '40 שעות',
         description: 'נגישות תיושם ברמת הקוד בהתאם לדוח המפורט של...',
         details: 'פירוט מלא על תוסף הנגישות כולל התאמות WCAG 2.1, תמיכה בקוראי מסך, ניווט מקלדת ועוד.'
       },
@@ -45,6 +56,9 @@ const categories = [
         id: 'report',
         title: 'דו"ח נגישות',
         price: '₪48,000',
+        priceValue: 48000,
+        hours: 40,
+        hoursText: '40 שעות',
         description: 'נגישות תיושם ברמת הקוד בהתאם לדוח המפורט של...',
         details: 'דוח נגישות מקיף הכולל בדיקות אוטומטיות וידניות, המלצות לתיקון והתאמה לתקנות.'
       }
@@ -54,31 +68,31 @@ const categories = [
     id: 'branding',
     title: 'חבילות מיתוג',
     options: [
-      { id: 'basic', title: 'חבילה בסיסית', price: '₪15,000', description: 'לוגו ופלטת צבעים', details: '' },
-      { id: 'premium', title: 'חבילה מורחבת', price: '₪35,000', description: 'מיתוג מלא', details: '' }
+      { id: 'basic', title: 'חבילה בסיסית', price: '₪15,000', priceValue: 15000, hours: 20, hoursText: '20 שעות', description: 'לוגו ופלטת צבעים', details: '' },
+      { id: 'premium', title: 'חבילה מורחבת', price: '₪35,000', priceValue: 35000, hours: 50, hoursText: '50 שעות', description: 'מיתוג מלא', details: '' }
     ]
   },
   {
     id: 'hosting',
     title: 'שרת אחסון',
     options: [
-      { id: 'shared', title: 'אחסון משותף', price: '₪500/חודש', description: 'לאתרים קטנים', details: '' },
-      { id: 'dedicated', title: 'שרת ייעודי', price: '₪2,000/חודש', description: 'לאתרים גדולים', details: '' }
+      { id: 'shared', title: 'אחסון משותף', price: '₪500/חודש', priceValue: 500, hours: 0, hoursText: '', description: 'לאתרים קטנים', details: '' },
+      { id: 'dedicated', title: 'שרת ייעודי', price: '₪2,000/חודש', priceValue: 2000, hours: 0, hoursText: '', description: 'לאתרים גדולים', details: '' }
     ]
   },
   {
     id: 'maintenance',
     title: 'חבילות תחזוקה',
     options: [
-      { id: 'monthly', title: 'תחזוקה חודשית', price: '₪1,500/חודש', description: 'תמיכה וגיבויים', details: '' },
-      { id: 'yearly', title: 'תחזוקה שנתית', price: '₪15,000/שנה', description: 'חבילה מלאה', details: '' }
+      { id: 'monthly', title: 'תחזוקה חודשית', price: '₪1,500/חודש', priceValue: 1500, hours: 0, hoursText: '', description: 'תמיכה וגיבויים', details: '' },
+      { id: 'yearly', title: 'תחזוקה שנתית', price: '₪15,000/שנה', priceValue: 15000, hours: 0, hoursText: '', description: 'חבילה מלאה', details: '' }
     ]
   }
 ];
 
 const PricingSection: React.FC = () => {
   const [openCategory, setOpenCategory] = useState<string>('accessibility');
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({ accessibility: 'report' });
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
   const [modalContent, setModalContent] = useState<{ title: string; content: string } | null>(null);
 
   const toggleCategory = (categoryId: string) => {
@@ -104,6 +118,44 @@ const PricingSection: React.FC = () => {
   const closeModal = () => {
     setModalContent(null);
   };
+
+  // Get selected addons to display in summary
+  const getSelectedAddons = () => {
+    const addons: Array<{ title: string; price: string; hoursText: string; priceValue: number; hours: number }> = [];
+    Object.entries(selectedOptions).forEach(([categoryId, optionId]) => {
+      const category = categories.find(c => c.id === categoryId);
+      if (category) {
+        const option = category.options.find(o => o.id === optionId);
+        if (option) {
+          addons.push({
+            title: option.title,
+            price: option.price,
+            hoursText: option.hoursText,
+            priceValue: option.priceValue,
+            hours: option.hours
+          });
+        }
+      }
+    });
+    return addons;
+  };
+
+  // Calculate totals
+  const selectedAddons = getSelectedAddons();
+  const baseTotal = basePricingItems.reduce((sum, item) => sum + item.priceValue, 0);
+  const baseHours = basePricingItems.reduce((sum, item) => sum + item.hours, 0);
+  const addonsTotal = selectedAddons.reduce((sum, addon) => sum + addon.priceValue, 0);
+  const addonsHours = selectedAddons.reduce((sum, addon) => sum + addon.hours, 0);
+  const totalPrice = baseTotal + addonsTotal;
+  const totalHours = baseHours + addonsHours;
+
+  // Combine base items with selected addons for display
+  const allItems = [...basePricingItems, ...selectedAddons.map(addon => ({
+    title: addon.title,
+    price: addon.price,
+    hoursText: addon.hoursText,
+    items: [] as string[]
+  }))];
 
   return (
     <section id="pricing" className="w-full py-24 px-16 flex flex-col justify-center bg-background">
@@ -193,7 +245,7 @@ const PricingSection: React.FC = () => {
             {/* Unified summary card */}
             <div className="rounded-[32px] px-4 pb-4" style={{ backgroundColor: '#EDEDED' }}>
               <div className="p-8">
-                {pricingItems.map((item, index) => (
+                {allItems.map((item, index) => (
                   <div key={index}>
                     {/* Row header */}
                     <div className="flex items-center justify-between mb-3">
@@ -202,21 +254,23 @@ const PricingSection: React.FC = () => {
                         <h3 className="text-lg font-medium text-foreground">{item.title}</h3>
                       </div>
                       <div className="flex items-center gap-3 text-muted-foreground text-sm">
-                        <span>{item.hours}</span>
-                        <span>|</span>
+                        {item.hoursText && <span>{item.hoursText}</span>}
+                        {item.hoursText && <span>|</span>}
                         <span className="font-medium text-foreground">{item.price}</span>
                       </div>
                     </div>
                     
-                    {/* Row items - bullet list */}
-                    <ul className="list-disc pr-5 space-y-1.5 text-right text-muted-foreground text-sm mb-4">
-                      {item.items.map((listItem, i) => (
-                        <li key={i}>{listItem}</li>
-                      ))}
-                    </ul>
+                    {/* Row items - bullet list (only for base items) */}
+                    {item.items && item.items.length > 0 && (
+                      <ul className="list-disc pr-5 space-y-1.5 text-right text-muted-foreground text-sm mb-4">
+                        {item.items.map((listItem, i) => (
+                          <li key={i}>{listItem}</li>
+                        ))}
+                      </ul>
+                    )}
                     
                     {/* Divider */}
-                    {index < pricingItems.length - 1 && (
+                    {index < allItems.length - 1 && (
                       <div className="border-t border-border/50 my-5" />
                     )}
                   </div>
@@ -227,9 +281,9 @@ const PricingSection: React.FC = () => {
               <div className="bg-white rounded-[68px] px-6 py-3 flex items-center justify-between">
                 <span className="text-xl font-medium text-foreground">סה"כ</span>
                 <div className="flex items-center gap-3 text-muted-foreground text-sm">
-                  <span>420 שעות</span>
+                  <span>{totalHours} שעות</span>
                   <span>|</span>
-                  <span className="font-bold text-foreground text-lg">₪48,000</span>
+                  <span className="font-bold text-foreground text-lg">₪{totalPrice.toLocaleString()}</span>
                 </div>
               </div>
             </div>
