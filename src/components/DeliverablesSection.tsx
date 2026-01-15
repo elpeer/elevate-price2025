@@ -26,7 +26,7 @@ const deliverables = [
 
 const DeliverablesSection: React.FC = () => {
   return (
-    <section className="bg-secondary py-24 px-16">
+    <section id="deliverables" className="min-h-screen w-full bg-secondary py-24 px-16 flex flex-col justify-center">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-4xl font-normal text-foreground text-center mb-16">
           כל מה שנספק לך

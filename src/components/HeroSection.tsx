@@ -1,8 +1,15 @@
 import React from 'react';
 
 const HeroSection: React.FC = () => {
+  const scrollToAbout = () => {
+    const element = document.getElementById('about');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section className="flex min-h-screen">
+    <section id="intro" className="flex h-screen w-full">
       {/* Left - Blue wave image */}
       <div className="w-1/2 relative">
         <img
@@ -11,12 +18,15 @@ const HeroSection: React.FC = () => {
           className="w-full h-full object-cover"
         />
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 right-8 flex items-center gap-3 text-white">
+        <button 
+          onClick={scrollToAbout}
+          className="absolute bottom-8 right-8 flex items-center gap-3 text-white hover:opacity-80 transition-opacity"
+        >
           <span className="text-sm">גלול למטה</span>
           <div className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center">
             <div className="w-2 h-2 bg-white rounded-full" />
           </div>
-        </div>
+        </button>
       </div>
 
       {/* Right - Content */}
@@ -75,7 +85,10 @@ const HeroSection: React.FC = () => {
           </div>
 
           {/* CTA Button */}
-          <button className="bg-primary text-white px-8 py-4 rounded-full flex items-center gap-3 hover:bg-primary/90 transition-colors mr-auto">
+          <button 
+            onClick={scrollToAbout}
+            className="bg-primary text-white px-8 py-4 rounded-full flex items-center gap-3 hover:bg-primary/90 transition-colors mr-auto"
+          >
             <span className="font-medium">גלול להצעה</span>
             <div className="w-2 h-2 bg-white rounded-full" />
           </button>
