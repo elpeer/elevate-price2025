@@ -85,8 +85,16 @@ const PricingSection: React.FC = () => {
     setOpenCategory(openCategory === categoryId ? '' : categoryId);
   };
 
-  const selectOption = (categoryId: string, optionId: string) => {
-    setSelectedOptions(prev => ({ ...prev, [categoryId]: optionId }));
+  const toggleOption = (categoryId: string, optionId: string) => {
+    setSelectedOptions(prev => {
+      // If already selected, unselect it; otherwise select it
+      if (prev[categoryId] === optionId) {
+        const newState = { ...prev };
+        delete newState[categoryId];
+        return newState;
+      }
+      return { ...prev, [categoryId]: optionId };
+    });
   };
 
   const openModal = (title: string, content: string) => {
@@ -134,11 +142,11 @@ const PricingSection: React.FC = () => {
                           return (
                             <button
                               key={option.id}
-                              onClick={() => selectOption(category.id, option.id)}
-                              className={`relative p-5 text-right transition-all ${
+                              onClick={() => toggleOption(category.id, option.id)}
+                              className={`relative p-5 text-right transition-all rounded-[16px] ${
                                 isSelected
                                   ? 'bg-primary/10 border-2 border-primary'
-                                  : 'bg-white border-2 border-transparent'
+                                  : 'bg-[#F3F3F3] border-2 border-transparent'
                               }`}
                             >
                               {/* Checkbox */}
@@ -189,14 +197,14 @@ const PricingSection: React.FC = () => {
                   <div key={index}>
                     {/* Row header */}
                     <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-3 text-muted-foreground text-sm">
-                        <span className="font-medium text-foreground">{item.price}</span>
-                        <span>|</span>
-                        <span>{item.hours}</span>
-                      </div>
                       <div className="flex items-center gap-3">
-                        <h3 className="text-lg font-medium text-foreground">{item.title}</h3>
                         <img src={pricingBlockIcon} alt="" className="w-6 h-6" />
+                        <h3 className="text-lg font-medium text-foreground">{item.title}</h3>
+                      </div>
+                      <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                        <span>{item.hours}</span>
+                        <span>|</span>
+                        <span className="font-medium text-foreground">{item.price}</span>
                       </div>
                     </div>
                     
@@ -217,12 +225,12 @@ const PricingSection: React.FC = () => {
 
               {/* Total bar */}
               <div className="bg-white px-8 py-5 flex items-center justify-between">
-                <div className="flex items-center gap-3 text-muted-foreground text-sm">
-                  <span className="font-bold text-foreground text-lg">₪48,000</span>
-                  <span>|</span>
-                  <span>420 שעות</span>
-                </div>
                 <span className="text-xl font-medium text-foreground">סה"כ</span>
+                <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                  <span>420 שעות</span>
+                  <span>|</span>
+                  <span className="font-bold text-foreground text-lg">₪48,000</span>
+                </div>
               </div>
             </div>
           </div>
