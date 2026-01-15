@@ -2,23 +2,23 @@ import React from 'react';
 
 const AboutSection: React.FC = () => {
   return (
-    <section id="about" className="flex h-screen w-full bg-gradient-to-b from-[#f5f3ff] via-[#ede9fe] to-[#f5f3ff]">
-      {/* Left side - Profile (in RTL this appears on left) */}
-      <div className="w-2/5 flex items-center justify-center px-12">
+    <section id="about" dir="ltr" className="flex h-screen w-full">
+      {/* Left side - Profile with lavender background */}
+      <div className="w-1/2 flex items-center justify-center px-12" style={{ backgroundColor: '#EFEFFF' }}>
         <div className="text-center">
           <img
             src="https://api.builder.io/api/v1/image/assets/TEMP/9dbbf53e39bc0a6708b47a333686f73f0dc70ad5?placeholderIfAbsent=true"
             alt="Gadi Meirson"
-            className="w-40 h-40 rounded-lg object-cover mx-auto mb-4"
+            className="w-44 h-44 rounded-lg object-cover mx-auto mb-6"
           />
-          <h3 className="text-xl font-semibold text-foreground">גדי מאירסון</h3>
-          <p className="text-primary text-sm">CEO elevate</p>
-          <p className="text-primary text-sm">gadi@elevate.co.il</p>
+          <h3 className="text-2xl font-semibold text-foreground mb-1">גדי מאירסון</h3>
+          <p className="text-primary text-base">CEO elevate</p>
+          <a href="mailto:gadi@elevate.co.il" className="text-primary text-base hover:underline">gadi@elevate.co.il</a>
         </div>
       </div>
 
-      {/* Right side - Content (in RTL this appears on right) */}
-      <div className="w-3/5 flex flex-col justify-center px-16 py-20">
+      {/* Right side - Content with white background */}
+      <div className="w-1/2 bg-background flex flex-col justify-center px-16 py-20" dir="rtl">
         <div className="max-w-xl text-right">
           <h2 className="text-5xl font-medium leading-tight text-foreground mb-10">
             אנו נרגשים להתחיל את
