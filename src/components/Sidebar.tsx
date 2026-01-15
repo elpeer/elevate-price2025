@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import sidebarLogo from '@/assets/why-elevate-logo.svg';
 
 const navItems = [
   { id: 'intro', label: 'פתיח' },
@@ -43,10 +44,10 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside className="w-[220px] bg-background border-l fixed top-0 right-0 h-screen flex flex-col py-6 px-4 z-50" style={{ borderLeftColor: '#CBCBD4' }}>
-      {/* Logo - replaceable via Visual Edits */}
+      {/* Logo */}
       <img 
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%232563EB'/%3E%3Cpath d='M20 12L12 26h16L20 12z' fill='white'/%3E%3C/svg%3E" 
-        alt="Logo" 
+        src={sidebarLogo} 
+        alt="Elevate Logo" 
         className="w-10 h-10 mb-8"
       />
 
