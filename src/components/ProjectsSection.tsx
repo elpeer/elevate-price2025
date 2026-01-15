@@ -63,13 +63,13 @@ const ProjectsSection: React.FC = () => {
   }, [isDragging, startX, scrollLeft]);
 
   return (
-    <section id="projects" className="w-full bg-background py-16 flex flex-col justify-center overflow-hidden">
+    <section id="projects" className="w-full bg-background py-12 md:py-16 flex flex-col justify-center overflow-hidden">
       {/* Header with padding */}
-      <div className="px-16 mb-16">
-        <h2 className="text-4xl font-normal text-foreground text-center mb-4">
+      <div className="px-6 md:px-16 mb-10 md:mb-16">
+        <h2 className="text-3xl md:text-4xl font-normal text-foreground text-center mb-3 md:mb-4">
           פרויקטים
         </h2>
-        <p className="text-muted-foreground text-center text-lg max-w-2xl mx-auto">
+        <p className="text-muted-foreground text-center text-base md:text-lg max-w-2xl mx-auto">
           בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.
         </p>
       </div>
@@ -77,12 +77,10 @@ const ProjectsSection: React.FC = () => {
       {/* Full-width slider without padding */}
       <div 
         ref={scrollRef}
-        className={`flex gap-6 overflow-x-auto select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`flex gap-4 md:gap-6 overflow-x-auto select-none px-6 md:px-0 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         style={{ 
           scrollbarWidth: 'none', 
           msOverflowStyle: 'none',
-          paddingLeft: '0',
-          paddingRight: '0'
         }}
         dir="rtl"
         onMouseDown={handleMouseDown}
@@ -93,17 +91,16 @@ const ProjectsSection: React.FC = () => {
         {projects.map((project, index) => (
           <div 
             key={index} 
-            className="flex-shrink-0 text-right"
-            style={{ width: '500px' }}
+            className="flex-shrink-0 text-right w-[280px] md:w-[500px]"
           >
             <img
               src={project.image}
               alt={project.title}
-              className="w-full rounded-3xl mb-4 object-cover aspect-[4/3] pointer-events-none"
+              className="w-full rounded-2xl md:rounded-3xl mb-3 md:mb-4 object-cover aspect-[4/3] pointer-events-none"
               draggable={false}
             />
-            <h3 className="text-2xl font-medium text-foreground mb-2">{project.title}</h3>
-            <p className="text-muted-foreground">{project.description}</p>
+            <h3 className="text-xl md:text-2xl font-medium text-foreground mb-1 md:mb-2">{project.title}</h3>
+            <p className="text-muted-foreground text-sm md:text-base">{project.description}</p>
           </div>
         ))}
       </div>
