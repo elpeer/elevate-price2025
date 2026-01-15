@@ -1,13 +1,42 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React from 'react';
+import HeroSection from '@/components/HeroSection';
+import AboutSection from '@/components/AboutSection';
+import WhyElevateSection from '@/components/WhyElevateSection';
+import MissionSection from '@/components/MissionSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import ProjectsSection from '@/components/ProjectsSection';
+import SiteContentSection from '@/components/SiteContentSection';
+import DeliverablesSection from '@/components/DeliverablesSection';
+import ProjectDetailsSection from '@/components/ProjectDetailsSection';
+import PricingSection from '@/components/PricingSection';
+import SignatureSection from '@/components/SignatureSection';
+import Sidebar from '@/components/Sidebar';
 
-const Index = () => {
+const Index: React.FC = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <main className="bg-background flex flex-col overflow-hidden pb-[296px] max-md:pb-[100px]" dir="rtl">
+      <div className="self-stretch w-full max-md:max-w-full">
+        <div className="gap-5 flex max-md:flex-col max-md:items-stretch">
+          <div className="w-[83%] max-md:w-full max-md:ml-0">
+            <div className="flex w-full flex-col items-center max-md:max-w-full">
+              <HeroSection />
+              <AboutSection />
+              <WhyElevateSection />
+              <MissionSection />
+              <TestimonialsSection />
+              <ProjectsSection />
+            </div>
+          </div>
+          <Sidebar />
+        </div>
       </div>
-    </div>
+      
+      <SiteContentSection />
+      <DeliverablesSection />
+      <ProjectDetailsSection />
+      <PricingSection />
+      <SignatureSection />
+    </main>
   );
 };
 
