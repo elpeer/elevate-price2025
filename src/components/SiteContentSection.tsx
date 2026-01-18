@@ -33,10 +33,10 @@ const SiteContentSection: React.FC = () => {
           {contentItems.map((item, index) => (
             <StaggerItem key={index}>
               <div 
-                className="rounded-2xl p-4 md:p-6 text-center md:text-right w-full"
+                className="rounded-2xl p-4 md:p-6 text-right w-full"
                 style={{ backgroundColor: '#F3F3F3' }}
               >
-                <div className="flex items-center justify-center md:justify-start gap-2 mb-1 md:mb-3">
+                <div className="flex items-center gap-2 mb-1 md:mb-3">
                   <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 text-primary fill-primary stroke-white flex-shrink-0" />
                   <span className="text-base md:text-lg font-medium text-foreground">{item.title}</span>
                 </div>
@@ -53,10 +53,10 @@ const SiteContentSection: React.FC = () => {
           {secondRowItems.map((item, index) => (
             <StaggerItem key={index}>
               <div 
-                className="rounded-2xl p-4 md:p-6 text-center md:text-right w-full"
+                className="rounded-2xl p-4 md:p-6 text-right w-full"
                 style={{ backgroundColor: '#F3F3F3' }}
               >
-                <div className="flex items-center justify-center md:justify-start gap-2">
+                <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 text-primary fill-primary stroke-white flex-shrink-0" />
                   <span className="text-base md:text-lg font-medium text-foreground">{item.title}</span>
                 </div>
