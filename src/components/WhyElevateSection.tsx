@@ -120,7 +120,7 @@ const WhyElevateSection: React.FC = () => {
                 className="border-b border-gray-200"
               >
                 <AccordionTrigger className="flex items-center justify-between py-4 hover:no-underline [&>svg]:hidden">
-                  <div className="flex items-center gap-3 flex-row-reverse w-full">
+                  <div className="flex items-center gap-3 w-full">
                     <service.icon />
                     <span className="text-base font-medium text-foreground flex-1 text-right">{service.title}</span>
                   </div>
