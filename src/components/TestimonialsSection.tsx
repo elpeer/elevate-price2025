@@ -47,27 +47,23 @@ const TestimonialsSection: React.FC = () => {
           </p>
         </ScrollAnimation>
 
-        {/* Mobile: Horizontal scroll / Desktop: Grid */}
-        <div className="md:hidden overflow-x-auto -mx-6 px-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          <div className="flex gap-3 w-max">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-background border border-border rounded-2xl p-5 w-[280px] flex-shrink-0">
-                <div className="flex items-center justify-between mb-4" dir="rtl">
-                  <div className="flex items-center gap-2">
-                    <img src={testimonial.avatar} alt={testimonial.name} className="w-9 h-9 rounded-full object-cover" />
-                    <div className="text-right">
-                      <p className="font-medium text-foreground text-xs">{testimonial.name}</p>
-                      <p className="text-muted-foreground text-[10px]">{testimonial.title}</p>
-                    </div>
-                  </div>
-                  <img src={testimonial.logo} alt="Company logo" className="h-5 object-contain" />
+        {/* Mobile: Vertical stack */}
+        <div className="md:hidden flex flex-col gap-4">
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="bg-background border border-border rounded-2xl p-5">
+              <div className="flex items-center gap-3 mb-4" dir="rtl">
+                <img src={testimonial.avatar} alt={testimonial.name} className="w-10 h-10 rounded-full object-cover" />
+                <div className="text-right">
+                  <p className="font-medium text-foreground text-sm">{testimonial.name}</p>
+                  <p className="text-muted-foreground text-xs">{testimonial.title}</p>
                 </div>
-                <p className="text-foreground text-right leading-5 opacity-80 text-xs">
-                  {testimonial.text}
-                </p>
               </div>
-            ))}
-          </div>
+              <p className="text-foreground text-right leading-6 opacity-80 text-sm mb-4">
+                {testimonial.text}
+              </p>
+              <img src={testimonial.logo} alt="Company logo" className="h-6 object-contain" />
+            </div>
+          ))}
         </div>
 
         {/* Desktop Grid */}
