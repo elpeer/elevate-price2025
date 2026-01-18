@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Upload, Plus, Trash2, ChevronDown, ChevronUp, GripVertical } from 'lucide-react';
 import { motion, AnimatePresence, Reorder } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -21,6 +21,7 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
   const [data, setData] = useState<Record<string, any>>({});
   const [uploading, setUploading] = useState<string | null>(null);
   const [expandedRepeaters, setExpandedRepeaters] = useState<Record<string, boolean>>({});
+  const normalizedRepeatersRef = useRef<Set<string>>(new Set());
   const { toast } = useToast();
 
   useEffect(() => {
@@ -191,15 +192,33 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
 
       case 'repeater':
         const rawItems = Array.isArray(value) ? value : [];
-        // Ensure every item has an ID for Reorder to work properly
-        const items = rawItems.map((item: any, i: number) => ({
-          ...item,
-          id: item.id || `item-${i}-${Date.now()}`
-        }));
-        // Sync IDs back to data if they were missing
-        if (rawItems.some((item: any, i: number) => !item.id)) {
-          handleChange(path, items);
+        const itemFields = field.itemFields || [];
+        const firstKey = itemFields[0]?.key;
+
+        const needsNormalize = rawItems.some((item: any) => {
+          if (!item) return true;
+          if (typeof item !== 'object') return true;
+          if (Array.isArray(item)) return true;
+          return !('id' in item) || !item.id;
+        });
+
+        const normalizedItems = rawItems.map((item: any) => {
+          if (item && typeof item === 'object' && !Array.isArray(item)) {
+            return { ...item, id: item.id || generateId() };
+          }
+          const obj: Record<string, any> = { id: generateId() };
+          if (firstKey) obj[firstKey] = String(item ?? '');
+          return obj;
+        });
+
+        const items = needsNormalize ? normalizedItems : rawItems;
+
+        // Sync normalization back once (avoid render loops)
+        if (needsNormalize && !normalizedRepeatersRef.current.has(pathKey)) {
+          normalizedRepeatersRef.current.add(pathKey);
+          setTimeout(() => handleChange(path, items), 0);
         }
+
         const isExpanded = expandedRepeaters[pathKey] !== false;
         
         return (
@@ -233,7 +252,7 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
                   >
                     {items.map((item: any, index: number) => (
                       <Reorder.Item
-                        key={item.id}
+                        key={String(item.id)}
                         value={item}
                         className="bg-secondary/50 rounded-lg p-3 space-y-3 relative group cursor-grab active:cursor-grabbing"
                       >
