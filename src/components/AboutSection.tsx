@@ -9,7 +9,7 @@ const AboutSection: React.FC = () => {
       <div className="flex flex-col md:flex-row-reverse">
         {/* Left side - Gadi photo (desktop only) with lavender background - same width as hero image (1/2) */}
         <div className="hidden md:flex md:w-1/2 items-center justify-center py-16 px-8" style={{ backgroundColor: '#EFEFFF' }}>
-          <FadeScale className="flex flex-row-reverse items-center gap-6">
+          <FadeScale className="flex flex-row items-center gap-6">
             {/* Image */}
             <img
               src={gadiPhoto}
