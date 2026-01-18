@@ -16,7 +16,7 @@ const secondRowItems = [
 
 const SiteContentSection: React.FC = () => {
   return (
-    <section id="content" className="w-full bg-background py-10 md:py-24 px-6 md:px-16 flex flex-col justify-center">
+    <section id="content" className="w-full bg-background py-6 md:py-24 px-4 md:px-16 flex flex-col justify-center">
       <div className="max-w-6xl mx-auto">
         <ScrollAnimation>
           <h2 className="text-2xl md:text-4xl font-normal text-foreground text-center mb-2 md:mb-4">
@@ -29,19 +29,19 @@ const SiteContentSection: React.FC = () => {
           </p>
         </ScrollAnimation>
 
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4" staggerDelay={0.08}>
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4" staggerDelay={0.08}>
           {contentItems.map((item, index) => (
             <StaggerItem key={index}>
               <div 
-                className="rounded-xl md:rounded-2xl p-3 md:p-6 text-right h-full"
+                className="rounded-2xl p-4 md:p-6 text-center md:text-right w-full"
                 style={{ backgroundColor: '#F3F3F3' }}
               >
-                <div className="flex items-center gap-1.5 md:gap-2 mb-1 md:mb-3">
-                  <CheckCircle2 className="w-4 h-4 md:w-6 md:h-6 text-primary fill-primary stroke-white flex-shrink-0" />
-                  <span className="text-sm md:text-lg font-medium text-foreground">{item.title}</span>
+                <div className="flex items-center justify-center md:justify-start gap-2 mb-1 md:mb-3">
+                  <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 text-primary fill-primary stroke-white flex-shrink-0" />
+                  <span className="text-base md:text-lg font-medium text-foreground">{item.title}</span>
                 </div>
                 {item.description && (
-                  <p className="text-muted-foreground text-[10px] md:text-sm leading-4 md:leading-6 hidden md:block">{item.description}</p>
+                  <p className="text-muted-foreground text-xs md:text-sm leading-5 md:leading-6">{item.description}</p>
                 )}
               </div>
             </StaggerItem>
@@ -49,19 +49,19 @@ const SiteContentSection: React.FC = () => {
         </StaggerContainer>
 
         {/* Row 2 - 2 cards */}
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 mt-2 md:mt-4" staggerDelay={0.08}>
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-3 md:mt-4" staggerDelay={0.08}>
           {secondRowItems.map((item, index) => (
             <StaggerItem key={index}>
               <div 
-                className="rounded-xl md:rounded-2xl p-3 md:p-6 text-right"
+                className="rounded-2xl p-4 md:p-6 text-center md:text-right w-full"
                 style={{ backgroundColor: '#F3F3F3' }}
               >
-                <div className="flex items-center gap-1.5 md:gap-2">
-                  <CheckCircle2 className="w-4 h-4 md:w-6 md:h-6 text-primary fill-primary stroke-white flex-shrink-0" />
-                  <span className="text-sm md:text-lg font-medium text-foreground">{item.title}</span>
+                <div className="flex items-center justify-center md:justify-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 text-primary fill-primary stroke-white flex-shrink-0" />
+                  <span className="text-base md:text-lg font-medium text-foreground">{item.title}</span>
                 </div>
                 {item.description && (
-                  <p className="text-muted-foreground text-[10px] md:text-sm leading-4 md:leading-6 mt-1 md:mt-3 hidden md:block">{item.description}</p>
+                  <p className="text-muted-foreground text-xs md:text-sm leading-5 md:leading-6 mt-2 md:mt-3">{item.description}</p>
                 )}
               </div>
             </StaggerItem>
