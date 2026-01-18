@@ -68,7 +68,7 @@ const Admin: React.FC = () => {
   };
 
   const handleView = (slug: string) => {
-    window.open(`/p/${slug}`, '_blank');
+    window.open(`/customer/${slug}`, '_blank');
   };
 
   const handleDuplicate = async (id: string) => {
@@ -168,7 +168,7 @@ const Admin: React.FC = () => {
                         נוצר: {new Date(proposal.created_at).toLocaleDateString('he-IL')}
                       </span>
                       <span className="text-primary font-mono text-xs">
-                        /p/{proposal.slug}
+                        /customer/{proposal.slug}
                       </span>
                     </div>
                   </div>

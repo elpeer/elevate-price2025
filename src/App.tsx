@@ -9,7 +9,7 @@ import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import ProposalEditor from "./pages/ProposalEditor";
-import ProposalView from "./pages/ProposalView";
+import ProposalViewPage from "./pages/ProposalViewPage";
 
 const queryClient = new QueryClient();
 
@@ -19,16 +19,17 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/admin/edit/:id" element={<ProposalEditor />} />
-            <Route path="/p/:slug" element={<ProposalView />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/edit/:id" element={<ProposalEditor />} />
+              <Route path="/customer/:slug" element={<ProposalViewPage />} />
+              <Route path="/p/:slug" element={<ProposalViewPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>

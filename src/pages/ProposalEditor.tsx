@@ -68,7 +68,7 @@ const ProposalEditor: React.FC = () => {
         </div>
         <div className="flex items-center gap-3">
           <Select value={proposal.status} onValueChange={(v: any) => setProposal({ ...proposal, status: v })}><SelectTrigger className="w-32"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="draft">טיוטה</SelectItem><SelectItem value="published">פורסם</SelectItem><SelectItem value="signed">נחתם</SelectItem></SelectContent></Select>
-          <Button variant="outline" onClick={() => window.open(`/p/${proposal.slug}`, '_blank')}><Eye className="h-4 w-4 ml-2" />תצוגה</Button>
+          <Button variant="outline" onClick={() => window.open(`/customer/${proposal.slug}`, '_blank')}><Eye className="h-4 w-4 ml-2" />תצוגה</Button>
           <Button onClick={handleSave} disabled={saving}><Save className="h-4 w-4 ml-2" />{saving ? '⏳' : 'שמירה'}</Button>
         </div>
       </header>
