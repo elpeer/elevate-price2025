@@ -392,8 +392,8 @@ export const defaultHeroData: HeroData = {
   contactLabel: 'איש קשר',
   phoneLabel: 'טלפון',
   emailLabel: 'מייל',
-  desktopImage: '',
-  mobileImage: '',
+  desktopImage: 'https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b',
+  mobileImage: 'https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b',
 };
 
 export const defaultAboutData: AboutData = {
@@ -406,19 +406,19 @@ export const defaultAboutData: AboutData = {
   ownerName: 'גדי מאירסון',
   ownerTitle: 'CEO elevate',
   ownerEmail: 'gadi@elevate.co.il',
-  ownerImage: '',
+  ownerImage: 'https://api.builder.io/api/v1/image/assets/TEMP/bc86f55b38e99f75c8798f7f68b31b3419ab9c44',
 };
 
 export const defaultWhyElevateData: WhyElevateData = {
-  headerImage: '',
+  headerImage: 'https://api.builder.io/api/v1/image/assets/TEMP/d8c8d1a57cf84c8d92ef4b7fdd6e0b7cb5e18a91',
   description: 'אנו מעצבים חוויות משתמש אינטואיטיביות וממשקים ויזואליים המשקפים את מהות המותג שלך ומגבירים מעורבות.',
   services: [
-    { id: '1', icon: '', title: 'שירות מקיף', description: 'מעיצוב UI/UX ועד פיתוח, מיתוג, אירוח, אבטחה ואסטרטגיה דיגיטלית - אנו מציעים שירותי אינטרנט מקיפים תחת קורת גג אחת.' },
-    { id: '2', icon: '', title: 'פתרונות מותאמים אישית', description: 'הפורטפוליו המגוון שלנו מציג את יכולתנו להסתגל לתעשיות שונות.' },
-    { id: '3', icon: '', title: 'עיצוב אתר אסטרטגי להצלחה עסקית', description: 'שדרג את הנוכחות שלך באינטרנט עם אתר אינטרנט שנבנה בקפידה.' },
-    { id: '4', icon: '', title: 'מצוינות ללא טרחה', description: 'תירגע בזמן שאנו מטפלים בכל פרט.' },
-    { id: '5', icon: '', title: 'תמיכת לקוחות יוצאת דופן', description: 'החזון שלך מניע את העבודה שלנו.' },
-    { id: '6', icon: '', title: 'הצטיינות מהימנה', description: 'אנו משרתים את החברות המובילות בישראל.' },
+    { id: '1', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/star-icon.svg', title: 'שירות מקיף', description: 'מעיצוב UI/UX ועד פיתוח, מיתוג, אירוח, אבטחה ואסטרטגיה דיגיטלית - אנו מציעים שירותי אינטרנט מקיפים תחת קורת גג אחת.' },
+    { id: '2', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/crown-icon.svg', title: 'פתרונות מותאמים אישית', description: 'הפורטפוליו המגוון שלנו מציג את יכולתנו להסתגל לתעשיות שונות.' },
+    { id: '3', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/arrow-icon.svg', title: 'עיצוב אתר אסטרטגי להצלחה עסקית', description: 'שדרג את הנוכחות שלך באינטרנט עם אתר אינטרנט שנבנה בקפידה.' },
+    { id: '4', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/heart-icon.svg', title: 'מצוינות ללא טרחה', description: 'תירגע בזמן שאנו מטפלים בכל פרט.' },
+    { id: '5', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/bubble-icon.svg', title: 'תמיכת לקוחות יוצאת דופן', description: 'החזון שלך מניע את העבודה שלנו.' },
+    { id: '6', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/plane-icon.svg', title: 'הצטיינות מהימנה', description: 'אנו משרתים את החברות המובילות בישראל.' },
   ],
 };
 
@@ -428,15 +428,20 @@ export const defaultCoreValuesData: CoreValuesData = {
     'המשימה שלנו היא להעצים עסקים עם פתרונות אינטרנט מתקדמים המניעים צמיחה ומעורבות.',
     'עם מחויבות למצוינות ולשביעות רצון לקוחות, אנו שואפים להיות השותף המנצח.',
   ],
-  desktopBackgroundImage: '',
-  mobileBackgroundImage: '',
+  desktopBackgroundImage: 'https://api.builder.io/api/v1/image/assets/TEMP/blue-diagonal-bg.png',
+  mobileBackgroundImage: 'https://api.builder.io/api/v1/image/assets/TEMP/blue-diagonal-bg-mobile.png',
   clientsTitle: 'נבחרנו על ידי הטובים ביותר',
-  clientLogos: [],
+  clientLogos: [
+    { id: '1', image: 'https://api.builder.io/api/v1/image/assets/TEMP/06395a516979c278f2eccebe7d5ff71794845919' },
+    { id: '2', image: 'https://api.builder.io/api/v1/image/assets/TEMP/007e55697bfb495081352f2cd5144f56d07ec3d9' },
+    { id: '3', image: 'https://api.builder.io/api/v1/image/assets/TEMP/e8d9d11465d14cdee4ff2a87d6addaa494e312ea' },
+    { id: '4', image: 'https://api.builder.io/api/v1/image/assets/TEMP/930605fdd1caa51b70ea4489336287408de9d43e' },
+  ],
   values: [
-    { id: '1', icon: '', title: 'חדשנות', description: 'דחיפת גבולות בעיצוב ופיתוח אתרים עם פתרונות חדשניים.' },
-    { id: '2', icon: '', title: 'מיקוד לקוח', description: 'מתן עדיפות לתקשורת ברורה ופתרונות מותאמים בהתאמה למטרות הלקוח.' },
-    { id: '3', icon: '', title: 'מהימנות', description: 'אספקת תוצאות אמינות ואיכותיות באופן עקבי העולה על הציפיות.' },
-    { id: '4', icon: '', title: 'שירות מקיף', description: 'נציע פתרונות משולבים ברמה גבוהה לכל ההיבטים של נוכחות באינטרנט.' },
+    { id: '1', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/innovation-icon.svg', title: 'חדשנות', description: 'דחיפת גבולות בעיצוב ופיתוח אתרים עם פתרונות חדשניים.' },
+    { id: '2', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/customer-focus-icon.svg', title: 'מיקוד לקוח', description: 'מתן עדיפות לתקשורת ברורה ופתרונות מותאמים בהתאמה למטרות הלקוח.' },
+    { id: '3', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/reliability-icon.svg', title: 'מהימנות', description: 'אספקת תוצאות אמינות ואיכותיות באופן עקבי העולה על הציפיות.' },
+    { id: '4', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/service-icon.svg', title: 'שירות מקיף', description: 'נציע פתרונות משולבים ברמה גבוהה לכל ההיבטים של נוכחות באינטרנט.' },
   ],
 };
 
@@ -478,8 +483,8 @@ export const defaultDeliverablesData: DeliverablesData = {
   title: 'כל מה שנספק לך',
   includedTitle: 'כלול בהצעה',
   excludedTitle: 'לא כלול',
-  desktopBackgroundImage: '',
-  mobileBackgroundImage: '',
+  desktopBackgroundImage: 'https://api.builder.io/api/v1/image/assets/TEMP/deliverables-bg.png',
+  mobileBackgroundImage: 'https://api.builder.io/api/v1/image/assets/TEMP/deliverables-bg-mobile.png',
   includedItems: [
     { id: '1', text: 'אפיון ועיצוב כל התבניות בהתאם לרשימת המסכים' },
     { id: '2', text: 'בניית Design System' },
@@ -497,7 +502,7 @@ export const defaultDeliverablesData: DeliverablesData = {
 
 export const defaultProjectDetailsData: ProjectDetailsData = {
   title: 'פרטים נוספים על הפרויקט',
-  sideImage: '',
+  sideImage: 'https://api.builder.io/api/v1/image/assets/TEMP/project-details-side.png',
   faqItems: [
     { id: '1', title: 'אחריות', content: 'מועד תקופת האחריות יחל מיום העלייה לאוויר למשך 3 חודשים. במסגרת האחריות, חברת elevate תטפל בכל תקלה בהתאם לSLA.' },
     { id: '2', title: 'תקלות', content: 'במקרה של תקלות טכניות, צוות התמיכה שלנו יהיה זמין לסייע בפתרון הבעיה בהקדם האפשרי.' },
