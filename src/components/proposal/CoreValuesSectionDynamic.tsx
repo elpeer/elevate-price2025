@@ -84,7 +84,26 @@ const CoreValuesSectionDynamic: React.FC<Props> = ({ data }) => {
   return (
     <section id="values" className="w-full" dir="rtl">
       <div className="flex flex-col md:flex-row">
-        <div className="w-full md:w-1/2 flex flex-col order-2 md:order-1" style={{ backgroundColor: '#EFEFFF' }}>
+        {/* Values side - comes first in DOM */}
+        <div className="w-full md:w-1/2 bg-white py-10 md:py-24 px-6 md:px-16">
+          <ScrollAnimation direction="left"><h2 className="text-2xl md:text-4xl font-bold text-foreground mb-6 md:mb-12 text-right">{data.title || 'ערכי הליבה שלנו'}</h2></ScrollAnimation>
+          <StaggerContainer className="space-y-5 md:space-y-8" staggerDelay={0.1}>
+            {values.map((value, index) => (
+              <StaggerItem key={index} direction="left">
+                <div className="flex items-start gap-4 md:gap-6">
+                  <div className="flex-shrink-0"><img src={valueIcons[index % valueIcons.length]} alt="" className="w-10 h-10 md:w-14 md:h-14" /></div>
+                  <div className="text-right flex-1">
+                    <h3 className="text-base md:text-xl font-semibold text-foreground mb-1">{value.title}</h3>
+                    <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{value.description}</p>
+                  </div>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+
+        {/* Mission/Logos side - comes second in DOM */}
+        <div className="w-full md:w-1/2 flex flex-col" style={{ backgroundColor: '#EFEFFF' }}>
           <div className="relative h-[250px] md:h-[500px] bg-cover bg-center" style={{ backgroundImage: `url(${bgImage})` }}>
             <div className="absolute inset-0 flex flex-col justify-center items-center px-6 md:px-12 text-center">
               {missionText.map((text, i) => <ScrollAnimation key={i} delay={i * 0.1}><p className="text-white/90 text-sm md:text-lg leading-6 md:leading-8 mb-4 md:mb-8">{text}</p></ScrollAnimation>)}
@@ -97,22 +116,6 @@ const CoreValuesSectionDynamic: React.FC<Props> = ({ data }) => {
               {clientLogos.map((logo, i) => <StaggerItem key={i}><div className="flex items-center justify-center"><img src={logo} alt="" className="h-16 w-auto object-contain" /></div></StaggerItem>)}
             </StaggerContainer>
           </div>
-        </div>
-        <div className="w-full md:w-1/2 bg-white py-10 md:py-24 px-6 md:px-16 order-1 md:order-2">
-          <ScrollAnimation direction="left"><h2 className="text-2xl md:text-4xl font-bold text-foreground mb-6 md:mb-12 text-right">{data.title || 'ערכי הליבה שלנו'}</h2></ScrollAnimation>
-          <StaggerContainer className="space-y-5 md:space-y-8" staggerDelay={0.1}>
-            {values.map((value, index) => (
-              <StaggerItem key={index} direction="left">
-                <div className="flex items-start gap-4 md:gap-6" dir="rtl">
-                  <div className="flex-shrink-0"><img src={valueIcons[index % valueIcons.length]} alt="" className="w-10 h-10 md:w-14 md:h-14" /></div>
-                  <div className="text-right flex-1">
-                    <h3 className="text-base md:text-xl font-semibold text-foreground mb-1">{value.title}</h3>
-                    <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{value.description}</p>
-                  </div>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
         </div>
       </div>
     </section>
