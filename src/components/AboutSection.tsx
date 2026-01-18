@@ -33,19 +33,19 @@ const AboutSection: React.FC = () => {
             </ScrollAnimation>
 
             {/* Signature Section */}
-            <FadeScale className="flex items-center gap-6 mt-8 md:mt-12">
-              {/* Text */}
-              <div className="text-right">
-                <h3 className="text-lg md:text-2xl font-semibold text-foreground mb-1">גדי מאירסון</h3>
-                <p className="text-primary text-sm md:text-base">CEO elevate</p>
-                <a href="mailto:gadi@elevate.co.il" className="text-primary text-sm md:text-base hover:underline">gadi@elevate.co.il</a>
-              </div>
+            <FadeScale className="flex flex-row-reverse items-center gap-6 mt-8 md:mt-12 justify-end">
               {/* Image */}
               <img
                 src={gadiPhoto}
                 alt="Gadi Meirson"
                 className="w-24 h-24 md:w-36 md:h-36 object-cover grayscale"
               />
+              {/* Text */}
+              <div className="text-right">
+                <h3 className="text-lg md:text-2xl font-semibold text-foreground mb-1">גדי מאירסון</h3>
+                <p className="text-primary text-sm md:text-base">CEO elevate</p>
+                <a href="mailto:gadi@elevate.co.il" className="text-primary text-sm md:text-base hover:underline">gadi@elevate.co.il</a>
+              </div>
             </FadeScale>
           </div>
         </div>
