@@ -55,8 +55,8 @@ const DeliverablesSectionDynamic: React.FC<Props> = ({ data }) => {
         <div dir="rtl">
           <ScrollAnimation delay={0.1}>
             <div className="grid grid-cols-2 gap-2 md:gap-4 mb-2 md:mb-4">
-              <div className="bg-background p-3 md:p-5 text-right rounded-lg md:rounded-none"><span className="text-base md:text-3xl font-medium text-foreground">{includedTitle}</span></div>
-              <div className="bg-background/50 p-3 md:p-5 text-right rounded-lg md:rounded-none"><span className="text-base md:text-3xl font-medium text-foreground">{excludedTitle}</span></div>
+              <div className="bg-white p-3 md:p-5 text-right rounded-lg md:rounded-none"><span className="text-base md:text-3xl font-medium text-foreground">{includedTitle}</span></div>
+              <div className="bg-white/50 p-3 md:p-5 text-right rounded-lg md:rounded-none"><span className="text-base md:text-3xl font-medium text-foreground">{excludedTitle}</span></div>
             </div>
           </ScrollAnimation>
           <StaggerContainer className="grid gap-2 md:gap-4" staggerDelay={0.06}>
