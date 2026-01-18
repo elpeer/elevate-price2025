@@ -6,7 +6,10 @@ import { ClientInfo } from '@/types/proposal';
 interface HeroData {
   title?: string;
   subtitle?: string;
-  backgroundImage?: string;
+  ctaText?: string;
+  scrollText?: string;
+  desktopImage?: string;
+  mobileImage?: string;
 }
 
 interface Props {
@@ -23,13 +26,23 @@ const HeroSectionDynamic: React.FC<Props> = ({ data, clientInfo }) => {
   return (
     <section id="intro" dir="ltr" className="flex flex-col-reverse md:flex-row min-h-screen w-full">
       <div className="w-full md:w-1/2 h-[40vh] md:h-screen relative overflow-hidden">
+        {/* Desktop Image */}
         <motion.img
           initial={{ scale: 1.1, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-          src={data.backgroundImage || "https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b"}
+          src={data.desktopImage || "https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b"}
           alt="Background"
-          className="w-full h-full object-cover"
+          className="hidden md:block w-full h-full object-cover"
+        />
+        {/* Mobile Image */}
+        <motion.img
+          initial={{ scale: 1.1, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+          src={data.mobileImage || data.desktopImage || "https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b"}
+          alt="Background"
+          className="md:hidden w-full h-full object-cover"
         />
         <motion.button 
           initial={{ opacity: 0, y: 20 }}
@@ -45,7 +58,7 @@ const HeroSectionDynamic: React.FC<Props> = ({ data, clientInfo }) => {
           >
             <div className="w-2 h-2 bg-white rounded-full" />
           </motion.div>
-          <span className="text-sm">גלול למטה</span>
+          <span className="text-sm">{data.scrollText || 'גלול למטה'}</span>
         </motion.button>
       </div>
 
@@ -93,7 +106,7 @@ const HeroSectionDynamic: React.FC<Props> = ({ data, clientInfo }) => {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.6 }} className="flex justify-center md:justify-start">
             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={scrollToAbout} className="bg-primary text-primary-foreground px-8 md:px-10 py-4 rounded-full flex items-center gap-3 hover:bg-primary/90 transition-colors text-base md:text-lg">
               <div className="w-2.5 h-2.5 bg-white rounded-full" />
-              <span className="font-medium">גלול להצעה</span>
+              <span className="font-medium">{data.ctaText || 'גלול להצעה'}</span>
             </motion.button>
           </motion.div>
         </div>

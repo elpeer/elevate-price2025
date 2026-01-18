@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Upload, Plus, Trash2, ChevronDown, ChevronUp, GripVertical } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Reorder } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -85,6 +85,10 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
   const removeRepeaterItem = (path: string[], index: number) => {
     const currentArray = getValueByPath(data, path) || [];
     handleChange(path, currentArray.filter((_: any, i: number) => i !== index));
+  };
+
+  const reorderRepeaterItems = (path: string[], newItems: any[]) => {
+    handleChange(path, newItems);
   };
 
   const getValueByPath = (obj: any, path: string[]): any => {
@@ -205,35 +209,41 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
                   exit={{ height: 0, opacity: 0 }}
                   className="space-y-2 overflow-hidden"
                 >
-                  {items.map((item: any, index: number) => (
-                    <motion.div
-                      key={item.id || index}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="bg-secondary/50 rounded-lg p-3 space-y-3 relative group"
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <GripVertical className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-xs font-medium text-muted-foreground">
-                            פריט {index + 1}
-                          </span>
+                  <Reorder.Group 
+                    axis="y" 
+                    values={items} 
+                    onReorder={(newItems) => reorderRepeaterItems(path, newItems)}
+                    className="space-y-2"
+                  >
+                    {items.map((item: any, index: number) => (
+                      <Reorder.Item
+                        key={item.id || index}
+                        value={item}
+                        className="bg-secondary/50 rounded-lg p-3 space-y-3 relative group cursor-grab active:cursor-grabbing"
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <GripVertical className="h-4 w-4 text-muted-foreground" />
+                            <span className="text-xs font-medium text-muted-foreground">
+                              פריט {index + 1}
+                            </span>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 text-destructive hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={() => removeRepeaterItem(path, index)}
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
                         </div>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 text-destructive hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={() => removeRepeaterItem(path, index)}
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      </div>
-                      
-                      {field.itemFields?.map((subField) => 
-                        renderField(subField, [...path, String(index), subField.key], depth + 1)
-                      )}
-                    </motion.div>
-                  ))}
+                        
+                        {field.itemFields?.map((subField) => 
+                          renderField(subField, [...path, String(index), subField.key], depth + 1)
+                        )}
+                      </Reorder.Item>
+                    ))}
+                  </Reorder.Group>
                   
                   <Button
                     variant="outline"
