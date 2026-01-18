@@ -14,10 +14,12 @@ import customerFocusIcon from '@/assets/icons/customer-focus-icon.svg';
 import reliabilityIcon from '@/assets/icons/reliability-icon.svg';
 import serviceIcon from '@/assets/icons/service-icon.svg';
 
+type TextLike = string | { id?: string | number; text?: any } | Record<string, any>;
+
 interface ValueItem { title: string; description: string; }
 interface CoreValuesData {
   title?: string;
-  missionText?: string[];
+  missionText?: TextLike[];
   values?: ValueItem[];
   backgroundImage?: string;
 }
@@ -56,13 +58,31 @@ const LogoSwiper: React.FC = () => {
   );
 };
 
+const textFrom = (v: any): string => {
+  if (typeof v === 'string') return v;
+  if (v && typeof v === 'object') {
+    if (typeof v.text === 'string') return v.text;
+    const numericKeys = Object.keys(v)
+      .filter((k) => /^\d+$/.test(k))
+      .sort((a, b) => Number(a) - Number(b));
+    if (numericKeys.length) return numericKeys.map((k) => v[k]).join('');
+  }
+  return '';
+};
+
 const CoreValuesSectionDynamic: React.FC<Props> = ({ data }) => {
   const values = data.values || defaultValues;
-  const missionText = data.missionText || ['המשימה שלנו היא להעצים עסקים עם פתרונות אינטרנט מתקדמים המניעים צמיחה ומעורבות.', 'עם מחויבות למצוינות ולשביעות רצון לקוחות, אנו שואפים להיות השותף מנצח.'];
+  const fallbackMission = [
+    'המשימה שלנו היא להעצים עסקים עם פתרונות אינטרנט מתקדמים המניעים צמיחה ומעורבות.',
+    'עם מחויבות למצוינות ולשביעות רצון לקוחות, אנו שואפים להיות השותף מנצח.',
+  ];
+  const missionText = Array.isArray(data.missionText)
+    ? data.missionText.map(textFrom).filter(Boolean)
+    : fallbackMission;
   const bgImage = data.backgroundImage || blueAbstractBg;
 
   return (
-    <section id="values" className="w-full" dir="ltr">
+    <section id="values" className="w-full" dir="rtl">
       <div className="flex flex-col md:flex-row">
         <div className="w-full md:w-1/2 flex flex-col order-2 md:order-1" style={{ backgroundColor: '#EFEFFF' }}>
           <div className="relative h-[250px] md:h-[500px] bg-cover bg-center" style={{ backgroundImage: `url(${bgImage})` }}>
