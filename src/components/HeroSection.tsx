@@ -83,15 +83,15 @@ const HeroSection: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-x-4 gap-y-6 md:flex md:gap-24">
-              <div className="text-right min-w-[120px]">
-                <div className="flex items-center gap-2 mb-2 justify-end">
+              <div className="text-right min-w-[140px]">
+                <div className="flex items-center gap-2 mb-2">
                   <span className="text-muted-foreground text-sm md:text-base">איש קשר</span>
                   <div className="w-1 h-4 bg-primary rounded-full" />
                 </div>
                 <span className="text-foreground text-base md:text-lg font-medium">מתן ראובנס</span>
               </div>
-              <div className="text-right min-w-[120px]">
-                <div className="flex items-center gap-2 mb-2 justify-end">
+              <div className="text-right min-w-[140px]">
+                <div className="flex items-center gap-2 mb-2">
                   <span className="text-muted-foreground text-sm md:text-base">טלפון</span>
                   <div className="w-1 h-4 bg-primary rounded-full" />
                 </div>
@@ -100,15 +100,15 @@ const HeroSection: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-x-4 gap-y-6 md:flex md:gap-24">
-              <div className="text-right min-w-[120px]">
-                <div className="flex items-center gap-2 mb-2 justify-end">
+              <div className="text-right min-w-[140px]">
+                <div className="flex items-center gap-2 mb-2">
                   <span className="text-muted-foreground text-sm md:text-base">מייל</span>
                   <div className="w-1 h-4 bg-primary rounded-full" />
                 </div>
                 <a href="mailto:yemp@gmail.com" className="text-foreground text-base md:text-lg font-medium hover:text-primary transition-colors break-all">yemp@gmail.com</a>
               </div>
-              <div className="text-right min-w-[120px]">
-                <div className="flex items-center gap-2 mb-2 justify-end">
+              <div className="text-right min-w-[140px]">
+                <div className="flex items-center gap-2 mb-2">
                   <span className="text-muted-foreground text-sm md:text-base">טלפון משני</span>
                   <div className="w-1 h-4 bg-primary rounded-full" />
                 </div>
