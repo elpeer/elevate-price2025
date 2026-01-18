@@ -89,7 +89,7 @@ const WhyElevateSection: React.FC = () => {
         {/* Title - Logo with arrow icon in center */}
         <ScrollAnimation>
           <div className="flex items-center justify-center gap-6 mb-6 md:mb-8">
-            <img src={whyElevateLogo} alt="Why Elevate" className="h-10 md:h-12" />
+            <img src={whyElevateLogo} alt="Why Elevate" className="h-16 md:h-20" />
           </div>
         </ScrollAnimation>
 
