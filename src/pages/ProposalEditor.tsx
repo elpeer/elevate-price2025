@@ -57,7 +57,7 @@ const ProposalEditor: React.FC = () => {
     setProposal({ ...proposal, content: proposal.content.map(s => s.id === sectionId ? { ...s, data: newData } : s) });
   };
 
-  const handleSave = async () => { setSaving(true); await updateProposal(proposal.id, { content: proposal.content, title: proposal.title, status: proposal.status, client_info: proposal.client_info }); setSaving(false); };
+  const handleSave = async () => { setSaving(true); await updateProposal(proposal.id, { content: proposal.content, title: proposal.title, status: proposal.status, client_info: proposal.client_info, slug: proposal.slug }); setSaving(false); };
 
   return (
     <div className="min-h-screen bg-secondary/30" dir="rtl">
@@ -73,6 +73,20 @@ const ProposalEditor: React.FC = () => {
         </div>
       </header>
       <main className="max-w-2xl mx-auto px-4 py-8">
+        {/* Slug Editor */}
+        <div className="bg-white rounded-xl border p-4 mb-6">
+          <label className="block text-sm font-medium text-muted-foreground mb-2">כתובת הצעה (Slug)</label>
+          <div className="flex items-center gap-2">
+            <span className="text-muted-foreground text-sm">/customer/</span>
+            <Input 
+              value={proposal.slug} 
+              onChange={(e) => setProposal({ ...proposal, slug: e.target.value.toLowerCase().replace(/[^a-z0-9\u0590-\u05FF-]/g, '-') })} 
+              className="flex-1 font-mono text-sm"
+              placeholder="slug-name"
+            />
+          </div>
+        </div>
+        
         <h2 className="text-xl font-bold mb-2">סדר וניראות הסקשנים</h2>
         <p className="text-muted-foreground mb-6">גרור לשינוי סדר, לחץ על ⚙️ לעריכת תוכן</p>
         <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
