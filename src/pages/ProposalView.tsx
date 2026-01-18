@@ -1,8 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useProposals } from '@/hooks/useProposals';
 import { Proposal } from '@/types/proposal';
 import SectionRenderer from '@/components/proposal/SectionRenderer';
+
+class SectionErrorBoundary extends React.Component<
+  { label: string; children: React.ReactNode },
+  { hasError: boolean; error?: unknown }
+> {
+  state = { hasError: false as boolean, error: undefined as unknown };
+
+  static getDerivedStateFromError(error: unknown) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: unknown) {
+    // Helps us see the root cause in the browser console
+    console.error(`[ProposalView] Section crashed: ${this.props.label}`, error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="w-full py-10 px-6 md:px-16">
+          <div className="max-w-3xl mx-auto border border-border rounded-xl p-6 bg-background text-right" dir="rtl">
+            <h2 className="text-xl font-semibold text-foreground mb-2">משהו נשבר בסקשן: {this.props.label}</h2>
+            <p className="text-muted-foreground text-sm">
+              בדוק בקונסול (Console) לשגיאה המלאה, או שלח לי צילום/טקסט של השגיאה ואני אתקן.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
 
 const ProposalView: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
