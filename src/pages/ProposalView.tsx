@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useProposals } from '@/hooks/useProposals';
 import { Proposal } from '@/types/proposal';
 import SectionRenderer from '@/components/proposal/SectionRenderer';
+import elevateLogo from '@/assets/elevate-logo.svg';
 
 class SectionErrorBoundary extends React.Component<
   { label: string; children: React.ReactNode },
@@ -64,9 +65,21 @@ const ProposalView: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background" dir="rtl">
-      {visibleSections.map(section => (
-        <SectionRenderer key={section.id} section={section} proposal={proposal} />
-      ))}
+      {/* Header with logo */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border/50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link to="/">
+            <img src={elevateLogo} alt="Elevate" className="h-8" />
+          </Link>
+        </div>
+      </header>
+      
+      {/* Add top padding for fixed header */}
+      <div className="pt-16">
+        {visibleSections.map(section => (
+          <SectionRenderer key={section.id} section={section} proposal={proposal} />
+        ))}
+      </div>
     </div>
   );
 };
