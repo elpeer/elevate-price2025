@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { ScrollAnimation } from '../ScrollAnimation';
@@ -17,15 +17,34 @@ const SignatureSectionDynamic: React.FC<Props> = ({ data, proposalId, proposalSt
   const [signatureData, setSignatureData] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [alreadySigned, setAlreadySigned] = useState(false);
+  const [existingSignature, setExistingSignature] = useState<{ client_name: string; signed_at: string } | null>(null);
   const { toast } = useToast();
 
   const title = data.title || 'אישור לקוח';
   const agreementText = data.agreementText || 'בחתימה מעלה, אני מאשר שקראתי, הבנתי והסכמתי לכל התנאים, התנאים והמדיניות המפורטים בהסכם פרויקט ADU.';
 
-  const canSubmit = agreed && signatureData && clientName.trim() !== '' && proposalId && proposalStatus === 'published';
+  // Check if already signed
+  useEffect(() => {
+    const checkSignature = async () => {
+      if (!proposalId) return;
+      const { data: sigData } = await supabase
+        .from('signatures')
+        .select('client_name, signed_at')
+        .eq('proposal_id', proposalId)
+        .maybeSingle();
+      if (sigData) {
+        setAlreadySigned(true);
+        setExistingSignature(sigData);
+      }
+    };
+    checkSignature();
+  }, [proposalId]);
+
+  const canSubmit = agreed && signatureData && clientName.trim() !== '' && proposalId && (proposalStatus === 'published' || proposalStatus === 'signed') && !alreadySigned;
 
   const handleSubmit = async () => {
-    if (!canSubmit || !proposalId) return;
+    if (!canSubmit || !proposalId || alreadySigned) return;
     setSubmitting(true);
     try {
       const { error } = await supabase.from('signatures').insert({ proposal_id: proposalId, client_name: clientName, signature_data: signatureData, agreed_to_terms: agreed });
@@ -39,6 +58,20 @@ const SignatureSectionDynamic: React.FC<Props> = ({ data, proposalId, proposalSt
       setSubmitting(false);
     }
   };
+
+  // Already signed view
+  if (alreadySigned && existingSignature) {
+    return (
+      <section id="signature" className="w-full bg-background py-12 px-6 md:px-16 pb-32 md:pb-12" dir="rtl">
+        <div className="max-w-2xl mx-auto text-center py-16">
+          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring' }} className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"><Check className="w-10 h-10 text-green-600" /></motion.div>
+          <h2 className="text-3xl font-bold text-foreground mb-4">ההצעה נחתמה</h2>
+          <p className="text-muted-foreground mb-2">נחתם על ידי: <strong>{existingSignature.client_name}</strong></p>
+          <p className="text-muted-foreground">בתאריך: {new Date(existingSignature.signed_at).toLocaleDateString('he-IL')}</p>
+        </div>
+      </section>
+    );
+  }
 
   if (submitted) {
     return (

@@ -11,6 +11,7 @@ import Admin from "./pages/Admin";
 import AdminUsers from "./pages/AdminUsers";
 import AdminProfile from "./pages/AdminProfile";
 import AdminSettings from "./pages/AdminSettings";
+import AdminSignatures from "./pages/AdminSignatures";
 import ProposalEditor from "./pages/ProposalEditor";
 import ProposalViewPage from "./pages/ProposalViewPage";
 
@@ -27,6 +28,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/signatures" element={<AdminSignatures />} />
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/profile" element={<AdminProfile />} />
               <Route path="/admin/settings" element={<AdminSettings />} />
