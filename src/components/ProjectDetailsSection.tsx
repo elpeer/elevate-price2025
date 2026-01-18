@@ -32,7 +32,7 @@ const ProjectDetailsSection: React.FC = () => {
     <section id="project-details" className="w-full bg-background">
       <div className="flex flex-col md:flex-row">
         {/* RIGHT column: FAQ Accordion */}
-        <div className="w-full md:w-1/2 py-16 px-12" dir="rtl">
+        <div className="w-full md:w-1/2 py-10 md:py-16 px-4 md:px-12" dir="rtl">
           <h2 className="text-3xl md:text-4xl font-normal text-foreground text-right mb-12">
             פרטים נוספים על הפרויקט
           </h2>
@@ -73,7 +73,7 @@ const ProjectDetailsSection: React.FC = () => {
         </div>
 
         {/* LEFT column: Image */}
-        <div className="w-full md:w-1/2">
+        <div className="hidden md:block w-full md:w-1/2">
           <img 
             src={projectDetailsImage} 
             alt="Project details" 
