@@ -6,10 +6,10 @@ import gadiPhoto from '@/assets/gadi-photo.png';
 const AboutSection: React.FC = () => {
   return (
     <section id="about" dir="rtl" className="w-full">
-      <div className="flex flex-col md:flex-row">
-        {/* Left side - Gadi photo (desktop only) with lavender background */}
-        <div className="hidden md:flex md:w-1/3 items-center justify-center py-16 px-8" style={{ backgroundColor: '#EFEFFF' }}>
-          <FadeScale className="flex flex-col items-center gap-4">
+      <div className="flex flex-col md:flex-row-reverse">
+        {/* Left side - Gadi photo (desktop only) with lavender background - same width as hero image (1/2) */}
+        <div className="hidden md:flex md:w-1/2 items-center justify-center py-16 px-8" style={{ backgroundColor: '#EFEFFF' }}>
+          <FadeScale className="flex flex-row-reverse items-center gap-6">
             {/* Image */}
             <img
               src={gadiPhoto}
@@ -17,7 +17,7 @@ const AboutSection: React.FC = () => {
               className="w-48 h-48 object-cover grayscale"
             />
             {/* Text */}
-            <div className="text-center">
+            <div className="text-right">
               <h3 className="text-xl font-semibold text-foreground mb-1">גדי מאירסון</h3>
               <p className="text-primary text-sm">CEO elevate</p>
               <a href="mailto:gadi@elevate.co.il" className="text-primary text-sm hover:underline">gadi@elevate.co.il</a>
@@ -26,8 +26,8 @@ const AboutSection: React.FC = () => {
         </div>
 
         {/* Right side - Content with white background */}
-        <div className="w-full md:w-2/3 py-16 md:py-24 px-6 md:px-16 bg-background">
-          <div className="max-w-3xl md:mr-auto text-right">
+        <div className="w-full md:w-1/2 py-16 md:py-24 px-6 md:px-16 bg-background">
+          <div className="max-w-3xl text-right">
             <ScrollAnimation direction="right">
               <h2 className="text-2xl md:text-5xl font-medium leading-tight text-foreground mb-5 md:mb-10">
                 אנו נרגשים להתחיל את
