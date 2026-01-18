@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 const Tabs = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>
->(({ ...props }, ref) => (
+>(({ dir: _dir, ...props }, ref) => (
   <TabsPrimitive.Root ref={ref} dir="rtl" {...props} />
 ));
 Tabs.displayName = "Tabs";
