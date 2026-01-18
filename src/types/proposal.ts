@@ -82,6 +82,10 @@ export interface HeroData {
   scrollText: string;
   desktopImage: string;
   mobileImage: string;
+  proposalLabel: string;
+  contactLabel: string;
+  phoneLabel: string;
+  emailLabel: string;
 }
 
 export interface AboutData {
@@ -166,6 +170,8 @@ export interface SiteContentData {
 
 export interface DeliverablesData {
   title: string;
+  includedTitle: string;
+  excludedTitle: string;
   desktopBackgroundImage: string;
   mobileBackgroundImage: string;
   includedItems: { id: string; text: string }[];
@@ -218,6 +224,8 @@ export interface PricingData {
   addonsTitle: string;
   addonsSubtitle: string;
   summaryTitle: string;
+  totalLabel: string;
+  hoursLabel: string;
   basePackages: PricingPackage[];
   addonCategories: PricingCategory[];
   paymentTermsTitle: string;
@@ -229,6 +237,9 @@ export interface SignatureData {
   title: string;
   signatureTitle: string;
   signatureSubtitle: string;
+  clientNameLabel: string;
+  clientNamePlaceholder: string;
+  dateLabel: string;
   agreementText: string;
   submitButtonText: string;
   successTitle: string;
@@ -245,6 +256,10 @@ export const sectionFieldSchemas: Record<SectionType, FieldDefinition[]> = {
     { key: 'subtitle', label: 'כותרת משנית', type: 'text' },
     { key: 'ctaText', label: 'טקסט כפתור', type: 'text' },
     { key: 'scrollText', label: 'טקסט גלילה', type: 'text' },
+    { key: 'proposalLabel', label: 'תווית הצעה לכבוד', type: 'text' },
+    { key: 'contactLabel', label: 'תווית איש קשר', type: 'text' },
+    { key: 'phoneLabel', label: 'תווית טלפון', type: 'text' },
+    { key: 'emailLabel', label: 'תווית מייל', type: 'text' },
     { key: 'desktopImage', label: 'תמונת רקע (דסקטופ)', type: 'image' },
     { key: 'mobileImage', label: 'תמונת רקע (מובייל)', type: 'image' },
   ],
@@ -309,6 +324,8 @@ export const sectionFieldSchemas: Record<SectionType, FieldDefinition[]> = {
   ],
   deliverables: [
     { key: 'title', label: 'כותרת', type: 'text' },
+    { key: 'includedTitle', label: 'כותרת כלול', type: 'text' },
+    { key: 'excludedTitle', label: 'כותרת לא כלול', type: 'text' },
     { key: 'desktopBackgroundImage', label: 'רקע (דסקטופ)', type: 'image' },
     { key: 'mobileBackgroundImage', label: 'רקע (מובייל)', type: 'image' },
     { key: 'includedItems', label: 'כלול בהצעה', type: 'repeater', itemFields: [{ key: 'text', label: 'פריט', type: 'text' }] },
@@ -326,6 +343,8 @@ export const sectionFieldSchemas: Record<SectionType, FieldDefinition[]> = {
     { key: 'addonsTitle', label: 'כותרת תוספות', type: 'text' },
     { key: 'addonsSubtitle', label: 'תת כותרת תוספות', type: 'textarea' },
     { key: 'summaryTitle', label: 'כותרת סיכום', type: 'text' },
+    { key: 'totalLabel', label: 'תווית סה"כ', type: 'text' },
+    { key: 'hoursLabel', label: 'תווית שעות', type: 'text' },
     { key: 'basePackages', label: 'חבילות בסיס', type: 'repeater', itemFields: [
       { key: 'title', label: 'שם חבילה', type: 'text' },
       { key: 'price', label: 'מחיר', type: 'number' },
@@ -350,6 +369,9 @@ export const sectionFieldSchemas: Record<SectionType, FieldDefinition[]> = {
     { key: 'title', label: 'כותרת', type: 'text' },
     { key: 'signatureTitle', label: 'כותרת חתימה', type: 'text' },
     { key: 'signatureSubtitle', label: 'תת כותרת חתימה', type: 'text' },
+    { key: 'clientNameLabel', label: 'תווית שם לקוח', type: 'text' },
+    { key: 'clientNamePlaceholder', label: 'פלייסהולדר שם', type: 'text' },
+    { key: 'dateLabel', label: 'תווית תאריך', type: 'text' },
     { key: 'agreementText', label: 'טקסט הסכמה', type: 'textarea' },
     { key: 'submitButtonText', label: 'טקסט כפתור', type: 'text' },
     { key: 'successTitle', label: 'כותרת הצלחה', type: 'text' },
@@ -358,7 +380,7 @@ export const sectionFieldSchemas: Record<SectionType, FieldDefinition[]> = {
 };
 
 // ===============================
-// DEFAULT DATA FOR EACH SECTION
+// DEFAULT DATA - ACTUAL CONTENT FROM LIVE SITE
 // ===============================
 
 export const defaultHeroData: HeroData = {
@@ -366,8 +388,12 @@ export const defaultHeroData: HeroData = {
   subtitle: 'עבור Stagent CRM',
   ctaText: 'גלול להצעה',
   scrollText: 'גלול למטה',
-  desktopImage: 'https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b',
-  mobileImage: 'https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b',
+  proposalLabel: 'הצעה לכבוד',
+  contactLabel: 'איש קשר',
+  phoneLabel: 'טלפון',
+  emailLabel: 'מייל',
+  desktopImage: '',
+  mobileImage: '',
 };
 
 export const defaultAboutData: AboutData = {
@@ -387,9 +413,9 @@ export const defaultWhyElevateData: WhyElevateData = {
   headerImage: '',
   description: 'אנו מעצבים חוויות משתמש אינטואיטיביות וממשקים ויזואליים המשקפים את מהות המותג שלך ומגבירים מעורבות.',
   services: [
-    { id: '1', icon: '', title: 'שירות מקיף', description: 'מעיצוב UI/UX ועד פיתוח, מיתוג, אירוח, אבטחה ואסטרטגיה דיגיטלית.' },
+    { id: '1', icon: '', title: 'שירות מקיף', description: 'מעיצוב UI/UX ועד פיתוח, מיתוג, אירוח, אבטחה ואסטרטגיה דיגיטלית - אנו מציעים שירותי אינטרנט מקיפים תחת קורת גג אחת.' },
     { id: '2', icon: '', title: 'פתרונות מותאמים אישית', description: 'הפורטפוליו המגוון שלנו מציג את יכולתנו להסתגל לתעשיות שונות.' },
-    { id: '3', icon: '', title: 'עיצוב אתר אסטרטגי', description: 'שדרג את הנוכחות שלך באינטרנט עם אתר אינטרנט שנבנה בקפידה.' },
+    { id: '3', icon: '', title: 'עיצוב אתר אסטרטגי להצלחה עסקית', description: 'שדרג את הנוכחות שלך באינטרנט עם אתר אינטרנט שנבנה בקפידה.' },
     { id: '4', icon: '', title: 'מצוינות ללא טרחה', description: 'תירגע בזמן שאנו מטפלים בכל פרט.' },
     { id: '5', icon: '', title: 'תמיכת לקוחות יוצאת דופן', description: 'החזון שלך מניע את העבודה שלנו.' },
     { id: '6', icon: '', title: 'הצטיינות מהימנה', description: 'אנו משרתים את החברות המובילות בישראל.' },
@@ -408,55 +434,62 @@ export const defaultCoreValuesData: CoreValuesData = {
   clientLogos: [],
   values: [
     { id: '1', icon: '', title: 'חדשנות', description: 'דחיפת גבולות בעיצוב ופיתוח אתרים עם פתרונות חדשניים.' },
-    { id: '2', icon: '', title: 'מיקוד לקוח', description: 'מתן עדיפות לתקשורת ברורה ופתרונות מותאמים.' },
-    { id: '3', icon: '', title: 'מהימנות', description: 'אספקת תוצאות אמינות ואיכותיות באופן עקבי.' },
-    { id: '4', icon: '', title: 'שירות מקיף', description: 'פתרונות משולבים ברמה גבוהה.' },
+    { id: '2', icon: '', title: 'מיקוד לקוח', description: 'מתן עדיפות לתקשורת ברורה ופתרונות מותאמים בהתאמה למטרות הלקוח.' },
+    { id: '3', icon: '', title: 'מהימנות', description: 'אספקת תוצאות אמינות ואיכותיות באופן עקבי העולה על הציפיות.' },
+    { id: '4', icon: '', title: 'שירות מקיף', description: 'נציע פתרונות משולבים ברמה גבוהה לכל ההיבטים של נוכחות באינטרנט.' },
   ],
 };
 
 export const defaultTestimonialsData: TestimonialsData = {
   title: 'מה אומרים עלינו',
-  subtitle: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו.',
+  subtitle: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.',
   testimonials: [
-    { id: '1', avatar: '', name: 'יוסי כהן', role: 'מנכ"ל', companyLogo: '', quote: 'על Elevate הוטל לעצב מחדש ולפתח את האתר החדש שלנו.' },
-    { id: '2', avatar: '', name: 'דני לוי', role: 'VP Product', companyLogo: '', quote: 'אני יכול לומר בביטחון כי Elevate סיפקה עבודה מצוינת.' },
+    { id: '1', avatar: 'https://api.builder.io/api/v1/image/assets/TEMP/9dbbf53e39bc0a6708b47a333686f73f0dc70ad5', name: 'יוסי כהן', role: 'מנכ"ל', companyLogo: 'https://api.builder.io/api/v1/image/assets/TEMP/06395a516979c278f2eccebe7d5ff71794845919', quote: '"על Elevate הוטל לעצב מחדש ולפתח את האתר החדש שלנו. המסירה הסופית שלהם לא רק עלתה על הציפיות שלנו."' },
+    { id: '2', avatar: 'https://api.builder.io/api/v1/image/assets/TEMP/e70979e9cbec3cb67452933606c1001bf3c49dc4', name: 'דני לוי', role: 'VP Product', companyLogo: 'https://api.builder.io/api/v1/image/assets/TEMP/007e55697bfb495081352f2cd5144f56d07ec3d9', quote: '"אני יכול לומר בביטחון כי Elevate סיפקה חלק מעבודות העיצוב והפיתוח הטובות ביותר עבור Playtika."' },
+    { id: '3', avatar: 'https://api.builder.io/api/v1/image/assets/TEMP/5cd0c9786aa76fdc6d3c30a36f2c0c6091d1f586', name: 'מיכל אברהם', role: 'Product Manager', companyLogo: 'https://api.builder.io/api/v1/image/assets/TEMP/e8d9d11465d14cdee4ff2a87d6addaa494e312ea', quote: '"המומחיות והחדשנות של Elevate בתכנון ויישום שיפורים משמעותיים עלו על כל הציפיות שלנו."' },
+    { id: '4', avatar: 'https://api.builder.io/api/v1/image/assets/TEMP/e22b85885aa238673848e642f0723e370c109520', name: 'רון שמש', role: 'CTO', companyLogo: 'https://api.builder.io/api/v1/image/assets/TEMP/930605fdd1caa51b70ea4489336287408de9d43e', quote: '"על Elevate הוטל לעצב מחדש ולפתח את האתר החדש שלנו. המסירה הסופית שלהם עלתה על הציפיות."' },
   ],
 };
 
 export const defaultProjectsData: ProjectsData = {
   title: 'פרויקטים',
-  subtitle: 'אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות.',
+  subtitle: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.',
   projects: [
-    { id: '1', desktopImage: '', mobileImage: '', title: 'Israel Canada', description: 'עיצוב ופיתוח אתר' },
-    { id: '2', desktopImage: '', mobileImage: '', title: 'Polestar', description: 'עיצוב ופיתוח אתר' },
+    { id: '1', desktopImage: 'https://api.builder.io/api/v1/image/assets/TEMP/aa388752d6f6658df6b4fcee6b141e001158328b', mobileImage: 'https://api.builder.io/api/v1/image/assets/TEMP/aa388752d6f6658df6b4fcee6b141e001158328b', title: 'Israel Canada', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
+    { id: '2', desktopImage: 'https://api.builder.io/api/v1/image/assets/TEMP/c22f82cf2ef4eb51b822d54d2bdd7dac9c74c9f5', mobileImage: 'https://api.builder.io/api/v1/image/assets/TEMP/c22f82cf2ef4eb51b822d54d2bdd7dac9c74c9f5', title: 'Polestar', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
+    { id: '3', desktopImage: 'https://api.builder.io/api/v1/image/assets/TEMP/be2dcd2447248af8225102a121a6a1ff9913d3d2', mobileImage: 'https://api.builder.io/api/v1/image/assets/TEMP/be2dcd2447248af8225102a121a6a1ff9913d3d2', title: 'Afcon', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
   ],
 };
 
 export const defaultSiteContentData: SiteContentData = {
   title: 'תכולת האתר',
-  subtitle: 'מבנה האתר מאורגן כהיררכיה ברורה הכוללת דף בית מרכזי.',
+  subtitle: 'מבנה האתר מאורגן כהיררכיה ברורה הכוללת דף בית מרכזי, עמודי תוכן ראשיים',
   items: [
-    { id: '1', title: 'עמוד הבית', description: 'הירו, קומת יתרונות, קומת קטגוריות' },
-    { id: '2', title: 'עמוד קטגוריה', description: 'הסבר קצר על המוצרים' },
-    { id: '3', title: 'עמוד מוצר', description: 'פרטי המוצר' },
-    { id: '4', title: 'אודות', description: 'מידע על החברה' },
+    { id: '1', title: 'עמוד הבית', description: 'הירו, קומת יתרונות, קומת קטגוריות, קומת מוצרים, צור קשר, פוטר' },
+    { id: '2', title: 'עמוד קטגוריה', description: 'הסבר קצר על המוצרים שלנו ופאנל פילטרים של הקטגוריות יחד עם המוצרים' },
+    { id: '3', title: 'עמוד מוצר', description: 'הירו, קומת יתרונות, קומת קטגוריות, קומת מוצרים, צור קשר, פוטר' },
+    { id: '4', title: 'אודות', description: 'הירו, קומת יתרונות, קומת קטגוריות, קומת מוצרים, צור קשר, פוטר' },
+    { id: '5', title: 'עמוד יתרונות', description: '' },
+    { id: '6', title: 'יצירת קשר', description: '' },
   ],
 };
 
 export const defaultDeliverablesData: DeliverablesData = {
   title: 'כל מה שנספק לך',
+  includedTitle: 'כלול בהצעה',
+  excludedTitle: 'לא כלול',
   desktopBackgroundImage: '',
   mobileBackgroundImage: '',
   includedItems: [
-    { id: '1', text: 'אפיון ועיצוב כל התבניות' },
+    { id: '1', text: 'אפיון ועיצוב כל התבניות בהתאם לרשימת המסכים' },
     { id: '2', text: 'בניית Design System' },
-    { id: '3', text: 'ליווי צוות הפיתוח' },
-    { id: '4', text: 'מיקרו אנימציה' },
+    { id: '3', text: 'ליווי צוות הפיתוח עד לשלבים מתקדמים' },
+    { id: '4', text: 'מיקרו אנימציה ואלמנטים אינטרקאטיביים' },
     { id: '5', text: 'נגישות האתר' },
   ],
   excludedItems: [
     { id: '1', text: 'פיתוח Frontend' },
-    { id: '2', text: 'מיתוג' },
+    { id: '2', text: 'מיתוג (אופציונלי)' },
     { id: '3', text: 'יצירת תוכן' },
     { id: '4', text: 'הכנסת תוכן ועריכה' },
   ],
@@ -466,9 +499,9 @@ export const defaultProjectDetailsData: ProjectDetailsData = {
   title: 'פרטים נוספים על הפרויקט',
   sideImage: '',
   faqItems: [
-    { id: '1', title: 'אחריות', content: 'מועד תקופת האחריות יחל מיום העלייה לאוויר למשך 3 חודשים.' },
-    { id: '2', title: 'תקלות', content: 'במקרה של תקלות טכניות, צוות התמיכה שלנו יהיה זמין.' },
-    { id: '3', title: 'הדרכה', content: 'אנו מספקים הדרכה מקיפה לשימוש במערכת.' },
+    { id: '1', title: 'אחריות', content: 'מועד תקופת האחריות יחל מיום העלייה לאוויר למשך 3 חודשים. במסגרת האחריות, חברת elevate תטפל בכל תקלה בהתאם לSLA.' },
+    { id: '2', title: 'תקלות', content: 'במקרה של תקלות טכניות, צוות התמיכה שלנו יהיה זמין לסייע בפתרון הבעיה בהקדם האפשרי.' },
+    { id: '3', title: 'הדרכה של אתר CMS', content: 'אנו מספקים הדרכה מקיפה לשימוש במערכת ניהול התוכן (CMS) של האתר.' },
   ],
 };
 
@@ -477,15 +510,17 @@ export const defaultPricingData: PricingData = {
   addonsTitle: 'העדפות ותוספות',
   addonsSubtitle: 'נא לבחור העדפות בנוגע לנגישות ושרתים ועוד..',
   summaryTitle: 'סיכום לוחות זמנים ועלויות',
+  totalLabel: 'סה"כ',
+  hoursLabel: 'שעות',
   basePackages: [
-    { id: '1', title: 'אבחון ומחקר', price: 5000, hours: 30, items: [{ id: '1', text: 'ראיונות עומק' }, { id: '2', text: 'ניתוח הממשק הקיים' }] },
-    { id: '2', title: 'תכנון UX', price: 2000, hours: 30, items: [{ id: '1', text: 'ראיונות עומק' }] },
-    { id: '3', title: 'עיצוב UI', price: 1000, hours: 30, items: [{ id: '1', text: 'עיצוב ממשק' }] },
-    { id: '4', title: 'העברה לפיתוח', price: 2000, hours: 30, items: [{ id: '1', text: 'ליווי פיתוח' }] },
+    { id: '1', title: 'אבחון ומחקר', price: 5000, hours: 30, items: [{ id: '1', text: 'ראיונות עומק לצורך למידה ואפיון צרכים' }, { id: '2', text: 'ניתוח הממשק הקיים' }, { id: '3', text: 'ניתוח מתחרים' }] },
+    { id: '2', title: 'תכנון UX עדכני', price: 2000, hours: 30, items: [{ id: '1', text: 'ראיונות עומק' }, { id: '2', text: 'ניתוח הממשק הקיים' }] },
+    { id: '3', title: 'עיצוב UI', price: 1000, hours: 30, items: [{ id: '1', text: 'ראיונות עומק' }, { id: '2', text: 'ניתוח הממשק הקיים' }] },
+    { id: '4', title: 'העברה לפיתוח וליווי', price: 2000, hours: 30, items: [{ id: '1', text: 'ראיונות עומק' }, { id: '2', text: 'ניתוח הממשק הקיים' }] },
   ],
   addonCategories: [
-    { id: '1', title: 'נגישות', options: [
-      { id: '1', title: 'תוסף נגישות', price: '₪48,000', priceValue: 48000, hours: 40, description: 'נגישות ברמת הקוד', details: '' },
+    { id: 'accessibility', title: 'נגישות', options: [
+      { id: 'addon', title: 'תוסף/רכיב נגישות', price: '₪48,000', priceValue: 48000, hours: 40, description: 'נגישות תיושם ברמת הקוד', details: '' },
     ]},
   ],
   paymentTermsTitle: 'תנאי תשלום',
@@ -493,7 +528,7 @@ export const defaultPricingData: PricingData = {
     { id: '1', text: 'שבועיים אחרי פגישת התנעה – 15%' },
     { id: '2', text: 'סיום עיצוב – 30%' },
     { id: '3', text: 'השלמת פיתוח – 35%' },
-    { id: '4', text: 'שבועיים אחרי התקנה – 20%' },
+    { id: '4', text: 'שבועיים אחרי התקנה ווידוא תקינות – 20%' },
   ],
   notes: [
     { id: '1', text: '*הזמנים המוגדרים הם זמנים לכל חלק בנפרד' },
@@ -504,7 +539,10 @@ export const defaultSignatureData: SignatureData = {
   title: 'אישור לקוח',
   signatureTitle: 'חתימה',
   signatureSubtitle: 'יש לחתום בשדה הבא וללחוץ אישור.',
-  agreementText: 'בחתימה מעלה, אני מאשר שקראתי, הבנתי והסכמתי לכל התנאים.',
+  clientNameLabel: 'שם לקוח',
+  clientNamePlaceholder: 'הכנס שם מלא',
+  dateLabel: 'תאריך',
+  agreementText: 'בחתימה מעלה, אני מאשר שקראתי, הבנתי והסכמתי לכל התנאים, התנאים והמדיניות המפורטים בהסכם פרויקט ADU.',
   submitButtonText: 'אישור',
   successTitle: 'תודה רבה!',
   successMessage: 'ההצעה נחתמה בהצלחה. ניצור איתך קשר בהקדם.',
