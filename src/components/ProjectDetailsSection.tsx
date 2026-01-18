@@ -33,7 +33,7 @@ const ProjectDetailsSection: React.FC = () => {
       <div className="flex flex-col md:flex-row">
         {/* RIGHT column: FAQ Accordion */}
         <div className="w-full md:w-1/2 py-10 md:py-16 px-4 md:px-12" dir="rtl">
-          <h2 className="text-3xl md:text-4xl font-normal text-foreground text-right mb-12">
+          <h2 className="text-3xl md:text-4xl font-normal text-foreground text-right mb-6 md:mb-12">
             פרטים נוספים על הפרויקט
           </h2>
 
