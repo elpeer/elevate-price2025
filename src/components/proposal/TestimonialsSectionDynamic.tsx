@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollAnimation, StaggerContainer, StaggerItem } from '../ScrollAnimation';
 
+// Normalized shape expected by the component
 interface TestimonialItem {
   name: string;
   title: string;
@@ -9,10 +10,23 @@ interface TestimonialItem {
   avatar?: string;
 }
 
+// Raw shape that might come from DB
+interface RawTestimonialItem {
+  id?: number | string;
+  name: string;
+  role?: string;   // DB uses "role" instead of "title"
+  title?: string;
+  quote?: string;  // DB uses "quote" instead of "text"
+  text?: string;
+  companyLogo?: string;  // DB uses "companyLogo" instead of "logo"
+  logo?: string;
+  avatar?: string;
+}
+
 interface TestimonialsData {
   title?: string;
   subtitle?: string;
-  testimonials?: TestimonialItem[];
+  testimonials?: RawTestimonialItem[];
 }
 
 interface Props {
@@ -26,10 +40,21 @@ const defaultTestimonials: TestimonialItem[] = [
   { logo: 'https://api.builder.io/api/v1/image/assets/TEMP/930605fdd1caa51b70ea4489336287408de9d43e', avatar: 'https://api.builder.io/api/v1/image/assets/TEMP/e22b85885aa238673848e642f0723e370c109520', text: '"על Elevate הוטל לעצב מחדש ולפתח את האתר החדש שלנו. המסירה הסופית שלהם עלתה על הציפיות."', name: 'רון שמש', title: 'CTO' }
 ];
 
+const normalizeTestimonials = (raw: RawTestimonialItem[] | undefined): TestimonialItem[] => {
+  if (!Array.isArray(raw) || raw.length === 0) return defaultTestimonials;
+  return raw.map((t) => ({
+    name: t.name || '',
+    title: t.role || t.title || '',
+    text: t.quote || t.text || '',
+    logo: t.companyLogo || t.logo || '',
+    avatar: t.avatar || '',
+  }));
+};
+
 const TestimonialsSectionDynamic: React.FC<Props> = ({ data }) => {
   const title = data.title || 'מה אומרים עלינו';
   const subtitle = data.subtitle || 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.';
-  const testimonials = data.testimonials || defaultTestimonials;
+  const testimonials = normalizeTestimonials(data.testimonials);
 
   return (
     <section id="testimonials" className="w-full bg-background py-10 md:py-16 px-6 md:px-16 flex flex-col justify-center">
