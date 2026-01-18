@@ -73,6 +73,54 @@ const ProposalEditor: React.FC = () => {
         </div>
       </header>
       <main className="max-w-2xl mx-auto px-4 py-8">
+        {/* Client Info Editor */}
+        <div className="bg-white rounded-xl border p-4 mb-6">
+          <h3 className="text-lg font-medium mb-4">פרטי לקוח</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">שם חברה</label>
+              <Input 
+                value={proposal.client_info?.companyName || ''} 
+                onChange={(e) => setProposal({ ...proposal, client_info: { ...proposal.client_info, companyName: e.target.value } })} 
+                placeholder="שם חברה"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">איש קשר</label>
+              <Input 
+                value={proposal.client_info?.contactPerson || ''} 
+                onChange={(e) => setProposal({ ...proposal, client_info: { ...proposal.client_info, contactPerson: e.target.value } })} 
+                placeholder="איש קשר"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">אימייל</label>
+              <Input 
+                value={proposal.client_info?.email || ''} 
+                onChange={(e) => setProposal({ ...proposal, client_info: { ...proposal.client_info, email: e.target.value } })} 
+                placeholder="email@example.com"
+                type="email"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">טלפון</label>
+              <Input 
+                value={proposal.client_info?.phone || ''} 
+                onChange={(e) => setProposal({ ...proposal, client_info: { ...proposal.client_info, phone: e.target.value } })} 
+                placeholder="050-0000000"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">טלפון משני</label>
+              <Input 
+                value={proposal.client_info?.secondaryPhone || ''} 
+                onChange={(e) => setProposal({ ...proposal, client_info: { ...proposal.client_info, secondaryPhone: e.target.value } })} 
+                placeholder="טלפון משני (אופציונלי)"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Slug Editor */}
         <div className="bg-white rounded-xl border p-4 mb-6">
           <label className="block text-sm font-medium text-muted-foreground mb-2">כתובת הצעה (Slug)</label>
