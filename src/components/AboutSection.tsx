@@ -33,7 +33,7 @@ const AboutSection: React.FC = () => {
             </ScrollAnimation>
 
             {/* Signature Section */}
-            <FadeScale className="flex flex-row-reverse items-center gap-6 mt-8 md:mt-12 justify-end">
+            <FadeScale className="flex items-center gap-6 mt-8 md:mt-12">
               {/* Image */}
               <img
                 src={gadiPhoto}
