@@ -49,7 +49,7 @@ const HeroSection: React.FC = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex justify-center mb-6 md:hidden"
+            className="flex mb-6 md:hidden"
           >
             <img 
               src={sidebarLogo} 
@@ -63,7 +63,7 @@ const HeroSection: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-3xl md:text-6xl font-normal leading-tight text-foreground mb-8 md:mb-12 text-center md:text-right"
+            className="text-3xl md:text-6xl font-normal leading-tight text-foreground mb-8 md:mb-12 text-right"
           >
             אפיון ועיצוב UX/UI
             <br />
@@ -77,7 +77,7 @@ const HeroSection: React.FC = () => {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="space-y-6 mb-10"
           >
-            <div className="text-center md:text-right">
+            <div className="text-right">
               <span className="text-muted-foreground text-base block mb-1">הצעה לכבוד</span>
               <span className="text-2xl md:text-3xl font-medium text-foreground">Stagent</span>
             </div>
