@@ -151,7 +151,6 @@ const AdminProfile: React.FC = () => {
                 value={email}
                 disabled
                 className="bg-secondary"
-                dir="ltr"
               />
               <p className="text-xs text-muted-foreground">לא ניתן לשנות את האימייל</p>
             </div>
@@ -183,7 +182,6 @@ const AdminProfile: React.FC = () => {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="הזן סיסמה חדשה"
-                dir="ltr"
               />
             </div>
 
@@ -194,7 +192,6 @@ const AdminProfile: React.FC = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="הזן את הסיסמה שוב"
-                dir="ltr"
               />
             </div>
 

@@ -168,7 +168,6 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
               value={value || 0}
               onChange={(e) => handleChange(path, Number(e.target.value))}
               className="bg-white w-40"
-              dir="ltr"
             />
           </div>
         );
@@ -202,7 +201,6 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
                   onChange={(e) => handleChange(path, e.target.value)}
                   placeholder="URL או העלה תמונה"
                   className="bg-white text-sm"
-                  dir="ltr"
                 />
                 <Button variant="outline" size="sm" className="relative" disabled={isUploading}>
                   <input

@@ -60,11 +60,11 @@ const CreateProposalDialog: React.FC<Props> = ({ open, onOpenChange }) => {
           </div>
           <div>
             <Label>אימייל</Label>
-            <Input type="email" value={clientInfo.email} onChange={(e) => setClientInfo({...clientInfo, email: e.target.value})} dir="ltr" />
+            <Input type="email" value={clientInfo.email} onChange={(e) => setClientInfo({...clientInfo, email: e.target.value})} />
           </div>
           <div>
             <Label>טלפון</Label>
-            <Input value={clientInfo.phone} onChange={(e) => setClientInfo({...clientInfo, phone: e.target.value})} dir="ltr" />
+            <Input value={clientInfo.phone} onChange={(e) => setClientInfo({...clientInfo, phone: e.target.value})} />
           </div>
           <Button type="submit" className="w-full" disabled={loading || !title.trim()}>
             {loading ? '⏳' : 'יצירת הצעה'}

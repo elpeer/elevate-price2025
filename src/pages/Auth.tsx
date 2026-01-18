@@ -83,8 +83,6 @@ const Auth: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="text-left"
-                dir="ltr"
               />
             </div>
 
@@ -99,8 +97,7 @@ const Auth: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="text-left pl-10"
-                  dir="ltr"
+                  className="pl-10"
                 />
                 <button
                   type="button"

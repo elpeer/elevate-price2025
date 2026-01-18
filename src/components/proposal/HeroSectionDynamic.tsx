@@ -24,7 +24,7 @@ const HeroSectionDynamic: React.FC<Props> = ({ data, clientInfo }) => {
   };
 
   return (
-    <section id="intro" dir="ltr" className="flex flex-col-reverse md:flex-row min-h-screen w-full">
+    <section id="intro" className="flex flex-col-reverse md:flex-row min-h-screen w-full">
       <div className="w-full md:w-1/2 h-[40vh] md:h-screen relative overflow-hidden">
         {/* Desktop Image */}
         <motion.img
