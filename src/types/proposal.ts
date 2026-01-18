@@ -1,4 +1,7 @@
-// Proposal section types
+// ===============================
+// PROPOSAL SECTION TYPES - PRO CMS
+// ===============================
+
 export type SectionType = 
   | 'hero'
   | 'about'
@@ -52,128 +55,462 @@ export interface Signature {
   created_at: string;
 }
 
-// Default section data templates
-export const defaultHeroData = {
+// ===============================
+// FIELD DEFINITIONS FOR CMS
+// ===============================
+
+export type FieldType = 'text' | 'textarea' | 'image' | 'responsiveImage' | 'repeater' | 'boolean' | 'number' | 'select';
+
+export interface FieldDefinition {
+  key: string;
+  label: string;
+  type: FieldType;
+  placeholder?: string;
+  options?: { value: string; label: string }[]; // for select
+  itemFields?: FieldDefinition[]; // for repeater
+  required?: boolean;
+}
+
+// ===============================
+// SECTION DATA INTERFACES
+// ===============================
+
+export interface HeroData {
+  title: string;
+  subtitle: string;
+  ctaText: string;
+  scrollText: string;
+  desktopImage: string;
+  mobileImage: string;
+}
+
+export interface AboutData {
+  title: string;
+  paragraphs: string[];
+  ownerName: string;
+  ownerTitle: string;
+  ownerEmail: string;
+  ownerImage: string;
+}
+
+export interface WhyElevateServiceItem {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface WhyElevateData {
+  headerImage: string;
+  description: string;
+  services: WhyElevateServiceItem[];
+}
+
+export interface CoreValueItem {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface CoreValuesData {
+  title: string;
+  missionText: string[];
+  desktopBackgroundImage: string;
+  mobileBackgroundImage: string;
+  clientsTitle: string;
+  clientLogos: { id: string; image: string }[];
+  values: CoreValueItem[];
+}
+
+export interface TestimonialItem {
+  id: string;
+  avatar: string;
+  name: string;
+  role: string;
+  companyLogo: string;
+  quote: string;
+}
+
+export interface TestimonialsData {
+  title: string;
+  subtitle: string;
+  testimonials: TestimonialItem[];
+}
+
+export interface ProjectItem {
+  id: string;
+  desktopImage: string;
+  mobileImage: string;
+  title: string;
+  description: string;
+}
+
+export interface ProjectsData {
+  title: string;
+  subtitle: string;
+  projects: ProjectItem[];
+}
+
+export interface SiteContentItem {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface SiteContentData {
+  title: string;
+  subtitle: string;
+  items: SiteContentItem[];
+}
+
+export interface DeliverablesData {
+  title: string;
+  desktopBackgroundImage: string;
+  mobileBackgroundImage: string;
+  includedItems: { id: string; text: string }[];
+  excludedItems: { id: string; text: string }[];
+}
+
+export interface FaqItem {
+  id: string;
+  title: string;
+  content: string;
+}
+
+export interface ProjectDetailsData {
+  title: string;
+  sideImage: string;
+  faqItems: FaqItem[];
+}
+
+export interface PricingPackageItem {
+  id: string;
+  text: string;
+}
+
+export interface PricingPackage {
+  id: string;
+  title: string;
+  price: number;
+  hours: number;
+  items: PricingPackageItem[];
+}
+
+export interface PricingAddonOption {
+  id: string;
+  title: string;
+  price: string;
+  priceValue: number;
+  hours: number;
+  description: string;
+  details: string;
+}
+
+export interface PricingCategory {
+  id: string;
+  title: string;
+  options: PricingAddonOption[];
+}
+
+export interface PricingData {
+  title: string;
+  addonsTitle: string;
+  addonsSubtitle: string;
+  summaryTitle: string;
+  basePackages: PricingPackage[];
+  addonCategories: PricingCategory[];
+  paymentTermsTitle: string;
+  paymentTerms: { id: string; text: string }[];
+  notes: { id: string; text: string }[];
+}
+
+export interface SignatureData {
+  title: string;
+  signatureTitle: string;
+  signatureSubtitle: string;
+  agreementText: string;
+  submitButtonText: string;
+  successTitle: string;
+  successMessage: string;
+}
+
+// ===============================
+// FIELD SCHEMAS FOR EACH SECTION
+// ===============================
+
+export const sectionFieldSchemas: Record<SectionType, FieldDefinition[]> = {
+  hero: [
+    { key: 'title', label: 'כותרת ראשית', type: 'text', required: true },
+    { key: 'subtitle', label: 'כותרת משנית', type: 'text' },
+    { key: 'ctaText', label: 'טקסט כפתור', type: 'text' },
+    { key: 'scrollText', label: 'טקסט גלילה', type: 'text' },
+    { key: 'desktopImage', label: 'תמונת רקע (דסקטופ)', type: 'image' },
+    { key: 'mobileImage', label: 'תמונת רקע (מובייל)', type: 'image' },
+  ],
+  about: [
+    { key: 'title', label: 'כותרת', type: 'textarea', required: true },
+    { key: 'paragraphs', label: 'פסקאות', type: 'repeater', itemFields: [{ key: 'text', label: 'טקסט', type: 'textarea' }] },
+    { key: 'ownerName', label: 'שם בעלים', type: 'text' },
+    { key: 'ownerTitle', label: 'תפקיד', type: 'text' },
+    { key: 'ownerEmail', label: 'אימייל', type: 'text' },
+    { key: 'ownerImage', label: 'תמונת בעלים', type: 'image' },
+  ],
+  whyElevate: [
+    { key: 'headerImage', label: 'תמונת כותרת', type: 'image' },
+    { key: 'description', label: 'תיאור', type: 'textarea' },
+    { key: 'services', label: 'שירותים', type: 'repeater', itemFields: [
+      { key: 'icon', label: 'אייקון', type: 'image' },
+      { key: 'title', label: 'כותרת', type: 'text' },
+      { key: 'description', label: 'תיאור', type: 'textarea' },
+    ]},
+  ],
+  coreValues: [
+    { key: 'title', label: 'כותרת', type: 'text' },
+    { key: 'missionText', label: 'טקסט משימה', type: 'repeater', itemFields: [{ key: 'text', label: 'פסקה', type: 'textarea' }] },
+    { key: 'desktopBackgroundImage', label: 'רקע (דסקטופ)', type: 'image' },
+    { key: 'mobileBackgroundImage', label: 'רקע (מובייל)', type: 'image' },
+    { key: 'clientsTitle', label: 'כותרת לקוחות', type: 'text' },
+    { key: 'clientLogos', label: 'לוגואים', type: 'repeater', itemFields: [{ key: 'image', label: 'לוגו', type: 'image' }] },
+    { key: 'values', label: 'ערכים', type: 'repeater', itemFields: [
+      { key: 'icon', label: 'אייקון', type: 'image' },
+      { key: 'title', label: 'כותרת', type: 'text' },
+      { key: 'description', label: 'תיאור', type: 'textarea' },
+    ]},
+  ],
+  testimonials: [
+    { key: 'title', label: 'כותרת', type: 'text' },
+    { key: 'subtitle', label: 'תת כותרת', type: 'textarea' },
+    { key: 'testimonials', label: 'המלצות', type: 'repeater', itemFields: [
+      { key: 'avatar', label: 'תמונה', type: 'image' },
+      { key: 'name', label: 'שם', type: 'text' },
+      { key: 'role', label: 'תפקיד', type: 'text' },
+      { key: 'companyLogo', label: 'לוגו חברה', type: 'image' },
+      { key: 'quote', label: 'ציטוט', type: 'textarea' },
+    ]},
+  ],
+  projects: [
+    { key: 'title', label: 'כותרת', type: 'text' },
+    { key: 'subtitle', label: 'תת כותרת', type: 'textarea' },
+    { key: 'projects', label: 'פרויקטים', type: 'repeater', itemFields: [
+      { key: 'desktopImage', label: 'תמונה (דסקטופ)', type: 'image' },
+      { key: 'mobileImage', label: 'תמונה (מובייל)', type: 'image' },
+      { key: 'title', label: 'שם פרויקט', type: 'text' },
+      { key: 'description', label: 'תיאור', type: 'textarea' },
+    ]},
+  ],
+  siteContent: [
+    { key: 'title', label: 'כותרת', type: 'text' },
+    { key: 'subtitle', label: 'תת כותרת', type: 'textarea' },
+    { key: 'items', label: 'עמודים', type: 'repeater', itemFields: [
+      { key: 'title', label: 'שם עמוד', type: 'text' },
+      { key: 'description', label: 'תיאור', type: 'textarea' },
+    ]},
+  ],
+  deliverables: [
+    { key: 'title', label: 'כותרת', type: 'text' },
+    { key: 'desktopBackgroundImage', label: 'רקע (דסקטופ)', type: 'image' },
+    { key: 'mobileBackgroundImage', label: 'רקע (מובייל)', type: 'image' },
+    { key: 'includedItems', label: 'כלול בהצעה', type: 'repeater', itemFields: [{ key: 'text', label: 'פריט', type: 'text' }] },
+    { key: 'excludedItems', label: 'לא כלול', type: 'repeater', itemFields: [{ key: 'text', label: 'פריט', type: 'text' }] },
+  ],
+  projectDetails: [
+    { key: 'title', label: 'כותרת', type: 'text' },
+    { key: 'sideImage', label: 'תמונה צדדית', type: 'image' },
+    { key: 'faqItems', label: 'שאלות נפוצות', type: 'repeater', itemFields: [
+      { key: 'title', label: 'שאלה', type: 'text' },
+      { key: 'content', label: 'תשובה', type: 'textarea' },
+    ]},
+  ],
+  pricing: [
+    { key: 'addonsTitle', label: 'כותרת תוספות', type: 'text' },
+    { key: 'addonsSubtitle', label: 'תת כותרת תוספות', type: 'textarea' },
+    { key: 'summaryTitle', label: 'כותרת סיכום', type: 'text' },
+    { key: 'basePackages', label: 'חבילות בסיס', type: 'repeater', itemFields: [
+      { key: 'title', label: 'שם חבילה', type: 'text' },
+      { key: 'price', label: 'מחיר', type: 'number' },
+      { key: 'hours', label: 'שעות', type: 'number' },
+      { key: 'items', label: 'פריטים', type: 'repeater', itemFields: [{ key: 'text', label: 'פריט', type: 'text' }] },
+    ]},
+    { key: 'addonCategories', label: 'קטגוריות תוספות', type: 'repeater', itemFields: [
+      { key: 'title', label: 'שם קטגוריה', type: 'text' },
+      { key: 'options', label: 'אפשרויות', type: 'repeater', itemFields: [
+        { key: 'title', label: 'שם', type: 'text' },
+        { key: 'price', label: 'מחיר (טקסט)', type: 'text' },
+        { key: 'priceValue', label: 'מחיר (מספר)', type: 'number' },
+        { key: 'hours', label: 'שעות', type: 'number' },
+        { key: 'description', label: 'תיאור', type: 'textarea' },
+      ]},
+    ]},
+    { key: 'paymentTermsTitle', label: 'כותרת תנאי תשלום', type: 'text' },
+    { key: 'paymentTerms', label: 'תנאי תשלום', type: 'repeater', itemFields: [{ key: 'text', label: 'תנאי', type: 'text' }] },
+    { key: 'notes', label: 'הערות', type: 'repeater', itemFields: [{ key: 'text', label: 'הערה', type: 'text' }] },
+  ],
+  signature: [
+    { key: 'title', label: 'כותרת', type: 'text' },
+    { key: 'signatureTitle', label: 'כותרת חתימה', type: 'text' },
+    { key: 'signatureSubtitle', label: 'תת כותרת חתימה', type: 'text' },
+    { key: 'agreementText', label: 'טקסט הסכמה', type: 'textarea' },
+    { key: 'submitButtonText', label: 'טקסט כפתור', type: 'text' },
+    { key: 'successTitle', label: 'כותרת הצלחה', type: 'text' },
+    { key: 'successMessage', label: 'הודעת הצלחה', type: 'textarea' },
+  ],
+};
+
+// ===============================
+// DEFAULT DATA FOR EACH SECTION
+// ===============================
+
+export const defaultHeroData: HeroData = {
   title: 'אפיון ועיצוב UX/UI',
   subtitle: 'עבור Stagent CRM',
-  backgroundImage: 'https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b?placeholderIfAbsent=true'
+  ctaText: 'גלול להצעה',
+  scrollText: 'גלול למטה',
+  desktopImage: 'https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b',
+  mobileImage: 'https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b',
 };
 
-export const defaultAboutData = {
+export const defaultAboutData: AboutData = {
   title: 'אנו נרגשים להתחיל את\nהפרויקט שלך!',
   paragraphs: [
-    'אנחנו Elevate Digital Studio, המתמחה בעיצוב חווית משתמש (UX) וממשק משתמש (UI) למוצרים דיגיטליים ומערכות מורכבות. אנו מתמחים בעיצוב ופיתוח אתרי דגל בסטנדרטים מתקדמים, אפליקציות WEB, פלטפורמות מסחר אלקטרוני, דפי נחיתה ומערכות אינטרנט מורכבות. הצוות המוכשר שלנו בעל ניסיון רב בעבודה על פרויקטים מתעשיות שונות ועם מותגים מובילים בארץ ובעולם.',
-    'אנו נרגשים לשתף פעולה בפרויקט שלכם! הצעה זו כוללת את את התוכנית שלנו להביא את החזון שלכם לעולם הדיגיטלי בצורה הטובה ביותר.',
+    'אנחנו Elevate Digital Studio, המתמחה בעיצוב חווית משתמש (UX) וממשק משתמש (UI) למוצרים דיגיטליים ומערכות מורכבות.',
+    'אנו נרגשים לשתף פעולה בפרויקט שלכם!',
     'אל תהססו לפנות בכל שאלה. ביחד, בואו ניצור משהו מדהים!'
-  ]
+  ],
+  ownerName: 'גדי מאירסון',
+  ownerTitle: 'CEO elevate',
+  ownerEmail: 'gadi@elevate.co.il',
+  ownerImage: '',
 };
 
-export const defaultWhyElevateData = {
+export const defaultWhyElevateData: WhyElevateData = {
+  headerImage: '',
   description: 'אנו מעצבים חוויות משתמש אינטואיטיביות וממשקים ויזואליים המשקפים את מהות המותג שלך ומגבירים מעורבות.',
   services: [
-    { title: 'שירות מקיף', description: 'מעיצוב UI/UX ועד פיתוח, מיתוג, אירוח, אבטחה ואסטרטגיה דיגיטלית' },
-    { title: 'פתרונות מותאמים אישית', description: 'הפורטפוליו המגוון שלנו מציג את יכולתנו להסתגל לתעשיות שונות' },
-    { title: 'עיצוב אתר אסטרטגי להצלחה עסקית', description: 'שדרג את הנוכחות שלך באינטרנט' },
-    { title: 'מצוינות ללא טרחה', description: 'תירגע בזמן שאנו מטפלים בכל פרט' },
-    { title: 'תמיכת לקוחות יוצאת דופן', description: 'החזון שלך מניע את העבודה שלנו' },
-    { title: 'הצטיינות מהימנה', description: 'אנו משרתים את החברות המובילות בישראל' }
-  ]
+    { id: '1', icon: '', title: 'שירות מקיף', description: 'מעיצוב UI/UX ועד פיתוח, מיתוג, אירוח, אבטחה ואסטרטגיה דיגיטלית.' },
+    { id: '2', icon: '', title: 'פתרונות מותאמים אישית', description: 'הפורטפוליו המגוון שלנו מציג את יכולתנו להסתגל לתעשיות שונות.' },
+    { id: '3', icon: '', title: 'עיצוב אתר אסטרטגי', description: 'שדרג את הנוכחות שלך באינטרנט עם אתר אינטרנט שנבנה בקפידה.' },
+    { id: '4', icon: '', title: 'מצוינות ללא טרחה', description: 'תירגע בזמן שאנו מטפלים בכל פרט.' },
+    { id: '5', icon: '', title: 'תמיכת לקוחות יוצאת דופן', description: 'החזון שלך מניע את העבודה שלנו.' },
+    { id: '6', icon: '', title: 'הצטיינות מהימנה', description: 'אנו משרתים את החברות המובילות בישראל.' },
+  ],
 };
 
-export const defaultCoreValuesData = {
+export const defaultCoreValuesData: CoreValuesData = {
+  title: 'ערכי הליבה שלנו',
+  missionText: [
+    'המשימה שלנו היא להעצים עסקים עם פתרונות אינטרנט מתקדמים המניעים צמיחה ומעורבות.',
+    'עם מחויבות למצוינות ולשביעות רצון לקוחות, אנו שואפים להיות השותף המנצח.',
+  ],
+  desktopBackgroundImage: '',
+  mobileBackgroundImage: '',
+  clientsTitle: 'נבחרנו על ידי הטובים ביותר',
+  clientLogos: [],
   values: [
-    { title: 'חדשנות', description: 'דחיפת גבולות בעיצוב ופיתוח אתרים עם פתרונות חדשניים.' },
-    { title: 'מיקוד לקוח', description: 'מתן עדיפות לתקשורת ברורה ופתרונות מותאמים.' },
-    { title: 'מהימנות', description: 'אספקת תוצאות אמינות ואיכותיות באופן עקבי.' },
-    { title: 'שירות מקיף', description: 'נציע פתרונות משולבים ברמה גבוהה.' }
-  ]
+    { id: '1', icon: '', title: 'חדשנות', description: 'דחיפת גבולות בעיצוב ופיתוח אתרים עם פתרונות חדשניים.' },
+    { id: '2', icon: '', title: 'מיקוד לקוח', description: 'מתן עדיפות לתקשורת ברורה ופתרונות מותאמים.' },
+    { id: '3', icon: '', title: 'מהימנות', description: 'אספקת תוצאות אמינות ואיכותיות באופן עקבי.' },
+    { id: '4', icon: '', title: 'שירות מקיף', description: 'פתרונות משולבים ברמה גבוהה.' },
+  ],
 };
 
-export const defaultTestimonialsData = {
+export const defaultTestimonialsData: TestimonialsData = {
   title: 'מה אומרים עלינו',
+  subtitle: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו.',
   testimonials: [
-    { name: 'יוסי כהן', title: 'מנכ"ל', text: 'על Elevate הוטל לעצב מחדש ולפתח את האתר החדש שלנו.' },
-    { name: 'דני לוי', title: 'VP Product', text: 'אני יכול לומר בביטחון כי Elevate סיפקה חלק מעבודות העיצוב הטובות ביותר.' }
-  ]
+    { id: '1', avatar: '', name: 'יוסי כהן', role: 'מנכ"ל', companyLogo: '', quote: 'על Elevate הוטל לעצב מחדש ולפתח את האתר החדש שלנו.' },
+    { id: '2', avatar: '', name: 'דני לוי', role: 'VP Product', companyLogo: '', quote: 'אני יכול לומר בביטחון כי Elevate סיפקה עבודה מצוינת.' },
+  ],
 };
 
-export const defaultProjectsData = {
+export const defaultProjectsData: ProjectsData = {
   title: 'פרויקטים',
-  description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו',
+  subtitle: 'אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות.',
   projects: [
-    { title: 'Israel Canada', description: 'בין אם שמעתם עלינו מחבר', image: '' },
-    { title: 'Polestar', description: 'בין אם שמעתם עלינו מחבר', image: '' }
-  ]
+    { id: '1', desktopImage: '', mobileImage: '', title: 'Israel Canada', description: 'עיצוב ופיתוח אתר' },
+    { id: '2', desktopImage: '', mobileImage: '', title: 'Polestar', description: 'עיצוב ופיתוח אתר' },
+  ],
 };
 
-export const defaultSiteContentData = {
+export const defaultSiteContentData: SiteContentData = {
   title: 'תכולת האתר',
-  description: 'מבנה האתר מאורגן כהיררכיה ברורה',
+  subtitle: 'מבנה האתר מאורגן כהיררכיה ברורה הכוללת דף בית מרכזי.',
   items: [
-    { title: 'עמוד הבית', description: 'הירו, קומת יתרונות, קומת קטגוריות' },
-    { title: 'עמוד קטגוריה', description: 'הסבר קצר על המוצרים שלנו' },
-    { title: 'עמוד מוצר', description: 'הירו, קומת יתרונות' },
-    { title: 'אודות', description: 'הירו, קומת יתרונות' }
-  ]
+    { id: '1', title: 'עמוד הבית', description: 'הירו, קומת יתרונות, קומת קטגוריות' },
+    { id: '2', title: 'עמוד קטגוריה', description: 'הסבר קצר על המוצרים' },
+    { id: '3', title: 'עמוד מוצר', description: 'פרטי המוצר' },
+    { id: '4', title: 'אודות', description: 'מידע על החברה' },
+  ],
 };
 
-export const defaultDeliverablesData = {
+export const defaultDeliverablesData: DeliverablesData = {
   title: 'כל מה שנספק לך',
-  included: [
-    'אפיון ועיצוב כל התבניות בהתאם לרשימת המסכים',
-    'בניית Design System',
-    'ליווי צוות הפיתוח עד לשלבים מתקדמים',
-    'מיקרו אנימציה ואלמנטים אינטרקאטיביים',
-    'נגישות האתר'
+  desktopBackgroundImage: '',
+  mobileBackgroundImage: '',
+  includedItems: [
+    { id: '1', text: 'אפיון ועיצוב כל התבניות' },
+    { id: '2', text: 'בניית Design System' },
+    { id: '3', text: 'ליווי צוות הפיתוח' },
+    { id: '4', text: 'מיקרו אנימציה' },
+    { id: '5', text: 'נגישות האתר' },
   ],
-  excluded: [
-    'פיתוח Frontend',
-    'מיתוג (אופציונלי)',
-    'יצירת תוכן',
-    'הכנסת תוכן ועריכה'
-  ]
+  excludedItems: [
+    { id: '1', text: 'פיתוח Frontend' },
+    { id: '2', text: 'מיתוג' },
+    { id: '3', text: 'יצירת תוכן' },
+    { id: '4', text: 'הכנסת תוכן ועריכה' },
+  ],
 };
 
-export const defaultProjectDetailsData = {
+export const defaultProjectDetailsData: ProjectDetailsData = {
   title: 'פרטים נוספים על הפרויקט',
+  sideImage: '',
   faqItems: [
-    { title: 'אחריות', content: 'מועד תקופת האחריות יחל מיום העלייה לאוויר למשך 3 חודשים.' },
-    { title: 'תקלות', content: 'במקרה של תקלות טכניות, צוות התמיכה שלנו יהיה זמין.' },
-    { title: 'הדרכה של אתר CMS', content: 'אנו מספקים הדרכה מקיפה לשימוש במערכת.' }
-  ]
+    { id: '1', title: 'אחריות', content: 'מועד תקופת האחריות יחל מיום העלייה לאוויר למשך 3 חודשים.' },
+    { id: '2', title: 'תקלות', content: 'במקרה של תקלות טכניות, צוות התמיכה שלנו יהיה זמין.' },
+    { id: '3', title: 'הדרכה', content: 'אנו מספקים הדרכה מקיפה לשימוש במערכת.' },
+  ],
 };
 
-export const defaultPricingData = {
-  basePricingItems: [
-    { title: 'אבחון ומחקר', priceValue: 5000, hours: 30, items: ['ראיונות עומק', 'ניתוח הממשק הקיים', 'ניתוח מתחרים'] },
-    { title: 'תכנון UX עדכני', priceValue: 2000, hours: 30, items: ['ראיונות עומק', 'ניתוח הממשק הקיים'] },
-    { title: 'עיצוב UI', priceValue: 1000, hours: 30, items: ['ראיונות עומק', 'ניתוח הממשק הקיים'] },
-    { title: 'העברה לפיתוח וליווי', priceValue: 2000, hours: 30, items: ['ראיונות עומק', 'ניתוח הממשק הקיים'] }
+export const defaultPricingData: PricingData = {
+  title: 'תמחור',
+  addonsTitle: 'העדפות ותוספות',
+  addonsSubtitle: 'נא לבחור העדפות בנוגע לנגישות ושרתים ועוד..',
+  summaryTitle: 'סיכום לוחות זמנים ועלויות',
+  basePackages: [
+    { id: '1', title: 'אבחון ומחקר', price: 5000, hours: 30, items: [{ id: '1', text: 'ראיונות עומק' }, { id: '2', text: 'ניתוח הממשק הקיים' }] },
+    { id: '2', title: 'תכנון UX', price: 2000, hours: 30, items: [{ id: '1', text: 'ראיונות עומק' }] },
+    { id: '3', title: 'עיצוב UI', price: 1000, hours: 30, items: [{ id: '1', text: 'עיצוב ממשק' }] },
+    { id: '4', title: 'העברה לפיתוח', price: 2000, hours: 30, items: [{ id: '1', text: 'ליווי פיתוח' }] },
   ],
-  categories: [
-    {
-      id: 'accessibility',
-      title: 'נגישות',
-      options: [
-        { id: 'addon', title: 'תוסף/רכיב נגישות', price: '₪48,000', priceValue: 48000, hours: 40, description: 'נגישות תיושם ברמת הקוד' },
-        { id: 'report', title: 'דו"ח נגישות', price: '₪48,000', priceValue: 48000, hours: 40, description: 'נגישות תיושם ברמת הקוד' }
-      ]
-    }
+  addonCategories: [
+    { id: '1', title: 'נגישות', options: [
+      { id: '1', title: 'תוסף נגישות', price: '₪48,000', priceValue: 48000, hours: 40, description: 'נגישות ברמת הקוד', details: '' },
+    ]},
   ],
+  paymentTermsTitle: 'תנאי תשלום',
   paymentTerms: [
-    'שבועיים אחרי פגישת התנעה – 15%',
-    'סיום עיצוב – 30%',
-    'השלמת פיתוח – 35%',
-    'שבועיים אחרי התקנה ווידוא תקינות – 20%'
-  ]
+    { id: '1', text: 'שבועיים אחרי פגישת התנעה – 15%' },
+    { id: '2', text: 'סיום עיצוב – 30%' },
+    { id: '3', text: 'השלמת פיתוח – 35%' },
+    { id: '4', text: 'שבועיים אחרי התקנה – 20%' },
+  ],
+  notes: [
+    { id: '1', text: '*הזמנים המוגדרים הם זמנים לכל חלק בנפרד' },
+  ],
 };
 
-export const defaultSignatureData = {
+export const defaultSignatureData: SignatureData = {
   title: 'אישור לקוח',
-  agreementText: 'בחתימה מעלה, אני מאשר שקראתי, הבנתי והסכמתי לכל התנאים.'
+  signatureTitle: 'חתימה',
+  signatureSubtitle: 'יש לחתום בשדה הבא וללחוץ אישור.',
+  agreementText: 'בחתימה מעלה, אני מאשר שקראתי, הבנתי והסכמתי לכל התנאים.',
+  submitButtonText: 'אישור',
+  successTitle: 'תודה רבה!',
+  successMessage: 'ההצעה נחתמה בהצלחה. ניצור איתך קשר בהקדם.',
 };
 
-// Generate default sections for a new proposal
+// Generate default sections
 export function getDefaultSections(): ProposalSection[] {
   return [
     { id: '1', type: 'hero', visible: true, order: 0, data: defaultHeroData },
@@ -186,7 +523,7 @@ export function getDefaultSections(): ProposalSection[] {
     { id: '8', type: 'deliverables', visible: true, order: 7, data: defaultDeliverablesData },
     { id: '9', type: 'projectDetails', visible: true, order: 8, data: defaultProjectDetailsData },
     { id: '10', type: 'pricing', visible: true, order: 9, data: defaultPricingData },
-    { id: '11', type: 'signature', visible: true, order: 10, data: defaultSignatureData }
+    { id: '11', type: 'signature', visible: true, order: 10, data: defaultSignatureData },
   ];
 }
 
@@ -201,5 +538,5 @@ export const sectionLabels: Record<SectionType, string> = {
   deliverables: 'תוצרים',
   projectDetails: 'פרטי הפרויקט',
   pricing: 'תמחור',
-  signature: 'חתימה'
+  signature: 'חתימה',
 };
