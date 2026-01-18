@@ -5,6 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { ProposalSection, sectionLabels, sectionFieldSchemas, FieldDefinition } from '@/types/proposal';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -17,6 +25,22 @@ interface Props {
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
+// Group fields by type for tabbed interface
+const groupFields = (schema: FieldDefinition[]) => {
+  const simpleFields: FieldDefinition[] = [];
+  const repeaterFields: FieldDefinition[] = [];
+  
+  schema.forEach(field => {
+    if (field.type === 'repeater') {
+      repeaterFields.push(field);
+    } else {
+      simpleFields.push(field);
+    }
+  });
+  
+  return { simpleFields, repeaterFields };
+};
+
 const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => {
   const [data, setData] = useState<Record<string, any>>({});
   const [uploading, setUploading] = useState<string | null>(null);
@@ -27,12 +51,14 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
   useEffect(() => {
     if (section) {
       setData(JSON.parse(JSON.stringify(section.data || {})));
+      normalizedRepeatersRef.current.clear();
     }
   }, [section]);
 
   if (!section) return null;
 
   const schema = sectionFieldSchemas[section.type] || [];
+  const { simpleFields, repeaterFields } = groupFields(schema);
 
   const handleChange = (path: string[], value: any) => {
     const newData = JSON.parse(JSON.stringify(data));
@@ -108,7 +134,7 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
     switch (field.type) {
       case 'text':
         return (
-          <div key={pathKey} className="space-y-1.5">
+          <div key={pathKey} className="space-y-2">
             <Label className="text-sm font-medium">{field.label}</Label>
             <Input
               value={value || ''}
@@ -121,13 +147,13 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
 
       case 'textarea':
         return (
-          <div key={pathKey} className="space-y-1.5">
+          <div key={pathKey} className="space-y-2">
             <Label className="text-sm font-medium">{field.label}</Label>
             <Textarea
               value={value || ''}
               onChange={(e) => handleChange(path, e.target.value)}
               placeholder={field.placeholder}
-              rows={3}
+              rows={4}
               className="bg-white"
             />
           </div>
@@ -135,13 +161,13 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
 
       case 'number':
         return (
-          <div key={pathKey} className="space-y-1.5">
+          <div key={pathKey} className="space-y-2">
             <Label className="text-sm font-medium">{field.label}</Label>
             <Input
               type="number"
               value={value || 0}
               onChange={(e) => handleChange(path, Number(e.target.value))}
-              className="bg-white"
+              className="bg-white w-40"
               dir="ltr"
             />
           </div>
@@ -149,43 +175,45 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
 
       case 'image':
         return (
-          <div key={pathKey} className="space-y-1.5">
+          <div key={pathKey} className="space-y-2">
             <Label className="text-sm font-medium">{field.label}</Label>
-            {value && (
-              <div className="relative w-full h-24 rounded-lg overflow-hidden bg-secondary">
-                <img 
-                  src={value} 
-                  alt="" 
-                  className="w-full h-full object-cover" 
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/placeholder.svg';
-                  }}
+            <div className="flex gap-3 items-start">
+              {value && (
+                <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-secondary flex-shrink-0">
+                  <img 
+                    src={value} 
+                    alt="" 
+                    className="w-full h-full object-cover" 
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/placeholder.svg';
+                    }}
+                  />
+                  <button
+                    onClick={() => handleChange(path, '')}
+                    className="absolute top-1 left-1 bg-destructive text-white rounded-full p-1 hover:bg-destructive/80"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              )}
+              <div className="flex-1 space-y-2">
+                <Input
+                  value={value || ''}
+                  onChange={(e) => handleChange(path, e.target.value)}
+                  placeholder="URL או העלה תמונה"
+                  className="bg-white text-sm"
+                  dir="ltr"
                 />
-                <button
-                  onClick={() => handleChange(path, '')}
-                  className="absolute top-1 left-1 bg-destructive text-white rounded-full p-1 hover:bg-destructive/80"
-                >
-                  <X className="h-3 w-3" />
-                </button>
+                <Button variant="outline" size="sm" className="relative" disabled={isUploading}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    onChange={(e) => e.target.files?.[0] && handleImageUpload(path, e.target.files[0])}
+                  />
+                  {isUploading ? '⏳ מעלה...' : <><Upload className="h-4 w-4 ml-2" />העלה תמונה</>}
+                </Button>
               </div>
-            )}
-            <div className="flex gap-2">
-              <Input
-                value={value || ''}
-                onChange={(e) => handleChange(path, e.target.value)}
-                placeholder="URL או העלה תמונה"
-                className="flex-1 bg-white text-xs"
-                dir="ltr"
-              />
-              <Button variant="outline" size="sm" className="relative shrink-0" disabled={isUploading}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="absolute inset-0 opacity-0 cursor-pointer"
-                  onChange={(e) => e.target.files?.[0] && handleImageUpload(path, e.target.files[0])}
-                />
-                {isUploading ? '⏳' : <Upload className="h-4 w-4" />}
-              </Button>
             </div>
           </div>
         );
@@ -213,7 +241,6 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
 
         const items = needsNormalize ? normalizedItems : rawItems;
 
-        // Sync normalization back once (avoid render loops)
         if (needsNormalize && !normalizedRepeatersRef.current.has(pathKey)) {
           normalizedRepeatersRef.current.add(pathKey);
           setTimeout(() => handleChange(path, items), 0);
@@ -222,18 +249,18 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
         const isExpanded = expandedRepeaters[pathKey] !== false;
         
         return (
-          <div key={pathKey} className={`space-y-2 ${depth > 0 ? 'pr-3 border-r-2 border-primary/20' : ''}`}>
+          <div key={pathKey} className={`space-y-3 ${depth > 0 ? 'pr-4 border-r-2 border-primary/20 mr-2' : ''}`}>
             <button
               onClick={() => toggleRepeater(pathKey)}
-              className="flex items-center justify-between w-full text-right"
+              className="flex items-center justify-between w-full text-right py-2 px-3 bg-secondary/50 rounded-lg hover:bg-secondary transition-colors"
             >
-              <div className="flex items-center gap-2">
-                <Label className="text-sm font-medium cursor-pointer">{field.label}</Label>
-                <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+              <div className="flex items-center gap-3">
+                <Label className="text-sm font-semibold cursor-pointer">{field.label}</Label>
+                <span className="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
                   {items.length}
                 </span>
               </div>
-              {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
             </button>
             
             <AnimatePresence>
@@ -242,52 +269,53 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="space-y-2 overflow-hidden"
+                  className="space-y-3 overflow-hidden"
                 >
                   <Reorder.Group 
                     axis="y" 
                     values={items} 
                     onReorder={(newItems) => reorderRepeaterItems(path, newItems)}
-                    className="space-y-2"
+                    className="space-y-3"
                   >
                     {items.map((item: any, index: number) => (
                       <Reorder.Item
                         key={String(item.id)}
                         value={item}
-                        className="bg-secondary/50 rounded-lg p-3 space-y-3 relative group cursor-grab active:cursor-grabbing"
+                        className="bg-white rounded-xl p-4 space-y-4 relative group cursor-grab active:cursor-grabbing border border-border shadow-sm"
                       >
-                        <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center justify-between pb-2 border-b border-border/50">
                           <div className="flex items-center gap-2">
-                            <GripVertical className="h-4 w-4 text-muted-foreground" />
-                            <span className="text-xs font-medium text-muted-foreground">
+                            <GripVertical className="h-5 w-5 text-muted-foreground" />
+                            <span className="text-sm font-medium text-foreground">
                               פריט {index + 1}
                             </span>
                           </div>
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-6 w-6 text-destructive hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
                             onClick={() => removeRepeaterItem(path, index)}
                           >
-                            <Trash2 className="h-3 w-3" />
+                            <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
                         
-                        {field.itemFields?.map((subField) => 
-                          renderField(subField, [...path, String(index), subField.key], depth + 1)
-                        )}
+                        <div className="grid gap-4">
+                          {field.itemFields?.map((subField) => 
+                            renderField(subField, [...path, String(index), subField.key], depth + 1)
+                          )}
+                        </div>
                       </Reorder.Item>
                     ))}
                   </Reorder.Group>
                   
                   <Button
                     variant="outline"
-                    size="sm"
-                    className="w-full border-dashed"
+                    className="w-full border-dashed py-6 text-muted-foreground hover:text-foreground"
                     onClick={() => addRepeaterItem(path, field.itemFields || [])}
                   >
-                    <Plus className="h-4 w-4 ml-2" />
-                    הוסף פריט
+                    <Plus className="h-5 w-5 ml-2" />
+                    הוסף פריט חדש
                   </Button>
                 </motion.div>
               )}
@@ -300,40 +328,83 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
     }
   };
 
+  const hasRepeaters = repeaterFields.length > 0;
+  const hasSimpleFields = simpleFields.length > 0;
+
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ x: '-100%' }}
-        animate={{ x: 0 }}
-        exit={{ x: '-100%' }}
-        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        className="fixed top-0 right-0 h-full w-[420px] bg-background shadow-2xl z-50 flex flex-col border-l"
+    <Dialog open={!!section} onOpenChange={() => onClose()}>
+      <DialogContent 
+        className="max-w-4xl h-[85vh] p-0 flex flex-col" 
         dir="rtl"
       >
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b bg-white">
-          <div>
-            <h3 className="font-bold text-lg">{sectionLabels[section.type]}</h3>
-            <p className="text-xs text-muted-foreground">עריכת תוכן הסקשן</p>
+        <DialogHeader className="px-6 py-4 border-b flex-shrink-0">
+          <DialogTitle className="text-xl font-bold flex items-center gap-3">
+            {sectionLabels[section.type]}
+            <span className="text-sm font-normal text-muted-foreground">עריכת תוכן</span>
+          </DialogTitle>
+        </DialogHeader>
+
+        <div className="flex-1 overflow-hidden">
+          {hasRepeaters && hasSimpleFields ? (
+            <Tabs defaultValue="general" className="h-full flex flex-col">
+              <TabsList className="mx-6 mt-4 justify-start gap-2 bg-secondary/50 p-1 flex-shrink-0">
+                <TabsTrigger value="general" className="px-6">
+                  הגדרות כלליות
+                </TabsTrigger>
+                {repeaterFields.map(field => (
+                  <TabsTrigger key={field.key} value={field.key} className="px-6">
+                    {field.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+
+              <TabsContent value="general" className="flex-1 overflow-hidden m-0">
+                <ScrollArea className="h-full">
+                  <div className="p-6 grid gap-5 md:grid-cols-2">
+                    {simpleFields.map(field => (
+                      <div key={field.key} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
+                        {renderField(field, [field.key], 0)}
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </TabsContent>
+
+              {repeaterFields.map(field => (
+                <TabsContent key={field.key} value={field.key} className="flex-1 overflow-hidden m-0">
+                  <ScrollArea className="h-full">
+                    <div className="p-6">
+                      {renderField(field, [field.key], 0)}
+                    </div>
+                  </ScrollArea>
+                </TabsContent>
+              ))}
+            </Tabs>
+          ) : (
+            <ScrollArea className="h-full">
+              <div className="p-6 grid gap-5 md:grid-cols-2">
+                {schema.map(field => (
+                  <div key={field.key} className={field.type === 'textarea' || field.type === 'repeater' ? 'md:col-span-2' : ''}>
+                    {renderField(field, [field.key], 0)}
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+          )}
+        </div>
+
+        <div className="px-6 py-4 border-t bg-secondary/30 flex-shrink-0">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-muted-foreground">
+              ✓ השינויים נשמרים אוטומטית
+            </p>
+            <Button onClick={onClose}>
+              סיום עריכה
+            </Button>
           </div>
-          <Button variant="ghost" size="icon" onClick={onClose}>
-            <X className="h-5 w-5" />
-          </Button>
         </div>
-
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {schema.map((field) => renderField(field, [field.key], 0))}
-        </div>
-
-        {/* Footer */}
-        <div className="p-4 border-t bg-white">
-          <p className="text-xs text-muted-foreground text-center">
-            השינויים נשמרים אוטומטית
-          </p>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+      </DialogContent>
+    </Dialog>
   );
 };
 
