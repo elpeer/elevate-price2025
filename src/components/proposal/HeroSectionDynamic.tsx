@@ -25,44 +25,8 @@ const HeroSectionDynamic: React.FC<Props> = ({ data, clientInfo }) => {
 
   return (
     <section id="intro" className="flex flex-col-reverse md:flex-row min-h-screen w-full">
-      <div className="w-full md:w-1/2 h-[40vh] md:h-screen relative overflow-hidden">
-        {/* Desktop Image */}
-        <motion.img
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-          src={data.desktopImage || "https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b"}
-          alt="Background"
-          className="hidden md:block w-full h-full object-cover"
-        />
-        {/* Mobile Image */}
-        <motion.img
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-          src={data.mobileImage || data.desktopImage || "https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b"}
-          alt="Background"
-          className="md:hidden w-full h-full object-cover"
-        />
-        <motion.button 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1 }}
-          onClick={scrollToAbout}
-          className="absolute bottom-8 inset-x-0 mx-auto w-fit md:inset-x-auto md:mx-0 md:left-8 flex items-center gap-3 text-white hover:opacity-80 transition-opacity"
-        >
-          <motion.div 
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center"
-          >
-            <div className="w-2 h-2 bg-white rounded-full" />
-          </motion.div>
-          <span className="text-sm">{data.scrollText || 'גלול למטה'}</span>
-        </motion.button>
-      </div>
-
-      <div className="w-full md:w-1/2 bg-white flex flex-col justify-center px-6 md:px-20 py-8 md:py-12" dir="rtl">
+      {/* Text/Form side - comes first in DOM */}
+      <div className="w-full md:w-1/2 bg-white flex flex-col justify-center px-6 md:px-20 py-8 md:py-12">
         <div className="max-w-2xl text-right mx-auto md:mx-0">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex mb-6 md:hidden">
             <img src={sidebarLogo} alt="Elevate Logo" className="h-10 w-auto" />
@@ -110,6 +74,44 @@ const HeroSectionDynamic: React.FC<Props> = ({ data, clientInfo }) => {
             </motion.button>
           </motion.div>
         </div>
+      </div>
+
+      {/* Image side - comes second in DOM */}
+      <div className="w-full md:w-1/2 h-[40vh] md:h-screen relative overflow-hidden">
+        {/* Desktop Image */}
+        <motion.img
+          initial={{ scale: 1.1, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+          src={data.desktopImage || "https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b"}
+          alt="Background"
+          className="hidden md:block w-full h-full object-cover"
+        />
+        {/* Mobile Image */}
+        <motion.img
+          initial={{ scale: 1.1, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+          src={data.mobileImage || data.desktopImage || "https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b"}
+          alt="Background"
+          className="md:hidden w-full h-full object-cover"
+        />
+        <motion.button 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1 }}
+          onClick={scrollToAbout}
+          className="absolute bottom-8 inset-x-0 mx-auto w-fit md:inset-x-auto md:mx-0 md:left-8 flex items-center gap-3 text-white hover:opacity-80 transition-opacity"
+        >
+          <motion.div 
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center"
+          >
+            <div className="w-2 h-2 bg-white rounded-full" />
+          </motion.div>
+          <span className="text-sm">{data.scrollText || 'גלול למטה'}</span>
+        </motion.button>
       </div>
     </section>
   );
