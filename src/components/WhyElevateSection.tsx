@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollAnimation, StaggerContainer, StaggerItem } from './ScrollAnimation';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
+import { Plus, Minus } from 'lucide-react';
 import whyElevateLogo from '@/assets/why-elevate-header.svg';
 
 // Custom hand-drawn style icons as SVG components
@@ -83,6 +85,8 @@ const services = [
 ];
 
 const WhyElevateSection: React.FC = () => {
+  const [openItem, setOpenItem] = useState<string>('item-0');
+
   return (
     <section id="why" className="min-h-screen w-full py-16 md:py-24 px-6 md:px-16" style={{ backgroundColor: '#EFEFFF' }}>
       <div className="max-w-6xl mx-auto">
@@ -100,8 +104,44 @@ const WhyElevateSection: React.FC = () => {
           </p>
         </ScrollAnimation>
 
-        {/* Services Grid */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-x-16 md:gap-y-16">
+        {/* Mobile Accordion - Only visible on mobile */}
+        <div className="block md:hidden">
+          <Accordion 
+            type="single" 
+            collapsible 
+            value={openItem} 
+            onValueChange={(value) => setOpenItem(value)}
+            className="w-full"
+          >
+            {services.map((service, index) => (
+              <AccordionItem 
+                key={index} 
+                value={`item-${index}`}
+                className="border-b border-gray-200"
+              >
+                <AccordionTrigger className="flex items-center justify-between py-4 hover:no-underline [&>svg]:hidden">
+                  <div className="flex items-center gap-3 flex-row-reverse w-full">
+                    <service.icon />
+                    <span className="text-base font-medium text-foreground flex-1 text-right">{service.title}</span>
+                  </div>
+                  <div className="mr-2">
+                    {openItem === `item-${index}` ? (
+                      <Minus className="h-5 w-5 text-muted-foreground" />
+                    ) : (
+                      <Plus className="h-5 w-5 text-muted-foreground" />
+                    )}
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-right text-muted-foreground leading-7 pb-4">
+                  {service.description}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+
+        {/* Desktop Grid - Only visible on desktop */}
+        <StaggerContainer className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-x-16 md:gap-y-16">
           {services.map((service, index) => (
             <StaggerItem key={index}>
               <div className="text-right">
