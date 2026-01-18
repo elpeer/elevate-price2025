@@ -2,8 +2,28 @@ import React, { useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { ScrollAnimation } from '../ScrollAnimation';
 
-interface ProjectItem { title: string; description: string; image: string; }
-interface ProjectsData { title?: string; subtitle?: string; projects?: ProjectItem[]; }
+// Normalized shape expected by the component
+interface ProjectItem {
+  title: string;
+  description: string;
+  image: string;
+}
+
+// Raw shape that might come from DB
+interface RawProjectItem {
+  id?: number | string;
+  title: string;
+  description?: string;
+  image?: string;
+  desktopImage?: string;
+  mobileImage?: string;
+}
+
+interface ProjectsData {
+  title?: string;
+  subtitle?: string;
+  projects?: RawProjectItem[];
+}
 interface Props { data: ProjectsData; }
 
 const defaultProjects: ProjectItem[] = [
@@ -11,6 +31,15 @@ const defaultProjects: ProjectItem[] = [
   { image: 'https://api.builder.io/api/v1/image/assets/TEMP/c22f82cf2ef4eb51b822d54d2bdd7dac9c74c9f5', title: 'Polestar', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
   { image: 'https://api.builder.io/api/v1/image/assets/TEMP/be2dcd2447248af8225102a121a6a1ff9913d3d2', title: 'Afcon', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' }
 ];
+
+const normalizeProjects = (raw: RawProjectItem[] | undefined): ProjectItem[] => {
+  if (!Array.isArray(raw) || raw.length === 0) return defaultProjects;
+  return raw.map((p) => ({
+    title: p.title || '',
+    description: p.description || '',
+    image: p.image || p.desktopImage || p.mobileImage || '',
+  }));
+};
 
 const ProjectsSectionDynamic: React.FC<Props> = ({ data }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -24,7 +53,7 @@ const ProjectsSectionDynamic: React.FC<Props> = ({ data }) => {
 
   const title = data.title || 'פרויקטים';
   const subtitle = data.subtitle || 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.';
-  const projects = data.projects || defaultProjects;
+  const projects = normalizeProjects(data.projects);
 
   return (
     <section id="projects" className="w-full bg-background py-10 md:py-16 flex flex-col justify-center overflow-hidden">

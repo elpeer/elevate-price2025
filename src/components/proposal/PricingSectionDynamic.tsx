@@ -81,6 +81,23 @@ const normalizeTextArray = (arr: any, fallback: string[]): string[] => {
   return arr.map(textFrom).filter(Boolean);
 };
 
+const defaultBasePricingItems: PricingItem[] = [
+  { title: 'אבחון ומחקר', priceValue: 5000, hours: 30, items: ['ראיונות עומק לצורך למידה ואפיון צרכים', 'ניתוח הממשק הקיים', 'ניתוח מתחרים'] },
+  { title: 'תכנון UX עדכני', priceValue: 2000, hours: 30, items: ['ראיונות עומק', 'ניתוח הממשק הקיים'] },
+  { title: 'עיצוב UI', priceValue: 1000, hours: 30, items: ['ראיונות עומק', 'ניתוח הממשק הקיים'] },
+  { title: 'העברה לפיתוח וליווי', priceValue: 2000, hours: 30, items: ['ראיונות עומק', 'ניתוח הממשק הקיים'] },
+];
+
+const defaultCategories: PricingCategory[] = [
+  {
+    id: 'accessibility',
+    title: 'נגישות',
+    options: [
+      { id: 'addon', title: 'תוסף/רכיב נגישות', price: '₪48,000', priceValue: 48000, hours: 40, hoursText: '40 שעות', description: 'נגישות תיושם ברמת הקוד', details: '' },
+    ],
+  },
+];
+
 const parsePriceValue = (v: any): number => {
   if (typeof v === 'number') return v;
   if (typeof v === 'string') {
