@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useProposals } from '@/hooks/useProposals';
 import { Proposal } from '@/types/proposal';
 import SectionRenderer from '@/components/proposal/SectionRenderer';
-import elevateLogo from '@/assets/elevate-logo.svg';
+import Sidebar from '@/components/Sidebar';
 
 class SectionErrorBoundary extends React.Component<
   { label: string; children: React.ReactNode },
@@ -16,7 +16,6 @@ class SectionErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: unknown) {
-    // Helps us see the root cause in the browser console
     console.error(`[ProposalView] Section crashed: ${this.props.label}`, error);
   }
 
@@ -65,17 +64,11 @@ const ProposalView: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background" dir="rtl">
-      {/* Header with logo */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border/50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/">
-            <img src={elevateLogo} alt="Elevate" className="h-8" />
-          </Link>
-        </div>
-      </header>
+      {/* Sidebar navigation */}
+      <Sidebar />
       
-      {/* Add top padding for fixed header */}
-      <div className="pt-16">
+      {/* Main content with margin for sidebar */}
+      <div className="md:mr-[220px]">
         {visibleSections.map(section => (
           <SectionRenderer key={section.id} section={section} proposal={proposal} />
         ))}
