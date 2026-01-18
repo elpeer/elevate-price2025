@@ -4,17 +4,47 @@ import { ScrollAnimation, StaggerContainer, StaggerItem } from '../ScrollAnimati
 import deliverablesBg from '@/assets/deliverables-bg.png';
 import checkIcon from '@/assets/icons/check-icon.svg';
 
-interface DeliverablesData { title?: string; included?: string[]; excluded?: string[]; backgroundImage?: string; }
+
+
+type TextLike = string | { id?: number | string; text?: string };
+
+interface DeliverablesData {
+  title?: string;
+
+  // legacy
+  included?: TextLike[];
+  excluded?: TextLike[];
+  backgroundImage?: string;
+
+  // current DB/editor
+  includedTitle?: string;
+  excludedTitle?: string;
+  includedItems?: TextLike[];
+  excludedItems?: TextLike[];
+  desktopBackgroundImage?: string;
+  mobileBackgroundImage?: string;
+}
 interface Props { data: DeliverablesData; }
 
 const defaultIncluded = ['אפיון ועיצוב כל התבניות בהתאם לרשימת המסכים', 'בניית Design System', 'ליווי צוות הפיתוח עד לשלבים מתקדמים', 'מיקרו אנימציה ואלמנטים אינטרקאטיביים', 'נגישות האתר'];
 const defaultExcluded = ['פיתוח Frontend', 'מיתוג (אופציונלי)', 'יצירת תוכן', 'הכנסת תוכן ועריכה'];
 
+const textFrom = (v: any): string => (typeof v === 'string' ? v : (v?.text ?? ''));
+
+const normalizeTextArray = (arr: any, fallback: string[]): string[] => {
+  if (!Array.isArray(arr)) return fallback;
+  return arr.map(textFrom).filter(Boolean);
+};
+
 const DeliverablesSectionDynamic: React.FC<Props> = ({ data }) => {
   const title = data.title || 'כל מה שנספק לך';
-  const included = data.included || defaultIncluded;
-  const excluded = data.excluded || defaultExcluded;
-  const bgImage = data.backgroundImage || deliverablesBg;
+  const includedTitle = data.includedTitle || 'כלול בהצעה';
+  const excludedTitle = data.excludedTitle || 'לא כלול';
+
+  const included = normalizeTextArray(data.included ?? data.includedItems, defaultIncluded);
+  const excluded = normalizeTextArray(data.excluded ?? data.excludedItems, defaultExcluded);
+
+  const bgImage = data.backgroundImage || data.desktopBackgroundImage || deliverablesBg;
   const maxRows = Math.max(included.length, excluded.length);
   const rows = Array.from({ length: maxRows }, (_, i) => ({ included: included[i] || null, excluded: excluded[i] || null }));
 
@@ -25,8 +55,8 @@ const DeliverablesSectionDynamic: React.FC<Props> = ({ data }) => {
         <div dir="rtl">
           <ScrollAnimation delay={0.1}>
             <div className="grid grid-cols-2 gap-2 md:gap-4 mb-2 md:mb-4">
-              <div className="bg-white p-3 md:p-5 text-right rounded-lg md:rounded-none"><span className="text-base md:text-3xl font-medium text-foreground">כלול בהצעה</span></div>
-              <div className="bg-white/50 p-3 md:p-5 text-right rounded-lg md:rounded-none"><span className="text-base md:text-3xl font-medium text-foreground">לא כלול</span></div>
+              <div className="bg-background p-3 md:p-5 text-right rounded-lg md:rounded-none"><span className="text-base md:text-3xl font-medium text-foreground">{includedTitle}</span></div>
+              <div className="bg-background/50 p-3 md:p-5 text-right rounded-lg md:rounded-none"><span className="text-base md:text-3xl font-medium text-foreground">{excludedTitle}</span></div>
             </div>
           </ScrollAnimation>
           <StaggerContainer className="grid gap-2 md:gap-4" staggerDelay={0.06}>
