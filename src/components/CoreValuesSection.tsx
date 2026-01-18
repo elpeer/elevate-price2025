@@ -87,7 +87,7 @@ const LogoSwiper: React.FC = () => {
 
 const CoreValuesSection: React.FC = () => {
   return (
-    <section id="values" className="w-full" dir="ltr">
+    <section id="values" className="w-full">
       {/* Main content area */}
       <div className="flex flex-col md:flex-row">
         {/* Left side - Image and logos (lavender background) - bottom on mobile */}

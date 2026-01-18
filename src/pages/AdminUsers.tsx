@@ -260,7 +260,6 @@ const AdminUsers: React.FC = () => {
                 value={newAdminEmail}
                 onChange={(e) => setNewAdminEmail(e.target.value)}
                 placeholder="user@example.com"
-                dir="ltr"
               />
             </div>
           </div>

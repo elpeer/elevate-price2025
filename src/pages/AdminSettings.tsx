@@ -200,7 +200,6 @@ const AdminSettings: React.FC = () => {
                     value={settings.favicon}
                     onChange={(e) => setSettings(prev => ({ ...prev, favicon: e.target.value }))}
                     placeholder="URL או העלה קובץ"
-                    dir="ltr"
                     className="flex-1"
                   />
                   <Button variant="outline" size="sm" className="relative shrink-0" disabled={uploading === 'favicon'}>
@@ -230,7 +229,6 @@ const AdminSettings: React.FC = () => {
                   value={settings.og_image}
                   onChange={(e) => setSettings(prev => ({ ...prev, og_image: e.target.value }))}
                   placeholder="URL או העלה קובץ"
-                  dir="ltr"
                   className="flex-1"
                 />
                 <Button variant="outline" size="sm" className="relative shrink-0" disabled={uploading === 'og_image'}>
