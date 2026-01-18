@@ -5,11 +5,29 @@ import gadiPhoto from '@/assets/gadi-photo.png';
 
 const AboutSection: React.FC = () => {
   return (
-    <section id="about" dir="rtl" className="w-full py-16 md:py-24 px-6 md:px-16" style={{ backgroundColor: '#EFEFFF' }}>
-      <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row items-start gap-8 md:gap-16">
-          {/* Right side - Content (top on mobile) */}
-          <div className="w-full md:w-2/3 text-right">
+    <section id="about" dir="rtl" className="w-full">
+      <div className="flex flex-col md:flex-row">
+        {/* Left side - Gadi photo (desktop only) with lavender background */}
+        <div className="hidden md:flex md:w-1/3 items-center justify-center py-16 px-8" style={{ backgroundColor: '#EFEFFF' }}>
+          <FadeScale className="flex flex-col items-center gap-4">
+            {/* Image */}
+            <img
+              src={gadiPhoto}
+              alt="Gadi Meirson"
+              className="w-48 h-48 object-cover grayscale"
+            />
+            {/* Text */}
+            <div className="text-center">
+              <h3 className="text-xl font-semibold text-foreground mb-1">גדי מאירסון</h3>
+              <p className="text-primary text-sm">CEO elevate</p>
+              <a href="mailto:gadi@elevate.co.il" className="text-primary text-sm hover:underline">gadi@elevate.co.il</a>
+            </div>
+          </FadeScale>
+        </div>
+
+        {/* Right side - Content with white background */}
+        <div className="w-full md:w-2/3 py-16 md:py-24 px-6 md:px-16 bg-background">
+          <div className="max-w-3xl md:mr-auto text-right">
             <ScrollAnimation direction="right">
               <h2 className="text-2xl md:text-5xl font-medium leading-tight text-foreground mb-5 md:mb-10">
                 אנו נרגשים להתחיל את
@@ -32,19 +50,17 @@ const AboutSection: React.FC = () => {
               </div>
             </ScrollAnimation>
 
-            {/* Signature Section */}
-            <FadeScale className="flex items-center gap-6 mt-8 md:mt-12">
-              {/* Image */}
+            {/* Signature Section - Mobile only */}
+            <FadeScale className="flex md:hidden items-center gap-6 mt-8">
               <img
                 src={gadiPhoto}
                 alt="Gadi Meirson"
-                className="w-24 h-24 md:w-36 md:h-36 object-cover grayscale"
+                className="w-24 h-24 object-cover grayscale"
               />
-              {/* Text */}
               <div className="text-right">
-                <h3 className="text-lg md:text-2xl font-semibold text-foreground mb-1">גדי מאירסון</h3>
-                <p className="text-primary text-sm md:text-base">CEO elevate</p>
-                <a href="mailto:gadi@elevate.co.il" className="text-primary text-sm md:text-base hover:underline">gadi@elevate.co.il</a>
+                <h3 className="text-lg font-semibold text-foreground mb-1">גדי מאירסון</h3>
+                <p className="text-primary text-sm">CEO elevate</p>
+                <a href="mailto:gadi@elevate.co.il" className="text-primary text-sm hover:underline">gadi@elevate.co.il</a>
               </div>
             </FadeScale>
           </div>
