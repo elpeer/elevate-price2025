@@ -28,7 +28,7 @@ const HeroSection: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1 }}
           onClick={scrollToAbout}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 md:left-8 md:translate-x-0 flex items-center gap-3 text-white hover:opacity-80 transition-opacity"
+          className="absolute bottom-8 inset-x-0 mx-auto w-fit md:inset-x-auto md:mx-0 md:left-8 flex items-center gap-3 text-white hover:opacity-80 transition-opacity"
         >
           <motion.div 
             animate={{ y: [0, 5, 0] }}
