@@ -111,13 +111,18 @@ const Admin: React.FC = () => {
         <div className="grid gap-4">
           {proposals.map((proposal, index) => {
             const StatusIcon = statusConfig[proposal.status].icon;
+            const isSigned = proposal.status === 'signed';
             return (
               <motion.div
                 key={proposal.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="bg-white rounded-xl p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border border-border hover:shadow-md transition-shadow"
+                className={`rounded-xl p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border hover:shadow-md transition-shadow ${
+                  isSigned 
+                    ? 'bg-green-50 border-green-200' 
+                    : 'bg-white border-border'
+                }`}
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
