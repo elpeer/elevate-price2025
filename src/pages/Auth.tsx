@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import elevateLogo from '@/assets/elevate-logo.svg';
+import elevateLogo from '@/assets/why-elevate-logo.svg';
 
 const Auth: React.FC = () => {
   const [email, setEmail] = useState('');

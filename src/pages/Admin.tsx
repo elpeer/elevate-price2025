@@ -28,7 +28,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import CreateProposalDialog from '@/components/admin/CreateProposalDialog';
-import elevateLogo from '@/assets/elevate-logo.svg';
+import elevateLogo from '@/assets/why-elevate-logo.svg';
 
 const statusConfig = {
   draft: { label: 'טיוטה', icon: Clock, color: 'bg-yellow-100 text-yellow-800' },
