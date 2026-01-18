@@ -42,7 +42,7 @@ const HeroSection: React.FC = () => {
       </div>
 
       {/* Right - Content */}
-      <div className="w-full md:w-1/2 bg-background flex flex-col justify-center px-6 md:px-20 py-8 md:py-12" dir="rtl">
+      <div className="w-full md:w-1/2 bg-white flex flex-col justify-center px-6 md:px-20 py-8 md:py-12" dir="rtl">
         <div className="max-w-2xl text-right mx-auto md:mx-0">
           {/* Logo - mobile only */}
           <motion.div 
