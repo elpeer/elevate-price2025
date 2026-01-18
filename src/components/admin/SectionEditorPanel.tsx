@@ -152,7 +152,14 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
             <Label className="text-sm font-medium">{field.label}</Label>
             {value && (
               <div className="relative w-full h-24 rounded-lg overflow-hidden bg-secondary">
-                <img src={value} alt="" className="w-full h-full object-cover" />
+                <img 
+                  src={value} 
+                  alt="" 
+                  className="w-full h-full object-cover" 
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/placeholder.svg';
+                  }}
+                />
                 <button
                   onClick={() => handleChange(path, '')}
                   className="absolute top-1 left-1 bg-destructive text-white rounded-full p-1 hover:bg-destructive/80"
@@ -165,7 +172,7 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
               <Input
                 value={value || ''}
                 onChange={(e) => handleChange(path, e.target.value)}
-                placeholder="URL"
+                placeholder="URL או העלה תמונה"
                 className="flex-1 bg-white text-xs"
                 dir="ltr"
               />
@@ -183,7 +190,16 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
         );
 
       case 'repeater':
-        const items = Array.isArray(value) ? value : [];
+        const rawItems = Array.isArray(value) ? value : [];
+        // Ensure every item has an ID for Reorder to work properly
+        const items = rawItems.map((item: any, i: number) => ({
+          ...item,
+          id: item.id || `item-${i}-${Date.now()}`
+        }));
+        // Sync IDs back to data if they were missing
+        if (rawItems.some((item: any, i: number) => !item.id)) {
+          handleChange(path, items);
+        }
         const isExpanded = expandedRepeaters[pathKey] !== false;
         
         return (
@@ -217,7 +233,7 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
                   >
                     {items.map((item: any, index: number) => (
                       <Reorder.Item
-                        key={item.id || index}
+                        key={item.id}
                         value={item}
                         className="bg-secondary/50 rounded-lg p-3 space-y-3 relative group cursor-grab active:cursor-grabbing"
                       >
