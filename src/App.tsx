@@ -8,6 +8,9 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import AdminUsers from "./pages/AdminUsers";
+import AdminProfile from "./pages/AdminProfile";
+import AdminSettings from "./pages/AdminSettings";
 import ProposalEditor from "./pages/ProposalEditor";
 import ProposalViewPage from "./pages/ProposalViewPage";
 
@@ -24,6 +27,9 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/users" element={<AdminUsers />} />
+              <Route path="/admin/profile" element={<AdminProfile />} />
+              <Route path="/admin/settings" element={<AdminSettings />} />
               <Route path="/admin/edit/:id" element={<ProposalEditor />} />
               <Route path="/customer/:slug" element={<ProposalViewPage />} />
               <Route path="/p/:slug" element={<ProposalViewPage />} />
