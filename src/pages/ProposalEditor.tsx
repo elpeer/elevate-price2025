@@ -5,37 +5,73 @@ import { useProposals } from '@/hooks/useProposals';
 import { Proposal, ProposalSection, sectionLabels } from '@/types/proposal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowRight, Save, Eye, EyeOff, GripVertical, Settings } from 'lucide-react';
-import { DndContext, closestCorners, DragEndEvent, PointerSensor, KeyboardSensor, useSensor, useSensors, MeasuringStrategy } from '@dnd-kit/core';
-import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { SortableContext, verticalListSortingStrategy, useSortable, arrayMove } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { ArrowRight, Save, Eye, EyeOff, Settings, ChevronUp, ChevronDown } from 'lucide-react';
+import { Reorder, useDragControls } from 'framer-motion';
+import { GripVertical } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import SectionEditorPanel from '@/components/admin/SectionEditorPanel';
 
-const SortableItem = ({ section, onToggle, onEdit }: { section: ProposalSection; onToggle: () => void; onEdit: () => void }) => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: section.id });
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.5 : 1,
-    zIndex: isDragging ? 50 : 'auto' as const,
-  };
+const SectionRow = ({
+  section,
+  index,
+  total,
+  onToggle,
+  onEdit,
+  onMoveUp,
+  onMoveDown,
+}: {
+  section: ProposalSection;
+  index: number;
+  total: number;
+  onToggle: () => void;
+  onEdit: () => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
+}) => {
+  const dragControls = useDragControls();
 
   return (
-    <div ref={setNodeRef} style={style} className={`flex items-center gap-3 p-4 bg-white rounded-xl border ${section.visible ? 'border-border' : 'border-dashed border-muted opacity-60'} ${isDragging ? 'shadow-lg' : ''}`}>
+    <Reorder.Item
+      value={section}
+      dragListener={false}
+      dragControls={dragControls}
+      whileDrag={{ scale: 1.02, boxShadow: '0 10px 30px -10px rgba(0,0,0,0.2)', zIndex: 50 }}
+      className={`flex items-center gap-2 p-3 bg-white rounded-xl border select-none ${section.visible ? 'border-border' : 'border-dashed border-muted opacity-60'}`}
+      style={{ listStyle: 'none' }}
+    >
       <button
-        {...attributes}
-        {...listeners}
-        className="cursor-grab active:cursor-grabbing p-2 -m-2 touch-none hover:bg-muted rounded"
+        onPointerDown={(e) => { e.preventDefault(); dragControls.start(e); }}
+        className="cursor-grab active:cursor-grabbing p-2 touch-none hover:bg-muted rounded"
         aria-label="גרור לשינוי סדר"
       >
         <GripVertical className="h-5 w-5 text-muted-foreground" />
       </button>
-      <span className="flex-1 font-medium">{sectionLabels[section.type]}</span>
+      <div className="flex flex-col">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-6 w-6"
+          disabled={index === 0}
+          onClick={onMoveUp}
+          aria-label="הזז למעלה"
+        >
+          <ChevronUp className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-6 w-6"
+          disabled={index === total - 1}
+          onClick={onMoveDown}
+          aria-label="הזז למטה"
+        >
+          <ChevronDown className="h-4 w-4" />
+        </Button>
+      </div>
+      <span className="flex-1 font-medium px-2">{sectionLabels[section.type]}</span>
       <Button variant="ghost" size="icon" onClick={onEdit}><Settings className="h-4 w-4" /></Button>
       <Button variant="ghost" size="icon" onClick={onToggle}>{section.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}</Button>
-    </div>
+    </Reorder.Item>
   );
 };
 
@@ -49,24 +85,24 @@ const ProposalEditor: React.FC = () => {
   const [saving, setSaving] = useState(false);
   const [editingSection, setEditingSection] = useState<ProposalSection | null>(null);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
-  );
-
   useEffect(() => { if (!authLoading && (!user || !isAdmin)) navigate('/auth'); }, [user, isAdmin, authLoading, navigate]);
   useEffect(() => { if (id) getProposalById(id).then((data) => { setProposal(data); setLoading(false); }); }, [id]);
 
   if (loading || authLoading) return <div className="min-h-screen flex items-center justify-center">⏳</div>;
   if (!proposal) return <div className="min-h-screen flex items-center justify-center">הצעה לא נמצאה</div>;
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (over && active.id !== over.id) {
-      const oldIndex = proposal.content.findIndex(s => s.id === active.id);
-      const newIndex = proposal.content.findIndex(s => s.id === over.id);
-      setProposal({ ...proposal, content: arrayMove(proposal.content, oldIndex, newIndex).map((s, i) => ({ ...s, order: i })) });
-    }
+  const sortedSections = [...proposal.content].sort((a, b) => a.order - b.order);
+
+  const reorder = (newOrder: ProposalSection[]) => {
+    setProposal({ ...proposal, content: newOrder.map((s, i) => ({ ...s, order: i })) });
+  };
+
+  const moveSection = (index: number, direction: -1 | 1) => {
+    const target = index + direction;
+    if (target < 0 || target >= sortedSections.length) return;
+    const next = [...sortedSections];
+    [next[index], next[target]] = [next[target], next[index]];
+    reorder(next);
   };
 
   const toggleVisibility = (sectionId: string) => setProposal({ ...proposal, content: proposal.content.map(s => s.id === sectionId ? { ...s, visible: !s.visible } : s) });
@@ -154,17 +190,26 @@ const ProposalEditor: React.FC = () => {
         </div>
         
         <h2 className="text-xl font-bold mb-2">סדר וניראות הסקשנים</h2>
-        <p className="text-muted-foreground mb-6">גרור לשינוי סדר, לחץ על ⚙️ לעריכת תוכן</p>
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCorners}
-          onDragEnd={handleDragEnd}
-          measuring={{ droppable: { strategy: MeasuringStrategy.Always } }}
+        <p className="text-muted-foreground mb-6">השתמש בחיצים ⬆️⬇️ או גרור מהידית לשינוי סדר • ⚙️ לעריכת תוכן</p>
+        <Reorder.Group
+          axis="y"
+          values={sortedSections}
+          onReorder={reorder}
+          className="space-y-3 list-none p-0"
         >
-          <SortableContext items={proposal.content.map(s => s.id)} strategy={verticalListSortingStrategy}>
-            <div className="space-y-3">{proposal.content.sort((a, b) => a.order - b.order).map(section => <SortableItem key={section.id} section={section} onToggle={() => toggleVisibility(section.id)} onEdit={() => setEditingSection(section)} />)}</div>
-          </SortableContext>
-        </DndContext>
+          {sortedSections.map((section, index) => (
+            <SectionRow
+              key={section.id}
+              section={section}
+              index={index}
+              total={sortedSections.length}
+              onToggle={() => toggleVisibility(section.id)}
+              onEdit={() => setEditingSection(section)}
+              onMoveUp={() => moveSection(index, -1)}
+              onMoveDown={() => moveSection(index, 1)}
+            />
+          ))}
+        </Reorder.Group>
       </main>
       {editingSection && <SectionEditorPanel section={editingSection} onClose={() => setEditingSection(null)} onUpdate={updateSectionData} />}
     </div>
