@@ -5,37 +5,73 @@ import { useProposals } from '@/hooks/useProposals';
 import { Proposal, ProposalSection, sectionLabels } from '@/types/proposal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowRight, Save, Eye, EyeOff, GripVertical, Settings } from 'lucide-react';
-import { DndContext, closestCorners, DragEndEvent, PointerSensor, KeyboardSensor, useSensor, useSensors, MeasuringStrategy } from '@dnd-kit/core';
-import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { SortableContext, verticalListSortingStrategy, useSortable, arrayMove } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { ArrowRight, Save, Eye, EyeOff, Settings, ChevronUp, ChevronDown } from 'lucide-react';
+import { Reorder, useDragControls } from 'framer-motion';
+import { GripVertical } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import SectionEditorPanel from '@/components/admin/SectionEditorPanel';
 
-const SortableItem = ({ section, onToggle, onEdit }: { section: ProposalSection; onToggle: () => void; onEdit: () => void }) => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: section.id });
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.5 : 1,
-    zIndex: isDragging ? 50 : 'auto' as const,
-  };
+const SectionRow = ({
+  section,
+  index,
+  total,
+  onToggle,
+  onEdit,
+  onMoveUp,
+  onMoveDown,
+}: {
+  section: ProposalSection;
+  index: number;
+  total: number;
+  onToggle: () => void;
+  onEdit: () => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
+}) => {
+  const dragControls = useDragControls();
 
   return (
-    <div ref={setNodeRef} style={style} className={`flex items-center gap-3 p-4 bg-white rounded-xl border ${section.visible ? 'border-border' : 'border-dashed border-muted opacity-60'} ${isDragging ? 'shadow-lg' : ''}`}>
+    <Reorder.Item
+      value={section}
+      dragListener={false}
+      dragControls={dragControls}
+      whileDrag={{ scale: 1.02, boxShadow: '0 10px 30px -10px rgba(0,0,0,0.2)', zIndex: 50 }}
+      className={`flex items-center gap-2 p-3 bg-white rounded-xl border select-none ${section.visible ? 'border-border' : 'border-dashed border-muted opacity-60'}`}
+      style={{ listStyle: 'none' }}
+    >
       <button
-        {...attributes}
-        {...listeners}
-        className="cursor-grab active:cursor-grabbing p-2 -m-2 touch-none hover:bg-muted rounded"
+        onPointerDown={(e) => { e.preventDefault(); dragControls.start(e); }}
+        className="cursor-grab active:cursor-grabbing p-2 touch-none hover:bg-muted rounded"
         aria-label="גרור לשינוי סדר"
       >
         <GripVertical className="h-5 w-5 text-muted-foreground" />
       </button>
-      <span className="flex-1 font-medium">{sectionLabels[section.type]}</span>
+      <div className="flex flex-col">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-6 w-6"
+          disabled={index === 0}
+          onClick={onMoveUp}
+          aria-label="הזז למעלה"
+        >
+          <ChevronUp className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-6 w-6"
+          disabled={index === total - 1}
+          onClick={onMoveDown}
+          aria-label="הזז למטה"
+        >
+          <ChevronDown className="h-4 w-4" />
+        </Button>
+      </div>
+      <span className="flex-1 font-medium px-2">{sectionLabels[section.type]}</span>
       <Button variant="ghost" size="icon" onClick={onEdit}><Settings className="h-4 w-4" /></Button>
       <Button variant="ghost" size="icon" onClick={onToggle}>{section.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}</Button>
-    </div>
+    </Reorder.Item>
   );
 };
 
