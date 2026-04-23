@@ -100,7 +100,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ visibleIds }) => {
 
             {/* Navigation Items */}
             <nav className="flex flex-col gap-1" dir="rtl">
-              {navItems.map((item) => (
+              {items.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
