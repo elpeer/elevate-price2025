@@ -4,6 +4,22 @@ import { useProposals } from '@/hooks/useProposals';
 import { Proposal } from '@/types/proposal';
 import SectionRenderer from '@/components/proposal/SectionRenderer';
 import Sidebar from '@/components/Sidebar';
+import MobileNav from '@/components/MobileNav';
+import { SectionType } from '@/types/proposal';
+
+const sectionTypeToNavId: Record<SectionType, string> = {
+  hero: 'intro',
+  about: 'about',
+  whyElevate: 'why',
+  coreValues: 'values',
+  testimonials: 'testimonials',
+  projects: 'projects',
+  siteContent: 'content',
+  deliverables: 'deliverables',
+  projectDetails: 'project-details',
+  pricing: 'pricing',
+  signature: 'signature',
+};
 
 class SectionErrorBoundary extends React.Component<
   { label: string; children: React.ReactNode },
@@ -61,11 +77,13 @@ const ProposalView: React.FC = () => {
   if (notFound || !proposal) return <div className="min-h-screen flex items-center justify-center text-xl text-muted-foreground">הצעה לא נמצאה</div>;
 
   const visibleSections = proposal.content.filter(s => s.visible).sort((a, b) => a.order - b.order);
+  const visibleNavIds = visibleSections.map(s => sectionTypeToNavId[s.type]).filter(Boolean);
 
   return (
     <div className="min-h-screen bg-background" dir="rtl">
       {/* Sidebar navigation */}
-      <Sidebar />
+      <Sidebar visibleIds={visibleNavIds} />
+      <MobileNav visibleIds={visibleNavIds} />
       
       {/* Main content with margin for sidebar */}
       <div className="md:mr-[220px]">
