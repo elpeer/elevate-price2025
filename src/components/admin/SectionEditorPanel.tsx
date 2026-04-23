@@ -283,11 +283,13 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
                       <Reorder.Item
                         key={String(item.id)}
                         value={item}
-                        className="bg-white rounded-xl p-4 space-y-4 relative group cursor-grab active:cursor-grabbing border border-border shadow-sm"
+                        dragListener={false}
+                        dragControls={undefined as any}
+                        className="bg-white rounded-xl p-4 space-y-4 relative group border border-border shadow-sm"
                       >
                         <div className="flex items-center justify-between pb-2 border-b border-border/50">
                           <div className="flex items-center gap-2">
-                            <GripVertical className="h-5 w-5 text-muted-foreground" />
+                            <ReorderHandle />
                             <span className="text-sm font-medium text-foreground">
                               פריט {index + 1}
                             </span>
