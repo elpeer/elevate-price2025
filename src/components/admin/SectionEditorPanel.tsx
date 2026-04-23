@@ -177,24 +177,28 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
           <div key={pathKey} className="space-y-2">
             <Label className="text-sm font-medium">{field.label}</Label>
             <div className="flex gap-3 items-start">
-              {value && (
-                <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-secondary flex-shrink-0">
-                  <img 
-                    src={value} 
-                    alt="" 
-                    className="w-full h-full object-cover" 
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/placeholder.svg';
-                    }}
-                  />
-                  <button
-                    onClick={() => handleChange(path, '')}
-                    className="absolute top-1 left-1 bg-destructive text-white rounded-full p-1 hover:bg-destructive/80"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                </div>
-              )}
+              <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-secondary flex-shrink-0 border border-border flex items-center justify-center">
+                {value ? (
+                  <>
+                    <img
+                      src={value}
+                      alt=""
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/placeholder.svg';
+                      }}
+                    />
+                    <button
+                      onClick={() => handleChange(path, '')}
+                      className="absolute top-1 left-1 bg-destructive text-white rounded-full p-1 hover:bg-destructive/80"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </>
+                ) : (
+                  <span className="text-xs text-muted-foreground">אין תמונה</span>
+                )}
+              </div>
               <div className="flex-1 space-y-2">
                 <Input
                   value={value || ''}
