@@ -52,7 +52,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ visibleIds }) => {
     }
   };
 
-  const currentLabel = navItems.find(item => item.id === activeItem)?.label || 'פתיח';
+  const currentLabel = items.find(item => item.id === activeItem)?.label || items[0]?.label || 'פתיח';
 
   return (
     <>
