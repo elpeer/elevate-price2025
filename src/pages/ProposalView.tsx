@@ -4,6 +4,22 @@ import { useProposals } from '@/hooks/useProposals';
 import { Proposal } from '@/types/proposal';
 import SectionRenderer from '@/components/proposal/SectionRenderer';
 import Sidebar from '@/components/Sidebar';
+import MobileNav from '@/components/MobileNav';
+import { SectionType } from '@/types/proposal';
+
+const sectionTypeToNavId: Record<SectionType, string> = {
+  hero: 'intro',
+  about: 'about',
+  whyElevate: 'why',
+  coreValues: 'values',
+  testimonials: 'testimonials',
+  projects: 'projects',
+  siteContent: 'content',
+  deliverables: 'deliverables',
+  projectDetails: 'project-details',
+  pricing: 'pricing',
+  signature: 'signature',
+};
 
 class SectionErrorBoundary extends React.Component<
   { label: string; children: React.ReactNode },
