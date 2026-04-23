@@ -190,7 +190,7 @@ const ProposalEditor: React.FC = () => {
         </div>
         
         <h2 className="text-xl font-bold mb-2">סדר וניראות הסקשנים</h2>
-        <p className="text-muted-foreground mb-6">גרור לשינוי סדר, לחץ על ⚙️ לעריכת תוכן</p>
+        <p className="text-muted-foreground mb-6">השתמש בחיצים ⬆️⬇️ או גרור מהידית לשינוי סדר • ⚙️ לעריכת תוכן</p>
         <Reorder.Group
           axis="y"
           values={sortedSections}
