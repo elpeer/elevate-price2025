@@ -392,8 +392,8 @@ export const defaultHeroData: HeroData = {
   contactLabel: 'איש קשר',
   phoneLabel: 'טלפון',
   emailLabel: 'מייל',
-  desktopImage: 'https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b',
-  mobileImage: 'https://api.builder.io/api/v1/image/assets/TEMP/78b9d39700d607107fb83c8be8f4161bf83eae8b',
+  desktopImage: '',
+  mobileImage: '',
 };
 
 export const defaultAboutData: AboutData = {
