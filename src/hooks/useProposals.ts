@@ -17,14 +17,14 @@ export function useProposals() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      
+
       const transformedData = (data || []).map((item: any) => ({
         ...item,
         content: item.content as unknown as ProposalSection[],
         client_info: item.client_info as unknown as ClientInfo,
         status: item.status as 'draft' | 'published' | 'signed'
       }));
-      
+
       setProposals(transformedData);
     } catch (error: any) {
       console.error('Error fetching proposals:', error);
@@ -35,11 +35,11 @@ export function useProposals() {
   };
 
   const createProposal = async (title: string, clientInfo: ClientInfo) => {
-    try {
-      const baseSlug = title.toLowerCase().replace(/[^a-z0-9\u0590-\u05FF]+/g, '-').replace(/^-|-$/g, '');
-      const slug = baseSlug || `proposal-${Date.now()}`;
-      
-      const { data, error } = await supabase
+    const baseSlug = title.toLowerCase().replace(/[^a-z0-9֐-׿]+/g, '-').replace(/^-|-$/g, '')
+      || `proposal-${Date.now()}`;
+
+    const insertWithSlug = (slug: string) =>
+      supabase
         .from('proposals')
         .insert({
           title,
@@ -51,13 +51,23 @@ export function useProposals() {
         .select()
         .single();
 
+    try {
+      let { data, error } = await insertWithSlug(baseSlug);
+
+      if (error?.code === '23505') {
+        ({ data, error } = await insertWithSlug(`${baseSlug}-${Date.now()}`));
+      }
+
       if (error) throw error;
       toast({ title: 'הצעה נוצרה בהצלחה', description: `הצעה "${title}" נוצרה` });
       await fetchProposals();
       return data;
     } catch (error: any) {
       console.error('Error creating proposal:', error);
-      toast({ title: 'שגיאה ביצירת הצעה', description: error.message, variant: 'destructive' });
+      const description = error?.code === '23505'
+        ? 'כבר קיימת הצעה עם כותרת דומה. אנא בחר כותרת אחרת.'
+        : error?.message || 'אירעה שגיאה לא צפויה. נסה שוב.';
+      toast({ title: 'שגיאה ביצירת הצעה', description, variant: 'destructive' });
       return null;
     }
   };
@@ -86,7 +96,7 @@ export function useProposals() {
       if (!original) throw new Error('הצעה לא נמצאה');
 
       const newTitle = `${original.title} (העתק)`;
-      const slug = `${newTitle.toLowerCase().replace(/[^a-z0-9\u0590-\u05FF]+/g, '-')}-${Date.now()}`;
+      const slug = `${newTitle.toLowerCase().replace(/[^a-z0-9֐-׿]+/g, '-')}-${Date.now()}`;
 
       const { data, error } = await supabase
         .from('proposals')
