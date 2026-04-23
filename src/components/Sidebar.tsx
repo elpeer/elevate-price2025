@@ -31,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ visibleIds }) => {
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveItem(navItems[i].id);
+          setActiveItem(items[i].id);
           break;
         }
       }
@@ -39,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ visibleIds }) => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [items]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
