@@ -191,16 +191,25 @@ const ProposalEditor: React.FC = () => {
         
         <h2 className="text-xl font-bold mb-2">סדר וניראות הסקשנים</h2>
         <p className="text-muted-foreground mb-6">גרור לשינוי סדר, לחץ על ⚙️ לעריכת תוכן</p>
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCorners}
-          onDragEnd={handleDragEnd}
-          measuring={{ droppable: { strategy: MeasuringStrategy.Always } }}
+        <Reorder.Group
+          axis="y"
+          values={sortedSections}
+          onReorder={reorder}
+          className="space-y-3 list-none p-0"
         >
-          <SortableContext items={proposal.content.map(s => s.id)} strategy={verticalListSortingStrategy}>
-            <div className="space-y-3">{proposal.content.sort((a, b) => a.order - b.order).map(section => <SortableItem key={section.id} section={section} onToggle={() => toggleVisibility(section.id)} onEdit={() => setEditingSection(section)} />)}</div>
-          </SortableContext>
-        </DndContext>
+          {sortedSections.map((section, index) => (
+            <SectionRow
+              key={section.id}
+              section={section}
+              index={index}
+              total={sortedSections.length}
+              onToggle={() => toggleVisibility(section.id)}
+              onEdit={() => setEditingSection(section)}
+              onMoveUp={() => moveSection(index, -1)}
+              onMoveDown={() => moveSection(index, 1)}
+            />
+          ))}
+        </Reorder.Group>
       </main>
       {editingSection && <SectionEditorPanel section={editingSection} onClose={() => setEditingSection(null)} onUpdate={updateSectionData} />}
     </div>
