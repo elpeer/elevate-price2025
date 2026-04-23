@@ -85,24 +85,24 @@ const ProposalEditor: React.FC = () => {
   const [saving, setSaving] = useState(false);
   const [editingSection, setEditingSection] = useState<ProposalSection | null>(null);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
-  );
-
   useEffect(() => { if (!authLoading && (!user || !isAdmin)) navigate('/auth'); }, [user, isAdmin, authLoading, navigate]);
   useEffect(() => { if (id) getProposalById(id).then((data) => { setProposal(data); setLoading(false); }); }, [id]);
 
   if (loading || authLoading) return <div className="min-h-screen flex items-center justify-center">⏳</div>;
   if (!proposal) return <div className="min-h-screen flex items-center justify-center">הצעה לא נמצאה</div>;
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (over && active.id !== over.id) {
-      const oldIndex = proposal.content.findIndex(s => s.id === active.id);
-      const newIndex = proposal.content.findIndex(s => s.id === over.id);
-      setProposal({ ...proposal, content: arrayMove(proposal.content, oldIndex, newIndex).map((s, i) => ({ ...s, order: i })) });
-    }
+  const sortedSections = [...proposal.content].sort((a, b) => a.order - b.order);
+
+  const reorder = (newOrder: ProposalSection[]) => {
+    setProposal({ ...proposal, content: newOrder.map((s, i) => ({ ...s, order: i })) });
+  };
+
+  const moveSection = (index: number, direction: -1 | 1) => {
+    const target = index + direction;
+    if (target < 0 || target >= sortedSections.length) return;
+    const next = [...sortedSections];
+    [next[index], next[target]] = [next[target], next[index]];
+    reorder(next);
   };
 
   const toggleVisibility = (sectionId: string) => setProposal({ ...proposal, content: proposal.content.map(s => s.id === sectionId ? { ...s, visible: !s.visible } : s) });
