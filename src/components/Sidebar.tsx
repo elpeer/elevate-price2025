@@ -15,18 +15,23 @@ const navItems = [
   { id: 'signature', label: 'חתימה' },
 ];
 
-const Sidebar: React.FC = () => {
-  const [activeItem, setActiveItem] = useState('intro');
+interface SidebarProps {
+  visibleIds?: string[];
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ visibleIds }) => {
+  const items = visibleIds ? navItems.filter(i => visibleIds.includes(i.id)) : navItems;
+  const [activeItem, setActiveItem] = useState(items[0]?.id ?? 'intro');
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(item => document.getElementById(item.id));
+      const sections = items.map(item => document.getElementById(item.id));
       const scrollPosition = window.scrollY + window.innerHeight / 3;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveItem(navItems[i].id);
+          setActiveItem(items[i].id);
           break;
         }
       }
@@ -34,7 +39,7 @@ const Sidebar: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [items]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -55,7 +60,7 @@ const Sidebar: React.FC = () => {
 
       {/* Navigation */}
       <nav className="flex flex-col gap-1">
-        {navItems.map((item) => (
+        {items.map((item) => (
           <button
             key={item.id}
             onClick={() => scrollToSection(item.id)}
