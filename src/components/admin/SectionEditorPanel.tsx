@@ -25,6 +25,50 @@ interface Props {
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
+interface RepeaterItemProps {
+  item: any;
+  index: number;
+  onRemove: () => void;
+  children: React.ReactNode;
+}
+
+const RepeaterItem: React.FC<RepeaterItemProps> = ({ item, index, onRemove, children }) => {
+  const dragControls = useDragControls();
+  return (
+    <Reorder.Item
+      value={item}
+      dragListener={false}
+      dragControls={dragControls}
+      className="bg-white rounded-xl p-4 space-y-4 relative group border border-border shadow-sm"
+    >
+      <div className="flex items-center justify-between pb-2 border-b border-border/50">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onPointerDown={(e) => dragControls.start(e)}
+            className="cursor-grab active:cursor-grabbing touch-none p-1 -m-1 hover:bg-muted rounded"
+            aria-label="גרור לשינוי סדר"
+          >
+            <GripVertical className="h-5 w-5 text-muted-foreground" />
+          </button>
+          <span className="text-sm font-medium text-foreground">
+            פריט {index + 1}
+          </span>
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+          onClick={onRemove}
+        >
+          <Trash2 className="h-4 w-4" />
+        </Button>
+      </div>
+      {children}
+    </Reorder.Item>
+  );
+};
+
 // Group fields by type for tabbed interface
 const groupFields = (schema: FieldDefinition[]) => {
   const simpleFields: FieldDefinition[] = [];
