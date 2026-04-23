@@ -60,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ visibleIds }) => {
 
       {/* Navigation */}
       <nav className="flex flex-col gap-1">
-        {navItems.map((item) => (
+        {items.map((item) => (
           <button
             key={item.id}
             onClick={() => scrollToSection(item.id)}
