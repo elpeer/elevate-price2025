@@ -14,12 +14,24 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import SectionEditorPanel from '@/components/admin/SectionEditorPanel';
 
 const SortableItem = ({ section, onToggle, onEdit }: { section: ProposalSection; onToggle: () => void; onEdit: () => void }) => {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: section.id });
-  const style = { transform: CSS.Transform.toString(transform), transition };
-  
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: section.id });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 50 : 'auto' as const,
+  };
+
   return (
-    <div ref={setNodeRef} style={style} className={`flex items-center gap-3 p-4 bg-white rounded-xl border ${section.visible ? 'border-border' : 'border-dashed border-muted opacity-60'}`}>
-      <button {...attributes} {...listeners} className="cursor-grab"><GripVertical className="h-5 w-5 text-muted-foreground" /></button>
+    <div ref={setNodeRef} style={style} className={`flex items-center gap-3 p-4 bg-white rounded-xl border ${section.visible ? 'border-border' : 'border-dashed border-muted opacity-60'} ${isDragging ? 'shadow-lg' : ''}`}>
+      <button
+        {...attributes}
+        {...listeners}
+        className="cursor-grab active:cursor-grabbing p-2 -m-2 touch-none hover:bg-muted rounded"
+        aria-label="גרור לשינוי סדר"
+      >
+        <GripVertical className="h-5 w-5 text-muted-foreground" />
+      </button>
       <span className="flex-1 font-medium">{sectionLabels[section.type]}</span>
       <Button variant="ghost" size="icon" onClick={onEdit}><Settings className="h-4 w-4" /></Button>
       <Button variant="ghost" size="icon" onClick={onToggle}>{section.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}</Button>
