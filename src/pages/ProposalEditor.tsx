@@ -37,6 +37,11 @@ const ProposalEditor: React.FC = () => {
   const [saving, setSaving] = useState(false);
   const [editingSection, setEditingSection] = useState<ProposalSection | null>(null);
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
   useEffect(() => { if (!authLoading && (!user || !isAdmin)) navigate('/auth'); }, [user, isAdmin, authLoading, navigate]);
   useEffect(() => { if (id) getProposalById(id).then((data) => { setProposal(data); setLoading(false); }); }, [id]);
 
