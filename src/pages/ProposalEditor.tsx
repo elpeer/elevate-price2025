@@ -138,7 +138,12 @@ const ProposalEditor: React.FC = () => {
         
         <h2 className="text-xl font-bold mb-2">סדר וניראות הסקשנים</h2>
         <p className="text-muted-foreground mb-6">גרור לשינוי סדר, לחץ על ⚙️ לעריכת תוכן</p>
-        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCorners}
+          onDragEnd={handleDragEnd}
+          measuring={{ droppable: { strategy: MeasuringStrategy.Always } }}
+        >
           <SortableContext items={proposal.content.map(s => s.id)} strategy={verticalListSortingStrategy}>
             <div className="space-y-3">{proposal.content.sort((a, b) => a.order - b.order).map(section => <SortableItem key={section.id} section={section} onToggle={() => toggleVisibility(section.id)} onEdit={() => setEditingSection(section)} />)}</div>
           </SortableContext>
