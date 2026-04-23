@@ -44,7 +44,7 @@ export function useProposals() {
         .insert({
           title,
           slug,
-          status: 'draft' as const,
+          status: 'published' as const,
           content: getDefaultSections() as any,
           client_info: clientInfo as any
         })
