@@ -410,7 +410,7 @@ export const defaultAboutData: AboutData = {
 };
 
 export const defaultWhyElevateData: WhyElevateData = {
-  headerImage: 'https://api.builder.io/api/v1/image/assets/TEMP/d8c8d1a57cf84c8d92ef4b7fdd6e0b7cb5e18a91',
+  headerImage: '',
   description: 'אנו מעצבים חוויות משתמש אינטואיטיביות וממשקים ויזואליים המשקפים את מהות המותג שלך ומגבירים מעורבות.',
   services: [
     { id: '1', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/star-icon.svg', title: 'שירות מקיף', description: 'מעיצוב UI/UX ועד פיתוח, מיתוג, אירוח, אבטחה ואסטרטגיה דיגיטלית - אנו מציעים שירותי אינטרנט מקיפים תחת קורת גג אחת.' },
