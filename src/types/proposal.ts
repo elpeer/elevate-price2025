@@ -406,19 +406,19 @@ export const defaultAboutData: AboutData = {
   ownerName: 'גדי מאירסון',
   ownerTitle: 'CEO elevate',
   ownerEmail: 'gadi@elevate.co.il',
-  ownerImage: 'https://api.builder.io/api/v1/image/assets/TEMP/bc86f55b38e99f75c8798f7f68b31b3419ab9c44',
+  ownerImage: '',
 };
 
 export const defaultWhyElevateData: WhyElevateData = {
   headerImage: '',
   description: 'אנו מעצבים חוויות משתמש אינטואיטיביות וממשקים ויזואליים המשקפים את מהות המותג שלך ומגבירים מעורבות.',
   services: [
-    { id: '1', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/star-icon.svg', title: 'שירות מקיף', description: 'מעיצוב UI/UX ועד פיתוח, מיתוג, אירוח, אבטחה ואסטרטגיה דיגיטלית - אנו מציעים שירותי אינטרנט מקיפים תחת קורת גג אחת.' },
-    { id: '2', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/crown-icon.svg', title: 'פתרונות מותאמים אישית', description: 'הפורטפוליו המגוון שלנו מציג את יכולתנו להסתגל לתעשיות שונות.' },
-    { id: '3', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/arrow-icon.svg', title: 'עיצוב אתר אסטרטגי להצלחה עסקית', description: 'שדרג את הנוכחות שלך באינטרנט עם אתר אינטרנט שנבנה בקפידה.' },
-    { id: '4', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/heart-icon.svg', title: 'מצוינות ללא טרחה', description: 'תירגע בזמן שאנו מטפלים בכל פרט.' },
-    { id: '5', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/bubble-icon.svg', title: 'תמיכת לקוחות יוצאת דופן', description: 'החזון שלך מניע את העבודה שלנו.' },
-    { id: '6', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/plane-icon.svg', title: 'הצטיינות מהימנה', description: 'אנו משרתים את החברות המובילות בישראל.' },
+    { id: '1', icon: '', title: 'שירות מקיף', description: 'מעיצוב UI/UX ועד פיתוח, מיתוג, אירוח, אבטחה ואסטרטגיה דיגיטלית - אנו מציעים שירותי אינטרנט מקיפים תחת קורת גג אחת.' },
+    { id: '2', icon: '', title: 'פתרונות מותאמים אישית', description: 'הפורטפוליו המגוון שלנו מציג את יכולתנו להסתגל לתעשיות שונות.' },
+    { id: '3', icon: '', title: 'עיצוב אתר אסטרטגי להצלחה עסקית', description: 'שדרג את הנוכחות שלך באינטרנט עם אתר אינטרנט שנבנה בקפידה.' },
+    { id: '4', icon: '', title: 'מצוינות ללא טרחה', description: 'תירגע בזמן שאנו מטפלים בכל פרט.' },
+    { id: '5', icon: '', title: 'תמיכת לקוחות יוצאת דופן', description: 'החזון שלך מניע את העבודה שלנו.' },
+    { id: '6', icon: '', title: 'הצטיינות מהימנה', description: 'אנו משרתים את החברות המובילות בישראל.' },
   ],
 };
 
@@ -428,20 +428,20 @@ export const defaultCoreValuesData: CoreValuesData = {
     'המשימה שלנו היא להעצים עסקים עם פתרונות אינטרנט מתקדמים המניעים צמיחה ומעורבות.',
     'עם מחויבות למצוינות ולשביעות רצון לקוחות, אנו שואפים להיות השותף המנצח.',
   ],
-  desktopBackgroundImage: 'https://api.builder.io/api/v1/image/assets/TEMP/blue-diagonal-bg.png',
-  mobileBackgroundImage: 'https://api.builder.io/api/v1/image/assets/TEMP/blue-diagonal-bg-mobile.png',
+  desktopBackgroundImage: '',
+  mobileBackgroundImage: '',
   clientsTitle: 'נבחרנו על ידי הטובים ביותר',
   clientLogos: [
-    { id: '1', image: 'https://api.builder.io/api/v1/image/assets/TEMP/06395a516979c278f2eccebe7d5ff71794845919' },
-    { id: '2', image: 'https://api.builder.io/api/v1/image/assets/TEMP/007e55697bfb495081352f2cd5144f56d07ec3d9' },
-    { id: '3', image: 'https://api.builder.io/api/v1/image/assets/TEMP/e8d9d11465d14cdee4ff2a87d6addaa494e312ea' },
-    { id: '4', image: 'https://api.builder.io/api/v1/image/assets/TEMP/930605fdd1caa51b70ea4489336287408de9d43e' },
+    { id: '1', image: '' },
+    { id: '2', image: '' },
+    { id: '3', image: '' },
+    { id: '4', image: '' },
   ],
   values: [
-    { id: '1', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/innovation-icon.svg', title: 'חדשנות', description: 'דחיפת גבולות בעיצוב ופיתוח אתרים עם פתרונות חדשניים.' },
-    { id: '2', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/customer-focus-icon.svg', title: 'מיקוד לקוח', description: 'מתן עדיפות לתקשורת ברורה ופתרונות מותאמים בהתאמה למטרות הלקוח.' },
-    { id: '3', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/reliability-icon.svg', title: 'מהימנות', description: 'אספקת תוצאות אמינות ואיכותיות באופן עקבי העולה על הציפיות.' },
-    { id: '4', icon: 'https://api.builder.io/api/v1/image/assets/TEMP/service-icon.svg', title: 'שירות מקיף', description: 'נציע פתרונות משולבים ברמה גבוהה לכל ההיבטים של נוכחות באינטרנט.' },
+    { id: '1', icon: '', title: 'חדשנות', description: 'דחיפת גבולות בעיצוב ופיתוח אתרים עם פתרונות חדשניים.' },
+    { id: '2', icon: '', title: 'מיקוד לקוח', description: 'מתן עדיפות לתקשורת ברורה ופתרונות מותאמים בהתאמה למטרות הלקוח.' },
+    { id: '3', icon: '', title: 'מהימנות', description: 'אספקת תוצאות אמינות ואיכותיות באופן עקבי העולה על הציפיות.' },
+    { id: '4', icon: '', title: 'שירות מקיף', description: 'נציע פתרונות משולבים ברמה גבוהה לכל ההיבטים של נוכחות באינטרנט.' },
   ],
 };
 
@@ -449,10 +449,10 @@ export const defaultTestimonialsData: TestimonialsData = {
   title: 'מה אומרים עלינו',
   subtitle: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.',
   testimonials: [
-    { id: '1', avatar: 'https://api.builder.io/api/v1/image/assets/TEMP/9dbbf53e39bc0a6708b47a333686f73f0dc70ad5', name: 'יוסי כהן', role: 'מנכ"ל', companyLogo: 'https://api.builder.io/api/v1/image/assets/TEMP/06395a516979c278f2eccebe7d5ff71794845919', quote: '"על Elevate הוטל לעצב מחדש ולפתח את האתר החדש שלנו. המסירה הסופית שלהם לא רק עלתה על הציפיות שלנו."' },
-    { id: '2', avatar: 'https://api.builder.io/api/v1/image/assets/TEMP/e70979e9cbec3cb67452933606c1001bf3c49dc4', name: 'דני לוי', role: 'VP Product', companyLogo: 'https://api.builder.io/api/v1/image/assets/TEMP/007e55697bfb495081352f2cd5144f56d07ec3d9', quote: '"אני יכול לומר בביטחון כי Elevate סיפקה חלק מעבודות העיצוב והפיתוח הטובות ביותר עבור Playtika."' },
-    { id: '3', avatar: 'https://api.builder.io/api/v1/image/assets/TEMP/5cd0c9786aa76fdc6d3c30a36f2c0c6091d1f586', name: 'מיכל אברהם', role: 'Product Manager', companyLogo: 'https://api.builder.io/api/v1/image/assets/TEMP/e8d9d11465d14cdee4ff2a87d6addaa494e312ea', quote: '"המומחיות והחדשנות של Elevate בתכנון ויישום שיפורים משמעותיים עלו על כל הציפיות שלנו."' },
-    { id: '4', avatar: 'https://api.builder.io/api/v1/image/assets/TEMP/e22b85885aa238673848e642f0723e370c109520', name: 'רון שמש', role: 'CTO', companyLogo: 'https://api.builder.io/api/v1/image/assets/TEMP/930605fdd1caa51b70ea4489336287408de9d43e', quote: '"על Elevate הוטל לעצב מחדש ולפתח את האתר החדש שלנו. המסירה הסופית שלהם עלתה על הציפיות."' },
+    { id: '1', avatar: '', name: 'יוסי כהן', role: 'מנכ"ל', companyLogo: '', quote: '"על Elevate הוטל לעצב מחדש ולפתח את האתר החדש שלנו. המסירה הסופית שלהם לא רק עלתה על הציפיות שלנו."' },
+    { id: '2', avatar: '', name: 'דני לוי', role: 'VP Product', companyLogo: '', quote: '"אני יכול לומר בביטחון כי Elevate סיפקה חלק מעבודות העיצוב והפיתוח הטובות ביותר עבור Playtika."' },
+    { id: '3', avatar: '', name: 'מיכל אברהם', role: 'Product Manager', companyLogo: '', quote: '"המומחיות והחדשנות של Elevate בתכנון ויישום שיפורים משמעותיים עלו על כל הציפיות שלנו."' },
+    { id: '4', avatar: '', name: 'רון שמש', role: 'CTO', companyLogo: '', quote: '"על Elevate הוטל לעצב מחדש ולפתח את האתר החדש שלנו. המסירה הסופית שלהם עלתה על הציפיות."' },
   ],
 };
 
@@ -460,9 +460,9 @@ export const defaultProjectsData: ProjectsData = {
   title: 'פרויקטים',
   subtitle: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.',
   projects: [
-    { id: '1', desktopImage: 'https://api.builder.io/api/v1/image/assets/TEMP/aa388752d6f6658df6b4fcee6b141e001158328b', mobileImage: 'https://api.builder.io/api/v1/image/assets/TEMP/aa388752d6f6658df6b4fcee6b141e001158328b', title: 'Israel Canada', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
-    { id: '2', desktopImage: 'https://api.builder.io/api/v1/image/assets/TEMP/c22f82cf2ef4eb51b822d54d2bdd7dac9c74c9f5', mobileImage: 'https://api.builder.io/api/v1/image/assets/TEMP/c22f82cf2ef4eb51b822d54d2bdd7dac9c74c9f5', title: 'Polestar', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
-    { id: '3', desktopImage: 'https://api.builder.io/api/v1/image/assets/TEMP/be2dcd2447248af8225102a121a6a1ff9913d3d2', mobileImage: 'https://api.builder.io/api/v1/image/assets/TEMP/be2dcd2447248af8225102a121a6a1ff9913d3d2', title: 'Afcon', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
+    { id: '1', desktopImage: '', mobileImage: '', title: 'Israel Canada', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
+    { id: '2', desktopImage: '', mobileImage: '', title: 'Polestar', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
+    { id: '3', desktopImage: '', mobileImage: '', title: 'Afcon', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
   ],
 };
 
@@ -483,8 +483,8 @@ export const defaultDeliverablesData: DeliverablesData = {
   title: 'כל מה שנספק לך',
   includedTitle: 'כלול בהצעה',
   excludedTitle: 'לא כלול',
-  desktopBackgroundImage: 'https://api.builder.io/api/v1/image/assets/TEMP/deliverables-bg.png',
-  mobileBackgroundImage: 'https://api.builder.io/api/v1/image/assets/TEMP/deliverables-bg-mobile.png',
+  desktopBackgroundImage: '',
+  mobileBackgroundImage: '',
   includedItems: [
     { id: '1', text: 'אפיון ועיצוב כל התבניות בהתאם לרשימת המסכים' },
     { id: '2', text: 'בניית Design System' },
@@ -502,7 +502,7 @@ export const defaultDeliverablesData: DeliverablesData = {
 
 export const defaultProjectDetailsData: ProjectDetailsData = {
   title: 'פרטים נוספים על הפרויקט',
-  sideImage: 'https://api.builder.io/api/v1/image/assets/TEMP/project-details-side.png',
+  sideImage: '',
   faqItems: [
     { id: '1', title: 'אחריות', content: 'מועד תקופת האחריות יחל מיום העלייה לאוויר למשך 3 חודשים. במסגרת האחריות, חברת elevate תטפל בכל תקלה בהתאם לSLA.' },
     { id: '2', title: 'תקלות', content: 'במקרה של תקלות טכניות, צוות התמיכה שלנו יהיה זמין לסייע בפתרון הבעיה בהקדם האפשרי.' },
