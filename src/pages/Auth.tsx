@@ -14,15 +14,24 @@ const Auth: React.FC = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn, user, isAdmin } = useAuth();
+  const { signIn, signOut, user, isAdmin, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
+    if (loading) return;
     if (user && isAdmin) {
-      navigate('/admin');
+      navigate('/admin', { replace: true });
+    } else if (user && !isAdmin) {
+      // Logged in but not an admin — sign out and warn
+      toast({
+        title: 'אין הרשאת גישה',
+        description: 'המשתמש הזה אינו מנהל במערכת',
+        variant: 'destructive',
+      });
+      signOut();
     }
-  }, [user, isAdmin, navigate]);
+  }, [user, isAdmin, loading, navigate, signOut, toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
