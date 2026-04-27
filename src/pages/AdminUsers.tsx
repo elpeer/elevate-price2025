@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Plus, Trash2, Shield, Mail } from 'lucide-react';
+import { Plus, Trash2, Shield, Mail, KeyRound, Pencil } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -43,10 +43,23 @@ const AdminUsers: React.FC = () => {
   const { toast } = useToast();
   const [admins, setAdmins] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Add dialog
   const [showAddDialog, setShowAddDialog] = useState(false);
-  const [newAdminEmail, setNewAdminEmail] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newName, setNewName] = useState('');
   const [adding, setAdding] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  // Edit dialog
+  const [editTarget, setEditTarget] = useState<AdminUser | null>(null);
+  const [editEmail, setEditEmail] = useState('');
+  const [editPassword, setEditPassword] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  // Delete
+  const [deleteTarget, setDeleteTarget] = useState<AdminUser | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (!authLoading && (!user || !isAdmin)) {
@@ -60,28 +73,23 @@ const AdminUsers: React.FC = () => {
 
   const fetchAdmins = async () => {
     try {
-      // Get all admin roles
       const { data: roles, error: rolesError } = await supabase
         .from('user_roles')
         .select('*')
         .eq('role', 'admin');
-
       if (rolesError) throw rolesError;
 
-      // Get profiles for these users
-      const userIds = roles?.map(r => r.user_id) || [];
+      const userIds = roles?.map((r) => r.user_id) || [];
       const { data: profiles, error: profilesError } = await supabase
         .from('profiles')
         .select('*')
         .in('user_id', userIds);
-
       if (profilesError) throw profilesError;
 
-      // Merge data
-      const merged = roles?.map(role => ({
+      const merged = roles?.map((role) => ({
         ...role,
-        email: profiles?.find(p => p.user_id === role.user_id)?.email || 'לא ידוע',
-        display_name: profiles?.find(p => p.user_id === role.user_id)?.display_name || '',
+        email: profiles?.find((p) => p.user_id === role.user_id)?.email || 'לא ידוע',
+        display_name: profiles?.find((p) => p.user_id === role.user_id)?.display_name || '',
       })) || [];
 
       setAdmins(merged);
@@ -93,52 +101,34 @@ const AdminUsers: React.FC = () => {
     }
   };
 
+  const callAdminFn = async (body: Record<string, any>) => {
+    const { data, error } = await supabase.functions.invoke('admin-manage-users', {
+      body,
+    });
+    if (error) throw error;
+    if (data?.error) throw new Error(data.error);
+    return data;
+  };
+
   const handleAddAdmin = async () => {
-    if (!newAdminEmail.trim()) return;
-    
+    if (!newEmail.trim() || !newPassword.trim()) return;
+    if (newPassword.length < 6) {
+      toast({ title: 'הסיסמה חייבת להיות לפחות 6 תווים', variant: 'destructive' });
+      return;
+    }
     setAdding(true);
     try {
-      // Find user by email in profiles
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('user_id')
-        .eq('email', newAdminEmail.trim())
-        .maybeSingle();
-
-      if (profileError) throw profileError;
-
-      if (!profile) {
-        toast({ 
-          title: 'משתמש לא נמצא', 
-          description: 'המשתמש צריך להירשם לאתר קודם',
-          variant: 'destructive' 
-        });
-        return;
-      }
-
-      // Check if already admin
-      const { data: existing } = await supabase
-        .from('user_roles')
-        .select('id')
-        .eq('user_id', profile.user_id)
-        .eq('role', 'admin')
-        .maybeSingle();
-
-      if (existing) {
-        toast({ title: 'המשתמש כבר מנהל', variant: 'destructive' });
-        return;
-      }
-
-      // Add admin role
-      const { error } = await supabase
-        .from('user_roles')
-        .insert({ user_id: profile.user_id, role: 'admin' });
-
-      if (error) throw error;
-
+      await callAdminFn({
+        action: 'create',
+        email: newEmail.trim(),
+        password: newPassword,
+        display_name: newName.trim() || undefined,
+      });
       toast({ title: 'מנהל נוסף בהצלחה' });
       setShowAddDialog(false);
-      setNewAdminEmail('');
+      setNewEmail('');
+      setNewPassword('');
+      setNewName('');
       fetchAdmins();
     } catch (error: any) {
       console.error('Error adding admin:', error);
@@ -148,32 +138,67 @@ const AdminUsers: React.FC = () => {
     }
   };
 
-  const handleRemoveAdmin = async () => {
-    if (!deleteId) return;
+  const openEdit = (admin: AdminUser) => {
+    setEditTarget(admin);
+    setEditEmail(admin.email || '');
+    setEditPassword('');
+  };
 
+  const handleSaveEdit = async () => {
+    if (!editTarget) return;
+    setSaving(true);
     try {
-      // Don't allow removing yourself
-      const adminToRemove = admins.find(a => a.id === deleteId);
-      if (adminToRemove?.user_id === user?.id) {
-        toast({ title: 'לא ניתן להסיר את עצמך', variant: 'destructive' });
-        setDeleteId(null);
-        return;
+      if (editEmail.trim() && editEmail.trim() !== editTarget.email) {
+        await callAdminFn({
+          action: 'update_email',
+          target_user_id: editTarget.user_id,
+          email: editEmail.trim(),
+        });
       }
-
-      const { error } = await supabase
-        .from('user_roles')
-        .delete()
-        .eq('id', deleteId);
-
-      if (error) throw error;
-
-      toast({ title: 'מנהל הוסר בהצלחה' });
+      if (editPassword.trim()) {
+        if (editPassword.length < 6) {
+          toast({ title: 'הסיסמה חייבת להיות לפחות 6 תווים', variant: 'destructive' });
+          setSaving(false);
+          return;
+        }
+        await callAdminFn({
+          action: 'update_password',
+          target_user_id: editTarget.user_id,
+          password: editPassword,
+        });
+      }
+      toast({ title: 'הפרטים עודכנו בהצלחה' });
+      setEditTarget(null);
       fetchAdmins();
     } catch (error: any) {
-      console.error('Error removing admin:', error);
-      toast({ title: 'שגיאה בהסרת מנהל', variant: 'destructive' });
+      console.error('Error updating admin:', error);
+      toast({ title: 'שגיאה בעדכון', description: error.message, variant: 'destructive' });
     } finally {
-      setDeleteId(null);
+      setSaving(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!deleteTarget) return;
+    if (deleteTarget.user_id === user?.id) {
+      toast({ title: 'לא ניתן למחוק את עצמך', variant: 'destructive' });
+      setDeleteTarget(null);
+      return;
+    }
+    setDeleting(true);
+    try {
+      await callAdminFn({
+        action: 'delete',
+        target_user_id: deleteTarget.user_id,
+      });
+      toast({ title: 'המנהל נמחק בהצלחה' });
+      setDeleteTarget(null);
+      fetchAdmins();
+    } catch (error: any) {
+      console.error('Error deleting admin:', error);
+      toast({ title: 'שגיאה במחיקה', description: error.message, variant: 'destructive' });
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -188,9 +213,8 @@ const AdminUsers: React.FC = () => {
   }
 
   return (
-    <AdminLayout title="ניהול משתמשים" subtitle="הוספה והסרה של מנהלים מהמערכת">
+    <AdminLayout title="ניהול משתמשים" subtitle="הוספה, עריכה והסרה של מנהלים מהמערכת">
       <div className="space-y-6">
-        {/* Add Admin Button */}
         <div className="flex justify-end">
           <Button onClick={() => setShowAddDialog(true)}>
             <Plus className="h-4 w-4 ml-2" />
@@ -198,7 +222,6 @@ const AdminUsers: React.FC = () => {
           </Button>
         </div>
 
-        {/* Admins List */}
         <div className="bg-white rounded-xl border">
           <div className="p-4 border-b">
             <h2 className="font-medium">מנהלים פעילים</h2>
@@ -226,12 +249,21 @@ const AdminUsers: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary">מנהל</Badge>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => openEdit(admin)}
+                    title="ערוך"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </Button>
                   {admin.user_id !== user?.id && (
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => setDeleteId(admin.id)}
+                      onClick={() => setDeleteTarget(admin)}
                       className="text-destructive hover:text-destructive"
+                      title="מחק"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -249,17 +281,35 @@ const AdminUsers: React.FC = () => {
           <DialogHeader>
             <DialogTitle>הוסף מנהל חדש</DialogTitle>
             <DialogDescription>
-              הזן את כתובת האימייל של המשתמש שברצונך להפוך למנהל. המשתמש חייב להיות רשום במערכת.
+              צור משתמש מנהל חדש עם אימייל וסיסמה. המשתמש יוכל להתחבר מיד.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label>אימייל המשתמש</Label>
+              <Label>שם תצוגה (אופציונלי)</Label>
+              <Input
+                type="text"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                placeholder="גדי כהן"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>אימייל</Label>
               <Input
                 type="email"
-                value={newAdminEmail}
-                onChange={(e) => setNewAdminEmail(e.target.value)}
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
                 placeholder="user@example.com"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>סיסמה (לפחות 6 תווים)</Label>
+              <Input
+                type="text"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="••••••"
               />
             </div>
           </div>
@@ -267,26 +317,75 @@ const AdminUsers: React.FC = () => {
             <Button variant="outline" onClick={() => setShowAddDialog(false)}>
               ביטול
             </Button>
-            <Button onClick={handleAddAdmin} disabled={adding || !newAdminEmail.trim()}>
-              {adding ? '⏳' : 'הוסף מנהל'}
+            <Button
+              onClick={handleAddAdmin}
+              disabled={adding || !newEmail.trim() || !newPassword.trim()}
+            >
+              {adding ? '⏳ יוצר...' : 'הוסף מנהל'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Admin Dialog */}
+      <Dialog open={!!editTarget} onOpenChange={(o) => !o && setEditTarget(null)}>
+        <DialogContent dir="rtl">
+          <DialogHeader>
+            <DialogTitle>עריכת מנהל</DialogTitle>
+            <DialogDescription>
+              עדכן את האימייל או הגדר סיסמה חדשה. השאר ריק כדי לא לשנות.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label>אימייל</Label>
+              <Input
+                type="email"
+                value={editEmail}
+                onChange={(e) => setEditEmail(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="flex items-center gap-1">
+                <KeyRound className="h-3 w-3" />
+                סיסמה חדשה (אופציונלי)
+              </Label>
+              <Input
+                type="text"
+                value={editPassword}
+                onChange={(e) => setEditPassword(e.target.value)}
+                placeholder="השאר ריק כדי לא לשנות"
+              />
+            </div>
+          </div>
+          <div className="flex gap-2 justify-end">
+            <Button variant="outline" onClick={() => setEditTarget(null)}>
+              ביטול
+            </Button>
+            <Button onClick={handleSaveEdit} disabled={saving}>
+              {saving ? '⏳ שומר...' : 'שמור שינויים'}
             </Button>
           </div>
         </DialogContent>
       </Dialog>
 
       {/* Delete Confirmation */}
-      <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+      <AlertDialog open={!!deleteTarget} onOpenChange={(o) => !o && setDeleteTarget(null)}>
         <AlertDialogContent dir="rtl">
           <AlertDialogHeader>
-            <AlertDialogTitle>הסרת מנהל</AlertDialogTitle>
+            <AlertDialogTitle>מחיקת מנהל</AlertDialogTitle>
             <AlertDialogDescription>
-              האם אתה בטוח שברצונך להסיר את ההרשאות מהמשתמש הזה?
+              פעולה זו תמחק את המשתמש לצמיתות מהמערכת ולא ניתן לשחזר אותו. האם להמשיך?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-row-reverse gap-2">
-            <AlertDialogCancel>ביטול</AlertDialogCancel>
-            <AlertDialogAction onClick={handleRemoveAdmin} className="bg-destructive text-destructive-foreground">
-              הסר
+            <AlertDialogCancel disabled={deleting}>ביטול</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={deleting}
+              className="bg-destructive text-destructive-foreground"
+            >
+              {deleting ? '⏳' : 'מחק לצמיתות'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
