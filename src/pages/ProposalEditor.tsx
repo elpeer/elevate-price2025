@@ -94,15 +94,19 @@ const ProposalEditor: React.FC = () => {
   const sortedSections = [...proposal.content].sort((a, b) => a.order - b.order);
 
   const reorder = (newOrder: ProposalSection[]) => {
-    setProposal({ ...proposal, content: newOrder.map((s, i) => ({ ...s, order: i })) });
+    setProposal((prev) => prev ? { ...prev, content: newOrder.map((s, i) => ({ ...s, order: i })) } : prev);
   };
 
-  const moveSection = (index: number, direction: -1 | 1) => {
-    const target = index + direction;
-    if (target < 0 || target >= sortedSections.length) return;
-    const next = [...sortedSections];
-    [next[index], next[target]] = [next[target], next[index]];
-    reorder(next);
+  const moveSection = (sectionId: string, direction: -1 | 1) => {
+    setProposal((prev) => {
+      if (!prev) return prev;
+      const sorted = [...prev.content].sort((a, b) => a.order - b.order);
+      const index = sorted.findIndex((s) => s.id === sectionId);
+      const target = index + direction;
+      if (index === -1 || target < 0 || target >= sorted.length) return prev;
+      [sorted[index], sorted[target]] = [sorted[target], sorted[index]];
+      return { ...prev, content: sorted.map((s, i) => ({ ...s, order: i })) };
+    });
   };
 
   const toggleVisibility = (sectionId: string) => setProposal({ ...proposal, content: proposal.content.map(s => s.id === sectionId ? { ...s, visible: !s.visible } : s) });
