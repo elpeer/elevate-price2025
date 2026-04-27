@@ -28,11 +28,14 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 interface RepeaterItemProps {
   item: any;
   index: number;
+  total: number;
   onRemove: () => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
   children: React.ReactNode;
 }
 
-const RepeaterItem: React.FC<RepeaterItemProps> = ({ item, index, onRemove, children }) => {
+const RepeaterItem: React.FC<RepeaterItemProps> = ({ item, index, total, onRemove, onMoveUp, onMoveDown, children }) => {
   const dragControls = useDragControls();
   return (
     <Reorder.Item
@@ -51,6 +54,30 @@ const RepeaterItem: React.FC<RepeaterItemProps> = ({ item, index, onRemove, chil
           >
             <GripVertical className="h-5 w-5 text-muted-foreground" />
           </button>
+          <div className="flex flex-col">
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6"
+              disabled={index === 0}
+              onClick={onMoveUp}
+              aria-label="הזז למעלה"
+            >
+              <ChevronUp className="h-4 w-4" />
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6"
+              disabled={index === total - 1}
+              onClick={onMoveDown}
+              aria-label="הזז למטה"
+            >
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+          </div>
           <span className="text-sm font-medium text-foreground">
             פריט {index + 1}
           </span>
