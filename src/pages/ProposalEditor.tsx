@@ -209,8 +209,8 @@ const ProposalEditor: React.FC = () => {
               total={sortedSections.length}
               onToggle={() => toggleVisibility(section.id)}
               onEdit={() => setEditingSection(section)}
-              onMoveUp={() => moveSection(index, -1)}
-              onMoveDown={() => moveSection(index, 1)}
+              onMoveUp={() => moveSection(section.id, -1)}
+              onMoveDown={() => moveSection(section.id, 1)}
             />
           ))}
         </Reorder.Group>
