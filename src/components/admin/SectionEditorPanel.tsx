@@ -189,6 +189,14 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
     handleChange(path, newItems);
   };
 
+  const moveRepeaterItem = (path: string[], index: number, direction: -1 | 1) => {
+    const currentArray = [...(getValueByPath(data, path) || [])];
+    const target = index + direction;
+    if (target < 0 || target >= currentArray.length) return;
+    [currentArray[index], currentArray[target]] = [currentArray[target], currentArray[index]];
+    handleChange(path, currentArray);
+  };
+
   const getValueByPath = (obj: any, path: string[]): any => {
     return path.reduce((acc, key) => acc?.[key], obj);
   };
