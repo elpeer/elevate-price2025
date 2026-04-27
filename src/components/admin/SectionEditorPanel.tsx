@@ -239,13 +239,15 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
         );
 
       case 'number':
+        const isPriceField = field.key.toLowerCase().includes('price') || field.label.includes('מחיר') || field.label.includes('עלות');
         return (
           <div key={pathKey} className="space-y-2">
             <Label className="text-sm font-medium">{field.label}</Label>
             <Input
               type="number"
-              value={value || 0}
-              onChange={(e) => handleChange(path, Number(e.target.value))}
+              value={value === 0 || value === undefined || value === null ? '' : value}
+              onChange={(e) => handleChange(path, e.target.value === '' ? 0 : Number(e.target.value))}
+              placeholder={field.placeholder || (isPriceField ? '0' : '')}
               className="bg-white w-40"
             />
           </div>
