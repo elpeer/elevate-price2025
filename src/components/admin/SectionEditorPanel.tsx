@@ -365,7 +365,10 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
                         key={String(item.id)}
                         item={item}
                         index={index}
+                        total={items.length}
                         onRemove={() => removeRepeaterItem(path, index)}
+                        onMoveUp={() => moveRepeaterItem(path, index, -1)}
+                        onMoveDown={() => moveRepeaterItem(path, index, 1)}
                       >
                         <div className="grid gap-4">
                           {field.itemFields?.map((subField) => 
