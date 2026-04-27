@@ -14,12 +14,12 @@ const Auth: React.FC = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn, signOut, user, isAdmin, loading } = useAuth();
+  const { signIn, signOut, user, isAdmin, loading, roleLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    if (loading) return;
+    if (loading || roleLoading) return;
     if (user && isAdmin) {
       navigate('/admin', { replace: true });
     } else if (user && !isAdmin) {
@@ -31,7 +31,7 @@ const Auth: React.FC = () => {
       });
       signOut();
     }
-  }, [user, isAdmin, loading, navigate, signOut, toast]);
+  }, [user, isAdmin, loading, roleLoading, navigate, signOut, toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
