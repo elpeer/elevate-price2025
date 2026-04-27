@@ -306,7 +306,8 @@ const AdminUsers: React.FC = () => {
             <div className="space-y-2">
               <Label>סיסמה (לפחות 6 תווים)</Label>
               <Input
-                type="text"
+                type="password"
+                autoComplete="new-password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="••••••"
@@ -351,7 +352,8 @@ const AdminUsers: React.FC = () => {
                 סיסמה חדשה (אופציונלי)
               </Label>
               <Input
-                type="text"
+                type="password"
+                autoComplete="new-password"
                 value={editPassword}
                 onChange={(e) => setEditPassword(e.target.value)}
                 placeholder="השאר ריק כדי לא לשנות"
