@@ -28,11 +28,14 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 interface RepeaterItemProps {
   item: any;
   index: number;
+  total: number;
   onRemove: () => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
   children: React.ReactNode;
 }
 
-const RepeaterItem: React.FC<RepeaterItemProps> = ({ item, index, onRemove, children }) => {
+const RepeaterItem: React.FC<RepeaterItemProps> = ({ item, index, total, onRemove, onMoveUp, onMoveDown, children }) => {
   const dragControls = useDragControls();
   return (
     <Reorder.Item
@@ -51,6 +54,30 @@ const RepeaterItem: React.FC<RepeaterItemProps> = ({ item, index, onRemove, chil
           >
             <GripVertical className="h-5 w-5 text-muted-foreground" />
           </button>
+          <div className="flex flex-col">
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6"
+              disabled={index === 0}
+              onClick={onMoveUp}
+              aria-label="הזז למעלה"
+            >
+              <ChevronUp className="h-4 w-4" />
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6"
+              disabled={index === total - 1}
+              onClick={onMoveDown}
+              aria-label="הזז למטה"
+            >
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+          </div>
           <span className="text-sm font-medium text-foreground">
             פריט {index + 1}
           </span>
@@ -162,6 +189,14 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
     handleChange(path, newItems);
   };
 
+  const moveRepeaterItem = (path: string[], index: number, direction: -1 | 1) => {
+    const currentArray = [...(getValueByPath(data, path) || [])];
+    const target = index + direction;
+    if (target < 0 || target >= currentArray.length) return;
+    [currentArray[index], currentArray[target]] = [currentArray[target], currentArray[index]];
+    handleChange(path, currentArray);
+  };
+
   const getValueByPath = (obj: any, path: string[]): any => {
     return path.reduce((acc, key) => acc?.[key], obj);
   };
@@ -204,13 +239,15 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
         );
 
       case 'number':
+        const isPriceField = field.key.toLowerCase().includes('price') || field.label.includes('מחיר') || field.label.includes('עלות');
         return (
           <div key={pathKey} className="space-y-2">
             <Label className="text-sm font-medium">{field.label}</Label>
             <Input
               type="number"
-              value={value || 0}
-              onChange={(e) => handleChange(path, Number(e.target.value))}
+              value={value === 0 || value === undefined || value === null ? '' : value}
+              onChange={(e) => handleChange(path, e.target.value === '' ? 0 : Number(e.target.value))}
+              placeholder={field.placeholder || (isPriceField ? '0' : '')}
               className="bg-white w-40"
             />
           </div>
@@ -328,7 +365,10 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
                         key={String(item.id)}
                         item={item}
                         index={index}
+                        total={items.length}
                         onRemove={() => removeRepeaterItem(path, index)}
+                        onMoveUp={() => moveRepeaterItem(path, index, -1)}
+                        onMoveDown={() => moveRepeaterItem(path, index, 1)}
                       >
                         <div className="grid gap-4">
                           {field.itemFields?.map((subField) => 
