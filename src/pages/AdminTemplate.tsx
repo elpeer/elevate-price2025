@@ -77,6 +77,7 @@ const ProposalTemplateEditor: React.FC = () => {
   const { user, isAdmin, loading: authLoading } = useAuth();
   const { template, setTemplate, loading, saving, saveTemplate } = useProposalTemplate();
   const [editingSection, setEditingSection] = useState<ProposalSection | null>(null);
+  const [search, setSearch] = useState('');
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
   const isInitialLoadRef = React.useRef(true);
   const saveTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
