@@ -77,8 +77,26 @@ const ProposalTemplateEditor: React.FC = () => {
   const { user, isAdmin, loading: authLoading } = useAuth();
   const { template, setTemplate, loading, saving, saveTemplate } = useProposalTemplate();
   const [editingSection, setEditingSection] = useState<ProposalSection | null>(null);
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
+  const isInitialLoadRef = React.useRef(true);
+  const saveTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => { if (!authLoading && (!user || !isAdmin)) navigate('/auth'); }, [user, isAdmin, authLoading, navigate]);
+
+  // Debounced autosave whenever template changes (skip the very first load)
+  useEffect(() => {
+    if (!template) return;
+    if (isInitialLoadRef.current) {
+      isInitialLoadRef.current = false;
+      return;
+    }
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(async () => {
+      const ok = await saveTemplate(template);
+      if (ok) setLastSavedAt(new Date());
+    }, 800);
+    return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
+  }, [template, saveTemplate]);
 
   if (loading || authLoading || !template) {
     return (
@@ -149,15 +167,15 @@ const ProposalTemplateEditor: React.FC = () => {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
-            <Button onClick={handleSave} disabled={saving}>
-              <Save className="h-4 w-4 ml-2" />{saving ? '⏳' : 'שמירה'}
+            <Button onClick={handleSave} disabled={saving} variant="outline">
+              <Save className="h-4 w-4 ml-2" />{saving ? 'שומר…' : lastSavedAt ? 'נשמר ✓' : 'שמירה'}
             </Button>
           </div>
         </div>
 
         <div className="bg-white rounded-xl border p-4 mb-6 text-sm text-muted-foreground">
           💡 <strong className="text-foreground">איך זה עובד:</strong> התוכן שתערוך בעמוד הזה ישומש כברירת מחדל בכל הצעת מחיר חדשה שתוצר.
-          הצעות קיימות לא ישתנו.
+          הצעות קיימות לא ישתנו. <span className="text-primary">השינויים נשמרים אוטומטית.</span>
         </div>
 
         <h2 className="text-xl font-bold mb-2">סדר וניראות הסקשנים</h2>
@@ -183,7 +201,10 @@ const ProposalTemplateEditor: React.FC = () => {
           ))}
         </Reorder.Group>
       </div>
-      {editingSection && <SectionEditorPanel section={editingSection} onClose={() => setEditingSection(null)} onUpdate={updateSectionData} />}
+      {editingSection && (() => {
+        const fresh = template.content.find(s => s.id === editingSection.id) || editingSection;
+        return <SectionEditorPanel section={fresh} onClose={() => setEditingSection(null)} onUpdate={updateSectionData} />;
+      })()}
     </AdminLayout>
   );
 };
