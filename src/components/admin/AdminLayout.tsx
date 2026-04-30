@@ -172,8 +172,23 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title, subtitle, ba
                   {item.label}
                 </Link>
               ))}
-              <div className="pt-2 border-t">
-                <div className="px-4 py-2 text-sm text-muted-foreground">{user?.email}</div>
+              <div className="pt-2 border-t space-y-2">
+                {userMenuItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                      isActive(item.path)
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
+                    }`}
+                  >
+                    <item.icon className="h-5 w-5" />
+                    {item.label}
+                  </Link>
+                ))}
+                <div className="px-4 py-2 text-xs text-muted-foreground truncate">{user?.email}</div>
                 <Button
                   variant="outline"
                   className="w-full justify-start"
