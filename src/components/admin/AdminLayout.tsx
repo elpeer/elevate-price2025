@@ -101,15 +101,38 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title, subtitle, ba
             </nav>
 
             {/* User & Actions */}
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground hidden lg:block">
-                {user?.email}
-              </span>
-              <Button variant="outline" size="sm" onClick={handleSignOut} className="hidden md:flex">
-                <LogOut className="h-4 w-4 ml-2" />
-                יציאה
-              </Button>
-              
+            <div className="flex items-center gap-2">
+              {/* User Avatar Dropdown - Desktop */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="hidden md:flex items-center gap-2 px-2 h-10 rounded-full hover:bg-secondary">
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
+                        {user?.email?.[0]?.toUpperCase() ?? 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56" dir="rtl">
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="text-xs text-muted-foreground">מחובר/ת בתור</div>
+                    <div className="text-sm font-medium truncate">{user?.email}</div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {userMenuItems.map((item) => (
+                    <DropdownMenuItem key={item.path} onClick={() => navigate(item.path)} className="cursor-pointer">
+                      <item.icon className="h-4 w-4 ml-2" />
+                      {item.label}
+                    </DropdownMenuItem>
+                  ))}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-destructive focus:text-destructive">
+                    <LogOut className="h-4 w-4 ml-2" />
+                    יציאה
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
               {/* Mobile Menu Button */}
               <Button
                 variant="ghost"
