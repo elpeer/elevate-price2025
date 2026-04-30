@@ -11,6 +11,7 @@ import Admin from "./pages/Admin";
 import AdminUsers from "./pages/AdminUsers";
 import AdminProfile from "./pages/AdminProfile";
 import AdminSettings from "./pages/AdminSettings";
+import AdminTemplate from "./pages/AdminTemplate";
 import AdminSignatures from "./pages/AdminSignatures";
 import ProposalEditor from "./pages/ProposalEditor";
 import ProposalViewPage from "./pages/ProposalViewPage";
@@ -32,6 +33,7 @@ const App = () => (
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/profile" element={<AdminProfile />} />
               <Route path="/admin/settings" element={<AdminSettings />} />
+              <Route path="/admin/template" element={<AdminTemplate />} />
               <Route path="/admin/edit/:id" element={<ProposalEditor />} />
               <Route path="/customer/:slug" element={<ProposalViewPage />} />
               <Route path="/p/:slug" element={<ProposalViewPage />} />
