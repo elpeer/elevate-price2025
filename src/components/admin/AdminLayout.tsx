@@ -35,9 +35,12 @@ interface AdminLayoutProps {
 
 const navItems = [
   { path: '/admin', label: 'הצעות מחיר', icon: FileText },
-  { path: '/admin/template', label: 'תבנית ברירת מחדל', icon: LayoutTemplate },
+  { path: '/admin/template', label: 'תבנית', icon: LayoutTemplate },
   { path: '/admin/signatures', label: 'חתימות', icon: FileSignature },
-  { path: '/admin/users', label: 'ניהול משתמשים', icon: Users },
+  { path: '/admin/users', label: 'משתמשים', icon: Users },
+];
+
+const userMenuItems = [
   { path: '/admin/profile', label: 'הפרופיל שלי', icon: User },
   { path: '/admin/settings', label: 'הגדרות אתר', icon: Settings },
 ];
