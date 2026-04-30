@@ -77,8 +77,26 @@ const ProposalTemplateEditor: React.FC = () => {
   const { user, isAdmin, loading: authLoading } = useAuth();
   const { template, setTemplate, loading, saving, saveTemplate } = useProposalTemplate();
   const [editingSection, setEditingSection] = useState<ProposalSection | null>(null);
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
+  const isInitialLoadRef = React.useRef(true);
+  const saveTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => { if (!authLoading && (!user || !isAdmin)) navigate('/auth'); }, [user, isAdmin, authLoading, navigate]);
+
+  // Debounced autosave whenever template changes (skip the very first load)
+  useEffect(() => {
+    if (!template) return;
+    if (isInitialLoadRef.current) {
+      isInitialLoadRef.current = false;
+      return;
+    }
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(async () => {
+      const ok = await saveTemplate(template);
+      if (ok) setLastSavedAt(new Date());
+    }, 800);
+    return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
+  }, [template, saveTemplate]);
 
   if (loading || authLoading || !template) {
     return (
