@@ -15,6 +15,15 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import elevateLogo from '@/assets/why-elevate-logo.svg';
 
 interface AdminLayoutProps {
@@ -26,9 +35,12 @@ interface AdminLayoutProps {
 
 const navItems = [
   { path: '/admin', label: 'הצעות מחיר', icon: FileText },
-  { path: '/admin/template', label: 'תבנית ברירת מחדל', icon: LayoutTemplate },
+  { path: '/admin/template', label: 'תבנית', icon: LayoutTemplate },
   { path: '/admin/signatures', label: 'חתימות', icon: FileSignature },
-  { path: '/admin/users', label: 'ניהול משתמשים', icon: Users },
+  { path: '/admin/users', label: 'משתמשים', icon: Users },
+];
+
+const userMenuItems = [
   { path: '/admin/profile', label: 'הפרופיל שלי', icon: User },
   { path: '/admin/settings', label: 'הגדרות אתר', icon: Settings },
 ];
@@ -89,15 +101,38 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title, subtitle, ba
             </nav>
 
             {/* User & Actions */}
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground hidden lg:block">
-                {user?.email}
-              </span>
-              <Button variant="outline" size="sm" onClick={handleSignOut} className="hidden md:flex">
-                <LogOut className="h-4 w-4 ml-2" />
-                יציאה
-              </Button>
-              
+            <div className="flex items-center gap-2">
+              {/* User Avatar Dropdown - Desktop */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="hidden md:flex items-center gap-2 px-2 h-10 rounded-full hover:bg-secondary">
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
+                        {user?.email?.[0]?.toUpperCase() ?? 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="text-xs text-muted-foreground">מחובר/ת בתור</div>
+                    <div className="text-sm font-medium truncate">{user?.email}</div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {userMenuItems.map((item) => (
+                    <DropdownMenuItem key={item.path} onClick={() => navigate(item.path)} className="cursor-pointer">
+                      <item.icon className="h-4 w-4 ml-2" />
+                      {item.label}
+                    </DropdownMenuItem>
+                  ))}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-destructive focus:text-destructive">
+                    <LogOut className="h-4 w-4 ml-2" />
+                    יציאה
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
               {/* Mobile Menu Button */}
               <Button
                 variant="ghost"
@@ -137,8 +172,23 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title, subtitle, ba
                   {item.label}
                 </Link>
               ))}
-              <div className="pt-2 border-t">
-                <div className="px-4 py-2 text-sm text-muted-foreground">{user?.email}</div>
+              <div className="pt-2 border-t space-y-2">
+                {userMenuItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                      isActive(item.path)
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
+                    }`}
+                  >
+                    <item.icon className="h-5 w-5" />
+                    {item.label}
+                  </Link>
+                ))}
+                <div className="px-4 py-2 text-xs text-muted-foreground truncate">{user?.email}</div>
                 <Button
                   variant="outline"
                   className="w-full justify-start"
