@@ -113,7 +113,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title, subtitle, ba
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-56" dir="rtl">
+                <DropdownMenuContent align="start" className="w-56">
                   <DropdownMenuLabel className="font-normal">
                     <div className="text-xs text-muted-foreground">מחובר/ת בתור</div>
                     <div className="text-sm font-medium truncate">{user?.email}</div>
