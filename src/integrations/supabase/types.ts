@@ -41,6 +41,33 @@ export type Database = {
         }
         Relationships: []
       }
+      proposal_templates: {
+        Row: {
+          content: Json
+          created_at: string
+          id: string
+          is_default: boolean
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content?: Json
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       proposals: {
         Row: {
           client_info: Json
