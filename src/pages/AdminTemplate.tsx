@@ -140,8 +140,8 @@ const ProposalTemplateEditor: React.FC = () => {
 
   return (
     <AdminLayout title="תבנית ברירת מחדל" subtitle="התוכן כאן יהווה ברירת מחדל לכל הצעת מחיר חדשה">
-      <div className="max-w-3xl">
-        <div className="flex items-center justify-between mb-6 sticky top-0 z-30 bg-secondary/30 -mx-4 px-4 py-3 backdrop-blur">
+      <div className="max-w-3xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 sticky top-0 z-30 bg-secondary/30 -mx-4 px-4 py-3 backdrop-blur">
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="icon" onClick={() => navigate('/admin')}><ArrowRight className="h-5 w-5" /></Button>
             <Input
@@ -179,28 +179,52 @@ const ProposalTemplateEditor: React.FC = () => {
           הצעות קיימות לא ישתנו. <span className="text-primary">השינויים נשמרים אוטומטית.</span>
         </div>
 
-        <h2 className="text-xl font-bold mb-2">סדר וניראות הסקשנים</h2>
-        <p className="text-muted-foreground mb-6">השתמש בחיצים ⬆️⬇️ או גרור מהידית לשינוי סדר • ⚙️ לעריכת תוכן</p>
+        <h2 className="text-xl font-bold mb-2 text-center">סדר וניראות הסקשנים</h2>
+        <p className="text-muted-foreground mb-4 text-center">השתמש בחיצים ⬆️⬇️ או גרור מהידית לשינוי סדר • ⚙️ לעריכת תוכן</p>
 
-        <Reorder.Group
-          axis="y"
-          values={sortedSections}
-          onReorder={reorder}
-          className="space-y-3 list-none p-0"
-        >
-          {sortedSections.map((section, index) => (
-            <SectionRow
-              key={section.id}
-              section={section}
-              index={index}
-              total={sortedSections.length}
-              onToggle={() => toggleVisibility(section.id)}
-              onEdit={() => setEditingSection(section)}
-              onMoveUp={() => moveSection(section.id, -1)}
-              onMoveDown={() => moveSection(section.id, 1)}
-            />
-          ))}
-        </Reorder.Group>
+        <div className="relative mb-4">
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="חיפוש סקשן לפי שם…"
+            className="pr-10"
+          />
+        </div>
+
+        {(() => {
+          const q = search.trim().toLowerCase();
+          const visibleRows = q
+            ? sortedSections.filter(s => sectionLabels[s.type]?.toLowerCase().includes(q))
+            : sortedSections;
+          return (
+            <Reorder.Group
+              axis="y"
+              values={sortedSections}
+              onReorder={reorder}
+              className="space-y-3 list-none p-0"
+            >
+              {visibleRows.length === 0 && (
+                <div className="text-center text-muted-foreground py-8">לא נמצאו סקשנים תואמים</div>
+              )}
+              {visibleRows.map((section) => {
+                const realIndex = sortedSections.findIndex(s => s.id === section.id);
+                return (
+                  <SectionRow
+                    key={section.id}
+                    section={section}
+                    index={realIndex}
+                    total={sortedSections.length}
+                    onToggle={() => toggleVisibility(section.id)}
+                    onEdit={() => setEditingSection(section)}
+                    onMoveUp={() => moveSection(section.id, -1)}
+                    onMoveDown={() => moveSection(section.id, 1)}
+                  />
+                );
+              })}
+            </Reorder.Group>
+          );
+        })()}
       </div>
       {editingSection && (() => {
         const fresh = template.content.find(s => s.id === editingSection.id) || editingSection;
