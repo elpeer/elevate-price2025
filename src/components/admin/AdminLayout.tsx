@@ -10,7 +10,8 @@ import {
   Menu, 
   X,
   ChevronLeft,
-  FileSignature
+  FileSignature,
+  LayoutTemplate
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -25,6 +26,7 @@ interface AdminLayoutProps {
 
 const navItems = [
   { path: '/admin', label: 'הצעות מחיר', icon: FileText },
+  { path: '/admin/template', label: 'תבנית ברירת מחדל', icon: LayoutTemplate },
   { path: '/admin/signatures', label: 'חתימות', icon: FileSignature },
   { path: '/admin/users', label: 'ניהול משתמשים', icon: Users },
   { path: '/admin/profile', label: 'הפרופיל שלי', icon: User },

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Proposal, ProposalSection, ClientInfo, getDefaultSections } from '@/types/proposal';
+import { fetchDefaultTemplateContent } from '@/hooks/useProposalTemplate';
 import { useToast } from '@/hooks/use-toast';
 
 export function useProposals() {
@@ -38,6 +39,9 @@ export function useProposals() {
     const baseSlug = title.toLowerCase().replace(/[^a-z0-9֐-׿]+/g, '-').replace(/^-|-$/g, '')
       || `proposal-${Date.now()}`;
 
+    // Pull the latest template content (falls back to hardcoded defaults)
+    const templateContent = await fetchDefaultTemplateContent();
+
     const insertWithSlug = (slug: string) =>
       supabase
         .from('proposals')
@@ -45,7 +49,7 @@ export function useProposals() {
           title,
           slug,
           status: 'published' as const,
-          content: getDefaultSections() as any,
+          content: templateContent as any,
           client_info: clientInfo as any
         })
         .select()
