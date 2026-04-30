@@ -5,7 +5,7 @@ import { useProposalTemplate } from '@/hooks/useProposalTemplate';
 import { ProposalSection, sectionLabels, getDefaultSections } from '@/types/proposal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowRight, Save, Eye, EyeOff, Settings, ChevronUp, ChevronDown, RotateCcw } from 'lucide-react';
+import { ArrowRight, Save, Eye, EyeOff, Settings, ChevronUp, ChevronDown, RotateCcw, Search } from 'lucide-react';
 import { Reorder, useDragControls } from 'framer-motion';
 import { GripVertical } from 'lucide-react';
 import SectionEditorPanel from '@/components/admin/SectionEditorPanel';
