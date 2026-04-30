@@ -201,7 +201,10 @@ const ProposalTemplateEditor: React.FC = () => {
           ))}
         </Reorder.Group>
       </div>
-      {editingSection && <SectionEditorPanel section={editingSection} onClose={() => setEditingSection(null)} onUpdate={updateSectionData} />}
+      {editingSection && (() => {
+        const fresh = template.content.find(s => s.id === editingSection.id) || editingSection;
+        return <SectionEditorPanel section={fresh} onClose={() => setEditingSection(null)} onUpdate={updateSectionData} />;
+      })()}
     </AdminLayout>
   );
 };
