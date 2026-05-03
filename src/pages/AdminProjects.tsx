@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, Reorder, useDragControls } from 'framer-motion';
-import { Plus, Trash2, GripVertical, Upload, X, ChevronUp, ChevronDown, FolderOpen } from 'lucide-react';
+import { Plus, Trash2, GripVertical, Upload, X, ChevronUp, ChevronDown, FolderOpen, Search } from 'lucide-react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
