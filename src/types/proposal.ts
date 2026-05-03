@@ -59,7 +59,7 @@ export interface Signature {
 // FIELD DEFINITIONS FOR CMS
 // ===============================
 
-export type FieldType = 'text' | 'textarea' | 'image' | 'responsiveImage' | 'repeater' | 'boolean' | 'number' | 'select';
+export type FieldType = 'text' | 'textarea' | 'image' | 'responsiveImage' | 'repeater' | 'boolean' | 'number' | 'select' | 'projects-selector';
 
 export interface FieldDefinition {
   key: string;
