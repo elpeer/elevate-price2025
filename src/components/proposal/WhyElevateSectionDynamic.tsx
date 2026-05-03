@@ -7,6 +7,7 @@ import whyElevateLogo from '@/assets/why-elevate-header.svg';
 interface ServiceItem {
   title: string;
   description: string;
+  icon?: string;
 }
 
 interface WhyElevateData {
