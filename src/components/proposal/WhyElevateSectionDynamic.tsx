@@ -51,6 +51,7 @@ const WhyElevateSectionDynamic: React.FC<Props> = ({ data }) => {
               <AccordionItem key={index} value={`item-${index}`} className="border-b border-gray-200">
                 <AccordionTrigger className="flex items-center justify-between py-4 hover:no-underline [&>svg]:hidden">
                   <div className="flex items-center gap-3 w-full">
+                    {service.icon && <img src={service.icon} alt="" className="w-8 h-8 object-contain shrink-0" />}
                     <span className="text-base font-medium text-foreground flex-1 text-right">{service.title}</span>
                   </div>
                   <div className="mr-2">{openItem === `item-${index}` ? <Minus className="h-5 w-5 text-muted-foreground" /> : <Plus className="h-5 w-5 text-muted-foreground" />}</div>
@@ -65,6 +66,11 @@ const WhyElevateSectionDynamic: React.FC<Props> = ({ data }) => {
           {services.map((service, index) => (
             <StaggerItem key={index}>
               <div className="text-right">
+                {service.icon && (
+                  <div className="mb-4 flex justify-start">
+                    <img src={service.icon} alt="" className="w-10 h-10 object-contain" />
+                  </div>
+                )}
                 <h3 className="text-lg md:text-xl font-medium text-foreground mb-3">{service.title}</h3>
                 <p className="text-muted-foreground leading-6 md:leading-7 text-sm">{service.description}</p>
               </div>
