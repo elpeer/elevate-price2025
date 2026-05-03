@@ -307,12 +307,7 @@ export const sectionFieldSchemas: Record<SectionType, FieldDefinition[]> = {
   projects: [
     { key: 'title', label: 'כותרת', type: 'text' },
     { key: 'subtitle', label: 'תת כותרת', type: 'textarea' },
-    { key: 'projects', label: 'פרויקטים', type: 'repeater', itemFields: [
-      { key: 'desktopImage', label: 'תמונה (דסקטופ)', type: 'image' },
-      { key: 'mobileImage', label: 'תמונה (מובייל)', type: 'image' },
-      { key: 'title', label: 'שם פרויקט', type: 'text' },
-      { key: 'description', label: 'תיאור', type: 'textarea' },
-    ]},
+    { key: 'hiddenIds', label: 'פרויקטים להצגה', type: 'projects-selector' as any },
   ],
   siteContent: [
     { key: 'title', label: 'כותרת', type: 'text' },
@@ -456,14 +451,10 @@ export const defaultTestimonialsData: TestimonialsData = {
   ],
 };
 
-export const defaultProjectsData: ProjectsData = {
+export const defaultProjectsData: any = {
   title: 'פרויקטים',
   subtitle: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות שלנו, אנו מודדים את ההצלחה שלנו על סמך שביעות רצון הלקוחות שלנו.',
-  projects: [
-    { id: '1', desktopImage: '', mobileImage: '', title: 'Israel Canada', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
-    { id: '2', desktopImage: '', mobileImage: '', title: 'Polestar', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
-    { id: '3', desktopImage: '', mobileImage: '', title: 'Afcon', description: 'בין אם שמעתם עלינו מחבר או שקראתם את הביקורות החיוביות' },
-  ],
+  hiddenIds: [],
 };
 
 export const defaultSiteContentData: SiteContentData = {
