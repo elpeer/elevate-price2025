@@ -11,7 +11,8 @@ import {
   X,
   ChevronLeft,
   FileSignature,
-  LayoutTemplate
+  LayoutTemplate,
+  FolderKanban
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -36,6 +37,7 @@ interface AdminLayoutProps {
 const navItems = [
   { path: '/admin', label: 'הצעות מחיר', icon: FileText },
   { path: '/admin/template', label: 'תבנית', icon: LayoutTemplate },
+  { path: '/admin/projects', label: 'פרויקטים', icon: FolderKanban },
   { path: '/admin/signatures', label: 'חתימות', icon: FileSignature },
   { path: '/admin/users', label: 'משתמשים', icon: Users },
 ];
