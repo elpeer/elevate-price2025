@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, Reorder, useDragControls } from 'framer-motion';
-import { Plus, Trash2, GripVertical, Upload, X, ChevronUp, ChevronDown, FolderOpen } from 'lucide-react';
+import { Plus, Trash2, GripVertical, Upload, X, ChevronUp, ChevronDown, FolderOpen, Search } from 'lucide-react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -138,16 +138,35 @@ const ProjectCard: React.FC<{
 
 const AdminProjects: React.FC = () => {
   const { projects, loading, createProject, updateProject, deleteProject, reorderProjects } = useProjects();
+  const [search, setSearch] = useState('');
+  const q = search.trim().toLowerCase();
+  const filtered = q
+    ? projects.filter(p => (p.title || '').toLowerCase().includes(q) || (p.description || '').toLowerCase().includes(q))
+    : projects;
 
   return (
     <AdminLayout title="פרויקטים" subtitle="ספריית הפרויקטים שמופיעים בהצעות המחיר. ערוך כאן פעם אחת – ובחר אילו להציג בכל הצעה.">
       <div className="max-w-4xl mx-auto space-y-4">
-        <div className="flex justify-between items-center">
-          <p className="text-sm text-muted-foreground">סך הכל {projects.length} פרויקטים</p>
-          <Button onClick={() => createProject({})}>
-            <Plus className="h-4 w-4 ml-2" />
-            פרויקט חדש
-          </Button>
+        <div className="flex flex-col md:flex-row justify-between md:items-center gap-3">
+          <p className="text-sm text-muted-foreground">
+            {q ? `${filtered.length} מתוך ${projects.length} פרויקטים` : `סך הכל ${projects.length} פרויקטים`}
+          </p>
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1 md:w-64">
+              <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="חיפוש פרויקט..."
+                className="bg-white pr-9"
+                dir="rtl"
+              />
+            </div>
+            <Button onClick={() => createProject({})}>
+              <Plus className="h-4 w-4 ml-2" />
+              פרויקט חדש
+            </Button>
+          </div>
         </div>
 
         {loading ? (
@@ -161,32 +180,39 @@ const AdminProjects: React.FC = () => {
               צור פרויקט ראשון
             </Button>
           </div>
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-12 bg-white rounded-xl border border-dashed text-muted-foreground">
+            לא נמצאו פרויקטים התואמים לחיפוש
+          </div>
         ) : (
           <Reorder.Group
             axis="y"
-            values={projects}
-            onReorder={(items) => reorderProjects(items.map(p => p.id))}
+            values={filtered}
+            onReorder={(items) => { if (!q) reorderProjects(items.map(p => p.id)); }}
             className="space-y-3"
           >
-            {projects.map((p, i) => (
-              <ProjectCard
-                key={p.id}
-                project={p}
-                index={i}
-                total={projects.length}
-                onUpdate={(patch) => updateProject(p.id, patch)}
-                onDelete={() => {
-                  if (confirm(`למחוק את "${p.title}"?`)) deleteProject(p.id);
-                }}
-                onMove={(dir) => {
-                  const ids = projects.map(x => x.id);
-                  const target = i + dir;
-                  if (target < 0 || target >= ids.length) return;
-                  [ids[i], ids[target]] = [ids[target], ids[i]];
-                  reorderProjects(ids);
-                }}
-              />
-            ))}
+            {filtered.map((p) => {
+              const i = projects.findIndex(x => x.id === p.id);
+              return (
+                <ProjectCard
+                  key={p.id}
+                  project={p}
+                  index={i}
+                  total={projects.length}
+                  onUpdate={(patch) => updateProject(p.id, patch)}
+                  onDelete={() => {
+                    if (confirm(`למחוק את "${p.title}"?`)) deleteProject(p.id);
+                  }}
+                  onMove={(dir) => {
+                    const ids = projects.map(x => x.id);
+                    const target = i + dir;
+                    if (target < 0 || target >= ids.length) return;
+                    [ids[i], ids[target]] = [ids[target], ids[i]];
+                    reorderProjects(ids);
+                  }}
+                />
+              );
+            })}
           </Reorder.Group>
         )}
       </div>
