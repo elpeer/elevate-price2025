@@ -16,6 +16,7 @@ import {
 import { ProposalSection, sectionLabels, sectionFieldSchemas, FieldDefinition } from '@/types/proposal';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import ProjectsSelector from './ProjectsSelector';
 
 interface Props {
   section: ProposalSection | null;
@@ -102,7 +103,7 @@ const groupFields = (schema: FieldDefinition[]) => {
   const repeaterFields: FieldDefinition[] = [];
   
   schema.forEach(field => {
-    if (field.type === 'repeater') {
+    if (field.type === 'repeater' || (field.type as string) === 'projects-selector') {
       repeaterFields.push(field);
     } else {
       simpleFields.push(field);
@@ -390,6 +391,16 @@ const SectionEditorPanel: React.FC<Props> = ({ section, onClose, onUpdate }) => 
                 </motion.div>
               )}
             </AnimatePresence>
+          </div>
+        );
+
+      case 'projects-selector' as any:
+        return (
+          <div key={pathKey}>
+            <ProjectsSelector
+              hiddenIds={Array.isArray(value) ? value : []}
+              onChange={(ids) => handleChange(path, ids)}
+            />
           </div>
         );
 

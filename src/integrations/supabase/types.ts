@@ -41,6 +41,39 @@ export type Database = {
         }
         Relationships: []
       }
+      projects: {
+        Row: {
+          created_at: string
+          description: string
+          desktop_image: string
+          id: string
+          mobile_image: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          desktop_image?: string
+          id?: string
+          mobile_image?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          desktop_image?: string
+          id?: string
+          mobile_image?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       proposal_templates: {
         Row: {
           content: Json
