@@ -103,7 +103,7 @@ const groupFields = (schema: FieldDefinition[]) => {
   const repeaterFields: FieldDefinition[] = [];
   
   schema.forEach(field => {
-    if (field.type === 'repeater') {
+    if (field.type === 'repeater' || (field.type as string) === 'projects-selector') {
       repeaterFields.push(field);
     } else {
       simpleFields.push(field);
